@@ -97,6 +97,13 @@ _onCreateButtonClick(){
    })
   }}
 
+  componentDidMount(){
+    if(localStorage.getItem('flag'))
+    {
+      this.props.history.push('/sharedare');
+      return;
+    }
+  }
     render() {
     if((!this.state.createComponent)){
       return(

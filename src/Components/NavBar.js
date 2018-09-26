@@ -7,6 +7,7 @@ import Home from './Home';
 import Login from './Login';
 import ResponseDare from "./ResponseDare";
 import ResponsePlayer from './ResponsePlayer';
+import ShareDare from './ShareDare';
 export default class NavBar extends React.Component {
     constructor(props) {
         super(props);
@@ -100,6 +101,7 @@ export default class NavBar extends React.Component {
                <Route  path="/contactus" component={Contact} />
                <Route  path="/dare/:dare_id" component={ResponsePlayer} />
                 <Route  path="/login" component={Login} />
+                <Route  path="/sharedare" component={ShareDare} />
                     </div>
             </Router>
         );

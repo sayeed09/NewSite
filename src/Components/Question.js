@@ -110,6 +110,7 @@ btnClick(){
         })
       })
   console.log(this.state.link);
+  localStorage.setItem('flag',true);
     this.setState({
       showDareComponent:true,
      
@@ -126,9 +127,7 @@ btnClickDelete(){
   })
   }
 btnClickResult(){
-this.setState({
-  showResultComponent:true
-})
+  alert('Under development');
 }
 
   render() {
@@ -197,7 +196,7 @@ this.setState({
                           <input value={this.state.link}
                               onChange={({target: {value}}) => this.setState({value, copied: false})} />
 
- 
+                      
         <CopyToClipboard text={this.state.link}
           onCopy={() => this.setState({copied: true})}>
           <button>Copy Link</button>
@@ -213,7 +212,7 @@ this.setState({
       <button  onClick={this.btnClickResult} type="button" class="btn btn-secondary btn-rounded">See all result</button>
       <button  onClick={this.btnClickDelete} type="button" class="btn btn-warning btn-rounded">Delete this dare</button>
 
-                  
+                  {localStorage.setItem('link',this.state.link)}
                 
                    </div>
                  </div>

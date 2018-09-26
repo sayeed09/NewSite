@@ -23,13 +23,18 @@ class ResponseDare extends React.Component  {
 
 }
 
-
+this.btnFunc=this.btnFunc.bind(this);
 this.btnClick=this.btnClick.bind(this);
 
   
 }
 
 
+btnFunc()
+{
+    this.props.history.push('/');
+    return;
+}
 
 
 onAnswerClick(option_id,question_id,e){
@@ -127,7 +132,7 @@ btnClick(){
                   <div className="text-center">
                   <br />
                   {answers}
-                  <button onClick={this.btnClick}type="button" class="btn btn-secondary btn-rounded">Next</button>
+                  <button onClick={this.btnClick}type="button" class="btn btn-secondary btn-rounded">Create Your Own Dare</button>
                   </div>
                 </div>
               </div>
@@ -158,7 +163,7 @@ btnClick(){
                 />
                 <br /> <br />
   
-          <button onClick={this.btnClick}type="button" class="btn btn-secondary btn-rounded">Next</button>
+          <button onClick={this.btnFunc}type="button" class="btn btn-secondary btn-rounded">Create Your Dare</button>
           </div>
         </div>
       </div>
