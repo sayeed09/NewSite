@@ -15,6 +15,7 @@ class Home extends React.Component  {
       errors:'',
       data:[],
       res:'',
+      obj:{}
      
     }
     this.handleChange = this.handleChange.bind(this);
@@ -74,11 +75,15 @@ _onCreateButtonClick(){
  else{
    
    var that=this;
+   this.state.obj["name"]=this.state.name;
   var postName = {name: this.state.name};
-  
+  var postData=this.state.obj;
   fetch(`https://pure-badlands-16289.herokuapp.com/api/users`, {
       method: 'post',
-      body: JSON.stringify(postName)
+      body: JSON.stringify(postData),
+      headers: {
+        'Content-Type': 'application/json',
+      },
 
     })
     .then(function (response) {
