@@ -134,7 +134,6 @@ btnClickDelete(){
   
 })
      localStorage.clear();
-     this.props.history.push('/');
      return;
   }
 btnClickResult(){
@@ -214,12 +213,10 @@ btnClickResult(){
         </CopyToClipboard>
  
         {this.state.copied ? <span style={{color: 'red'}}>Copied.</span> : null}
-        <br /><br />
+        <br /><br /> 
         <SocialShare  link={this.state.link}/>
 
-            {(this.state.showDeleteComponent) &&     
-                <Result />
-            }
+
       <button  onClick={this.btnClickResult} type="button" class="btn btn-secondary btn-rounded">See all result</button>
       <button  onClick={this.btnClickDelete} type="button" class="btn btn-warning btn-rounded">Delete this dare</button>
 

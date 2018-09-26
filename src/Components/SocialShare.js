@@ -16,15 +16,16 @@ import {
               link:''
           }
         
-          
+          this.state.link=this.props.link;
       }
     render() {
       return (
-        <div>
-    <div className="Demo__some-network">  
+        <div class = "row">
+        <div class="col-md-3"></div>
+    <div className="col-md-2 Demo__some-network">  
         <FacebookShareButton
-                url="http://github.com/"
-                quote="hahah"
+                url="this.state.link"
+                quote="this.state.link"
                 className="Demo__some-network__share-button" >
         <FacebookIcon
         size={50}
@@ -32,26 +33,28 @@ import {
     </FacebookShareButton>
     </div>
 
-    <div className="Demo__some-network"> 
+    <div className="col-md-2 Demo__some-network"> 
     <WhatsappShareButton
-            url="http://github.com/"
-            title="NewSite"
+            url="this.state.link"
+            title="Hey how much you know me"
             separator=":: "
             className="Demo__some-network__share-button">
             <WhatsappIcon size={50} round />
         </WhatsappShareButton>
     </div>
 
-    <div className="Demo__some-network">
+    <div className="col-md-2 Demo__some-network">
         <TwitterShareButton
-            url="http://localhost:3000/"
-            title="NewSite"
+            url="this.state.link"
+            title="this.state.link"
             className="Demo__some-network__share-button"   >
             <TwitterIcon
             size={50}
             round />
         </TwitterShareButton>
         </div>
+        <br/>
+        <br/>
     </div>
       );
     }

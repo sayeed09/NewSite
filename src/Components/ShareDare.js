@@ -52,7 +52,7 @@ class ShareDare extends React.Component  {
  
         <CopyToClipboard text={this.state.link}
           onCopy={() => this.setState({copied: true})}>
-          <button>Copy Link</button>
+          <button  class="btn btn-secondary btn-rounded">Copy Link</button>
         </CopyToClipboard>
  
         {this.state.copied ? <span style={{color: 'red'}}>Copied.</span> : null}
