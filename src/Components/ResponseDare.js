@@ -132,7 +132,7 @@ btnClick(){
                   <div className="text-center">
                   <br />
                   {answers}
-                  <button onClick={this.btnClick}type="button" class="btn btn-secondary btn-rounded">Create Your Own Dare</button>
+                  <button onClick={this.btnClick}type="button" class="btn btn-secondary btn-rounded">Next</button>
                   </div>
                 </div>
               </div>

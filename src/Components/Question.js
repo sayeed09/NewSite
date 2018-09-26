@@ -86,7 +86,8 @@ btnClick(){
   //console.log(this.state.AnswerArray);
   document.getElementById(this.state.option_id).classList.remove("blue-option");
   if(this.state.questionNumber===this.props.questionData.data.length -1 )
-  {
+  { 
+     
      this.state.obj["user_id"]=this.props.userData;
     this.state.obj["data"]=this.state.AnswerArray;
    
@@ -122,9 +123,19 @@ btnClick(){
 }
 
 btnClickDelete(){
-  this.setState({
-    showDeleteComponent:true
-  })
+  var that=this;
+  const { user_id } = this.props.userData
+ fetch(`https://pure-badlands-16289.herokuapp.com/api/delete_dare/${user_id}`)
+ .then(function (response) {
+  return response.json()
+})
+.then(function (data) {
+
+  
+})
+     localStorage.clear();
+     this.props.history.push('/');
+     return;
   }
 btnClickResult(){
   alert('Under development');
