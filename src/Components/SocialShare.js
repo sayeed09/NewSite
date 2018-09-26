@@ -24,8 +24,8 @@ import {
         <div class="col-md-3"></div>
     <div className="col-md-2 Demo__some-network">  
         <FacebookShareButton
-                url="this.state.link"
-                quote="this.state.link"
+                url={this.state.link}
+                quote={this.state.link}
                 className="Demo__some-network__share-button" >
         <FacebookIcon
         size={50}
@@ -35,7 +35,7 @@ import {
 
     <div className="col-md-2 Demo__some-network"> 
     <WhatsappShareButton
-            url="this.state.link"
+            url={this.state.link}
             title="Hey how much you know me"
             separator=":: "
             className="Demo__some-network__share-button">
@@ -45,8 +45,8 @@ import {
 
     <div className="col-md-2 Demo__some-network">
         <TwitterShareButton
-            url="this.state.link"
-            title="this.state.link"
+            url={this.state.link}
+            title={this.state.link}
             className="Demo__some-network__share-button"   >
             <TwitterIcon
             size={50}
