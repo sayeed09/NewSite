@@ -32,8 +32,8 @@ this.btnClick=this.btnClick.bind(this);
 
 btnFunc()
 {
-    this.props.history.push('/');
-    return;
+   
+    
 }
 
 
