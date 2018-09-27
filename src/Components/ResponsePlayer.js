@@ -32,6 +32,18 @@ class ResponsePlayer extends React.Component  {
     this.handleChange = this.handleChange.bind(this);
     this._onCreateButtonClick=this._onCreateButtonClick.bind(this);
 }
+
+componentDidMount(){
+  if(localStorage.getItem('flag'))
+  {
+    this.props.history.push('/sharedare');
+    return;
+  }
+}
+
+
+
+
 handleChange (event) {
     this.setState({
         name: event.target.value
