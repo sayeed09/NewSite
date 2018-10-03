@@ -11,10 +11,15 @@ class ResponsePlayer extends React.Component  {
     this.state={
         errors:'',
         name:'',
-        showComponent:false
+        showComponent:false,
+        link:'',
+        dareid:''
     }
-    const { dare_id } = this.props.match.params
-
+    
+    this.state.link=window.location.href;
+    const { dare_id } = this.props.match.params;
+    this.state.dareid=this.props.match.params;
+     
     var that=this;
     fetch(`https://pure-badlands-16289.herokuapp.com/api/dares/${dare_id}/test`)
     .then(function (response) {
@@ -34,6 +39,7 @@ class ResponsePlayer extends React.Component  {
 }
 
 componentDidMount(){
+  //alert(window.location.href);
   if(localStorage.getItem('flag'))
   {
     this.props.history.push('/sharedare');
@@ -110,7 +116,7 @@ _onCreateButtonClick(){
             }
 
             {(this.state.showComponent) && 
-              <ResponseDare questionData = {this.state.questionData}/>
+              <ResponseDare questionData = {this.state.questionData} link={this.state.link} name={this.state.name} dareid={this.state.dareid}/>
             }
       </div>
       <div class="col-md-2"></div>

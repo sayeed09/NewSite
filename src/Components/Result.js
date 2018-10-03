@@ -1,14 +1,18 @@
 import React from 'react';
 import { Container, Row, Col, Input, Button,Fa,CardBody,Card,CardHeader,Grid,View } from 'mdbreact';
 import './Custom.css';
-
+//import data from './responsedata';
+import { Progress } from 'react-sweet-progress';
+import "react-sweet-progress/lib/style.css";
 
 class Result extends React.Component  {
   constructor(props){
     super(props);
     this.state={
       showComponent:false,
-      data: [{
+      questionNumber:0,
+     data:
+      [{
         id: 1,
         name: "Simon Bailey"
       }, {
@@ -29,86 +33,83 @@ class Result extends React.Component  {
       }, {
         id: 7,
         name: "Aaron Frost"
-      }, {
-        id: 8,
-        name: "Joel Hooks"
-      }, {
-        id: 9,
-        name: "Jafar Husain"
-      }, {
-        id: 10,
-        name: "Tim Kindberg"
-      }, {
-        id: 11,
-        name: "John Lindquist"
-      }, {
-        id: 12,
-        name: "Joe Maddalone"
-      }, {
-        id: 13,
-        name: "Tyler McGinnis"
-      }, {
-        id: 14,
-        name: "Scott Moss"
-      }, {
-        id: 15,
-        name: "Robert Penner"
-      }, {
-        id: 16,
-        name: "Keith Peters"
-      }, {
-        id: 17,
-        name: "Lukas Ruebbelke"
-      }, {
-        id: 18,
-        name: "Brett Shollenberger"
       }]
-    }
+     
+        
+
+}
+
   
-
-  
 }
 
 
 
 
 
-    
 
 
+  render() {
 
- 
+    return(
+       <div class="contact-body">
+            <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-8">
+      <Container>
+        <Row>
+          <Col md="8" >
+              <div class="card">
+                <div class="card-body">
+                  <div class="avatar mx-auto white">
+                    <h6 class="text-center" style={{fontSize: '15px', margin: '0 auto', width: '120px', height: '40px', paddingTop: '10px',
+                      paddingRight: '20px'}}><strong>
+                      Results</strong> </h6>
+                  </div>
+                  <br />
+                  
+                  <div className="text-center">
 
 
-render() {
-  let rows = this.state.data.map(person => {
-    return <PersonRow key = {
-      person.id
-    }
-    data = {
-      person
-    }
-    />
-  })
-  return
-  <table >
-    < tbody > {
-      rows
-    } </tbody> </table>
-}
-}
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Score</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+             
+                  {
+                    this.state.data.map((item, index) => (
+                        
+                          <tr>
+                            <td>
+                          {item.name}</td>
+                          <td>{item.id}</td>
+                          </tr>
+                          
+                      
+                    ))}
+                    
+                  
+                  </tbody>
+                  </table>
 
-const PersonRow = (props) => {
-return (
-  <tr>
-    <td>
-      { props.data.id }
-    </td>
-    <td>
-      { props.data.name }
-    </td>
-  </tr>
-);
-}
+
+        
+                  <button type="button" class="btn btn-secondary btn-rounded">Next</button>
+                  </div>
+                </div>
+              </div>
+          </Col>
+        </Row>
+      </Container>
+
+      </div>
+      </div>
+      </div>
+    );
+  }
+};
 
 export default Result;

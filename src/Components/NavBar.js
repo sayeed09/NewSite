@@ -8,6 +8,12 @@ import Login from './Login';
 import ResponseDare from "./ResponseDare";
 import ResponsePlayer from './ResponsePlayer';
 import ShareDare from './ShareDare';
+import Result from './Result';
+import * as PubSub from 'pubsub-js';
+import Register from './Register';
+
+
+
 export default class NavBar extends React.Component {
     constructor(props) {
         super(props);
@@ -18,18 +24,33 @@ export default class NavBar extends React.Component {
             abtflg:false,
             contactflg:false,
             loginflg:false,
+            isLoggedIn:false
         };
     this.onClick = this.onClick.bind(this);
     this.handleSelect= this.handleSelect.bind(this);
 
     }
 
+
+    componentWillMount(){
+        PubSub.subscribe('UPDATE_NAV_MENU', this.subscriberData.bind(this));
+    }
+    subscriberData(msg, data) {
+        this.setState({
+            isLoggedIn:true,
+            name:data
+        })
+     }
     onClick(){
         this.setState({
             collapse: !this.state.collapse,
         });
     }
      handleSelect(value) {
+         this.setState({
+            collapse: !this.state.collapse,
+         });
+         
         switch(value){
             case "1":
             this.setState({
@@ -89,9 +110,24 @@ export default class NavBar extends React.Component {
                             <NavItem  active={this.state.contactflg} onClick={()=>{this.handleSelect("3")}}>
                                 <NavLink className="nav-link" to="/contactus">Contact us</NavLink>
                             </NavItem>
+                            {!this.state.isLoggedIn  &&
                             <NavItem active={this.state.loginflg} onClick={()=>{this.handleSelect("4")}}>
                                 <NavLink className="nav-link" to="/login">LogIn/SignUp</NavLink>
                             </NavItem>
+                            }
+                            {this.state.isLoggedIn  &&
+                          
+                                <Dropdown>
+                            <DropdownToggle nav caret>Hi {this.state.name}</DropdownToggle>
+                            <DropdownMenu>
+                            <DropdownItem href="#">My Account</DropdownItem>
+                            <DropdownItem href="#">Create My Dare</DropdownItem>
+                            <DropdownItem href="#">Logout</DropdownItem>
+                            </DropdownMenu>
+                          </Dropdown>
+
+
+                            }
                             
                         </NavbarNav>
                     </Collapse>
@@ -102,6 +138,9 @@ export default class NavBar extends React.Component {
                <Route  path="/dare/:dare_id" component={ResponsePlayer} />
                 <Route  path="/login" component={Login} />
                 <Route  path="/sharedare" component={ShareDare} />
+                <Route  path="/results" component={Result} />
+                <Route  path="/register" component={Register} />
+                
                     </div>
             </Router>
         );

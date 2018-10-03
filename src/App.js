@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import 'font-awesome/css/font-awesome.min.css';
-//import 'bootstrap/dist/css/bootstrap.min.css'; 
 import 'mdbreact/dist/css/mdb.css';
 import NavBar from './Components/NavBar';
 import FooterPage from './Components/FooterPage';
@@ -13,18 +12,22 @@ import Question from './Components/Question';
 import ResponseDare from './Components/ResponseDare'
 import SocialShare from './Components/SocialShare';
 import ResponsePlayer from './Components/ResponsePlayer';
+import Temp from './Components/temp';
+import Result from './Components/Result';
+import Register from './Components/Register';
+
 
 class App extends Component {
   render() {
     return (
-      <BrowserRouter>
+<BrowserRouter>
       <div className="App">
       <NavBar />
       <FooterPage />  
       </div>
       </BrowserRouter>
 
-    );
+);
   }
 }
 

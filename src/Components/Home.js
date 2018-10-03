@@ -112,7 +112,7 @@ _onCreateButtonClick(){
     render() {
     if((!this.state.createComponent)){
       return(
-        <Question questionData = {this.state.questionData} userData ={this.state.user_id} />
+        <Question questionData = {this.state.questionData} userData ={this.state.user_id}  userName={this.state.name} />
       )
     }
     else{

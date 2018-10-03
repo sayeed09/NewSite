@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Row, Col, Input, Button,Fa,CardBody,Card,CardHeader,Grid,View } from 'mdbreact';
 import './Custom.css';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+import { hashHistory } from 'react-router';
 
 import SocialShare from './SocialShare';
 
@@ -11,7 +12,30 @@ class ShareDare extends React.Component  {
   constructor(props){
     super(props);
     this.state={
-        link:''
+        link:'',
+        data:
+      [{
+        id: 1,
+        name: "Simon Bailey"
+      }, {
+        id: 2,
+        name: "Thomas Burleson"
+      }, {
+        id: 3,
+        name: "Will Button"
+      }, {
+        id: 4,
+        name: "Ben Clinkinbeard"
+      }, {
+        id: 5,
+        name: "Kent Dodds"
+      }, {
+        id: 6,
+        name: "Trevor Ewen"
+      }, {
+        id: 7,
+        name: "Aaron Frost"
+      }]
      
 }
 
@@ -22,8 +46,25 @@ class ShareDare extends React.Component  {
   }
   btnClickDelete(){
       alert('dare deleted');
+
+        /* var that=this;
+        var user_id = localStorage.getItem('user_id');
+        fetch(`https://pure-badlands-16289.herokuapp.com/api/delete_dare/${user_id}`)
+        .then(function (response) {
+        return response.json()
+        })
+        .then(function (data) {
+            console.log(data.data);
+
+        
+})
+*/
       localStorage.clear();
       this.props.history.push('/');
+  }
+  btnClickResult(){
+    
+
   }
 
   render() {
@@ -58,12 +99,37 @@ class ShareDare extends React.Component  {
         {this.state.copied ? <span style={{color: 'red'}}>Copied.</span> : null}
         <br /><br />
         <SocialShare  link={this.state.link}/>
-
+      
           
       <button  onClick={this.btnClickResult} type="button" class="btn btn-secondary btn-rounded">See all result</button>
       <button  onClick={this.btnClickDelete} type="button" class="btn btn-warning btn-rounded">Delete this dare</button>
 
-                  
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#basicExampleModal">
+                              Results
+</button>
+
+<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Results</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
                 
                    </div>
                  </div>

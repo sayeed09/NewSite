@@ -25,7 +25,7 @@ import {
     <div className="col-md-2 Demo__some-network">  
         <FacebookShareButton
                 url={this.state.link}
-                quote={this.state.link}
+                quote="Hey How much you know me I challenge you! Play Now.."
                 className="Demo__some-network__share-button" >
         <FacebookIcon
         size={50}
@@ -36,7 +36,7 @@ import {
     <div className="col-md-2 Demo__some-network"> 
     <WhatsappShareButton
             url={this.state.link}
-            title="Hey how much you know me"
+            title="Hey How much you know me I challenge you! Play Now.."
             separator=":: "
             className="Demo__some-network__share-button">
             <WhatsappIcon size={50} round />
@@ -46,7 +46,7 @@ import {
     <div className="col-md-2 Demo__some-network">
         <TwitterShareButton
             url={this.state.link}
-            title={this.state.link}
+            title="Hey How much you know me I challenge you! Play Now.."
             className="Demo__some-network__share-button"   >
             <TwitterIcon
             size={50}

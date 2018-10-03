@@ -7,6 +7,7 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 import whatsapp from './whatsapp.jpg';
 import SocialShare from './SocialShare';
 import Result from './Result';
+import { withRouter } from 'react-router';
 
 
 
@@ -89,6 +90,7 @@ btnClick(){
   { 
      
      this.state.obj["user_id"]=this.props.userData;
+     //this.state.obj[]
     this.state.obj["data"]=this.state.AnswerArray;
    
     console.log(this.state.obj);
@@ -131,13 +133,15 @@ btnClickDelete(){
 })
 .then(function (data) {
 
+  console.log(data.data);
   
 })
+this.props.history.push('/');
      localStorage.clear();
      return;
   }
 btnClickResult(){
-  alert('Under development');
+  this.props.history.push('/results');
 }
 
   render() {
@@ -221,6 +225,7 @@ btnClickResult(){
       <button  onClick={this.btnClickDelete} type="button" class="btn btn-warning btn-rounded">Delete this dare</button>
 
                   {localStorage.setItem('link',this.state.link)}
+                  {localStorage.setItem('user_id', this.props.userData)}
                 
                    </div>
                  </div>

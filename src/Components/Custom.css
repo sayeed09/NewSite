@@ -1,9 +1,3 @@
-/*.footer{
-    position:absolute;
-    left:0;
-    bottom:0;
-    right:0;
-}*/
 html {
     position: relative;
     min-height: 100%;
@@ -58,3 +52,10 @@ html {
 .Demo__some-network__share-button:hover:not(:active) {
   opacity: 0.75;
 }
+
+.quantity::-webkit-inner-spin-button, 
+.quantity::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+

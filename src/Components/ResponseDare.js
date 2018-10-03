@@ -18,7 +18,8 @@ class ResponseDare extends React.Component  {
       addClass: false,
       tmp:'',
       tmp1:'',
-      score:0
+      score:0,
+      obj:{}
         
 
 }
@@ -81,6 +82,27 @@ btnClick(){
 
     if(this.state.questionNumber===this.props.questionData.data.length -1)
   {
+    /*
+    this.state.obj["link"]=this.props.link;
+    this.state.obj["score"]=this.props.name;
+    this.state.obj["name"]=this.props.name;
+    var postData = this.state.obj;
+    var that=this;
+    const { dare_id } = this.props.dareid;
+
+    fetch(`https://pure-badlands-16289.herokuapp.com/api/dares/${dare_id}/score`, {
+        method: 'post',
+        body: JSON.stringify(postData),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(function (response) {
+        return response.json()
+      })
+      .then(function (data) {
+      
+      })*/
     this.setState({
       showResultComponent:true,
      
