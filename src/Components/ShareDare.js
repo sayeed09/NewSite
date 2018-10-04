@@ -2,7 +2,6 @@ import React from 'react';
 import { Container, Row, Col, Input, Button,Fa,CardBody,Card,CardHeader,Grid,View } from 'mdbreact';
 import './Custom.css';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
-import { hashHistory } from 'react-router';
 import Navbar from './NavBar';
 import Result from './Result';
 

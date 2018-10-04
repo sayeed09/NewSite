@@ -1,9 +1,10 @@
 import React from 'react';
+import { withRouter } from "react-router";
 import { Container, Row, Col, Input, Button,Fa,CardBody,Card,CardHeader,Grid,View } from 'mdbreact';
 import './Custom.css';
-//import data from './responsedata';
 import { Progress } from 'react-sweet-progress';
 import "react-sweet-progress/lib/style.css";
+import Navbar from './NavBar';
 
 class ResponseDare extends React.Component  {
   constructor(props){
@@ -31,12 +32,14 @@ this.btnClick=this.btnClick.bind(this);
 }
 
 
-btnFunc()
+btnFunc(e)
 {
-   
+  this.props.history.push('/');
     
 }
-
+btnresult(e){
+  this.props.history.push('/results');
+}
 
 onAnswerClick(option_id,question_id,e){
     var chk=document.getElementsByClassName("green");
@@ -84,7 +87,6 @@ btnClick(){
   {
     
     this.state.obj["link"]=this.props.link;
-    //this.state.obj["link"]="https://glacial-tundra-88546.herokuapp.com/dare/34/test";
     this.state.obj["score"]=this.state.score;
     this.state.obj["name"]=this.props.name;
     var postData = this.state.obj;
@@ -185,8 +187,11 @@ btnClick(){
                 percent={this.state.score * 10}
                 />
                 <br /> <br />
-  
-          <button onClick={this.btnFunc}type="button" class="btn btn-secondary btn-rounded">Create Your Dare</button>
+          <p>Now, it’s your turn. Create your own challange and send to your friends!
+ Create Your Dare  </p>
+
+          <button onClick={this.btnFunc.bind(this)}type="button" class="btn btn-secondary btn-rounded">Create Your Dare</button>
+          <button onClick={this.btnresult.bind(this)}type="button" class="btn btn-secondary btn-rounded">See all results</button>
           </div>
         </div>
       </div>
@@ -202,5 +207,4 @@ btnClick(){
     );
   }
 };
-
 export default ResponseDare;

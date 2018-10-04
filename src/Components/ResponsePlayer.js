@@ -17,6 +17,7 @@ class ResponsePlayer extends React.Component  {
     }
     
     this.state.link=window.location.href;
+    //this.state.link="https://glacial-tundra-88546.herokuapp.com/dare/34/test"
     const { dare_id } = this.props.match.params;
     this.state.dareid=this.props.match.params;
      
@@ -117,7 +118,7 @@ _onCreateButtonClick(){
             }
 
             {(this.state.showComponent) && 
-              <ResponseDare questionData = {this.state.questionData} link={this.state.link} name={this.state.name} dareid={this.state.dareid}/>
+              <ResponseDare history={this.props.history} questionData = {this.state.questionData} link={this.state.link} name={this.state.name} dareid={this.state.dareid}/>
             }
       </div>
       <div class="col-md-2"></div>

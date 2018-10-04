@@ -140,6 +140,7 @@ export default class NavBar extends React.Component {
                 <Route  path="/sharedare" component={ShareDare} />
                 <Route  path="/results" component={Result} />
                 <Route  path="/register" component={Register} />
+                <Route path="/responsedare" component={ResponseDare} />
                 
                     </div>
             </Router>
