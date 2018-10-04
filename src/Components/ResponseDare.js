@@ -82,9 +82,10 @@ btnClick(){
 
     if(this.state.questionNumber===this.props.questionData.data.length -1)
   {
-    /*
+    
     this.state.obj["link"]=this.props.link;
-    this.state.obj["score"]=this.props.name;
+    //this.state.obj["link"]="https://glacial-tundra-88546.herokuapp.com/dare/34/test";
+    this.state.obj["score"]=this.state.score;
     this.state.obj["name"]=this.props.name;
     var postData = this.state.obj;
     var that=this;
@@ -102,7 +103,7 @@ btnClick(){
       })
       .then(function (data) {
       
-      })*/
+      })
     this.setState({
       showResultComponent:true,
      

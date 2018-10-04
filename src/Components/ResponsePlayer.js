@@ -27,9 +27,10 @@ class ResponsePlayer extends React.Component  {
    })
    .then(function (data) {
     that.setState({
-     questionData:data
+     questionData:data,
+     dare_name:data.name
     })
-      console.log('the data', data)
+      
    })
 
 
@@ -86,7 +87,7 @@ _onCreateButtonClick(){
               <Col md="10">
                 <div class="card">
                   <div class="card-body"> 
-                    <h5 class="card-title text-center"  style={{fontSize: '30px'}}><strong>How Well Do You Know him/her??</strong></h5><br />
+                    <h5 class="card-title text-center"  style={{fontSize: '30px'}}><strong>How Well Do You Know  {this.state.dare_name} ?</strong></h5><br />
                     <input type="text" placeholder="Enter your Name" class="form-control"  value={this.state.name} onChange={this.handleChange} />       
                     <span style={{color: "red",fontSize:'14px',marginLeft:'3px'}}>{this.state.errors}</span><br />
 

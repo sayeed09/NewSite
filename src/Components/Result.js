@@ -1,9 +1,9 @@
 import React from 'react';
 import { Container, Row, Col, Input, Button,Fa,CardBody,Card,CardHeader,Grid,View } from 'mdbreact';
 import './Custom.css';
-//import data from './responsedata';
 import { Progress } from 'react-sweet-progress';
 import "react-sweet-progress/lib/style.css";
+import loader from './loader.gif'
 
 class Result extends React.Component  {
   constructor(props){
@@ -11,44 +11,59 @@ class Result extends React.Component  {
     this.state={
       showComponent:false,
       questionNumber:0,
-     data:
-      [{
-        id: 1,
-        name: "Simon Bailey"
-      }, {
-        id: 2,
-        name: "Thomas Burleson"
-      }, {
-        id: 3,
-        name: "Will Button"
-      }, {
-        id: 4,
-        name: "Ben Clinkinbeard"
-      }, {
-        id: 5,
-        name: "Kent Dodds"
-      }, {
-        id: 6,
-        name: "Trevor Ewen"
-      }, {
-        id: 7,
-        name: "Aaron Frost"
-      }]
-     
-        
-
+      loader:true,
+      obj:{},
+      showNoResultComponent:false
 }
 
   
 }
 
+componentWillMount(){
+  var that=this;
+  this.state.obj["link"]=localStorage.getItem('link');
+  var postData=this.state.obj;
+  fetch(`https://pure-badlands-16289.herokuapp.com/api/users/result`, {
+    method: 'post',
+    body: JSON.stringify(postData),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  .then(function (response) {
+    return response.json()
+  })
+  .then(function (data) {
+    that.setState({
+      data:data.data,
+      loader:false
+
+    })
+    if(data.data.length<1){
+      that.setState({
+        showNoResultComponent:true,
+      })
+    }
+    console.log("hahah",data);
+  })
+
+}
 
 
-
-
+btnClick(e){
+  this.props.history.push('/sharedare');
+}
 
 
   render() {
+    if(this.state.loader){
+      return(
+        <div class="text-center">
+        <img className="home-img" style={{height:'80px', width:'100px',marginTop:"300px",
+        alignItems:'center'}} src={loader}  className="img-responsive " />
+      </div>
+      
+    );}
 
     return(
        <div class="contact-body">
@@ -66,6 +81,7 @@ class Result extends React.Component  {
                       Results</strong> </h6>
                   </div>
                   <br />
+                  {!this.state.showNoResultComponent &&
                   
                   <div className="text-center">
 
@@ -85,7 +101,7 @@ class Result extends React.Component  {
                           <tr>
                             <td>
                           {item.name}</td>
-                          <td>{item.id}</td>
+                          <td>{item.score}</td>
                           </tr>
                           
                       
@@ -97,8 +113,12 @@ class Result extends React.Component  {
 
 
         
-                  <button type="button" class="btn btn-secondary btn-rounded">Next</button>
+                  <button type="button" onClick={this.btnClick.bind(this)} class="btn btn-secondary btn-rounded">Back</button>
                   </div>
+                  }
+                  {this.state.showNoResultComponent &&
+                  <h4 class="text-center">No Records Found</h4> 
+                  }
                 </div>
               </div>
           </Col>

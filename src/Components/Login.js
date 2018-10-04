@@ -26,9 +26,8 @@ class Login extends React.Component  {
   }
 
   loginFunction(e){
-    alert(this.state.email);
     this.setState({
-      loader:false
+      loader:true
     })
     e.preventDefault();
    this.state.obj["email"]=this.state.email;
@@ -50,8 +49,9 @@ class Login extends React.Component  {
     })
     .then(function (data) {
       that.setState({
-        data:data,
+        loader:false
       })
+   
     
     })
   }

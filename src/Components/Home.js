@@ -32,7 +32,10 @@ var that=this;
   questionData:data
  })
    console.log('the data', data)
-})
+}).catch(function(error){
+  alert('Server Error Please try again');
+  return
+});
 
 
 

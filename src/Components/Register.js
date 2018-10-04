@@ -13,6 +13,7 @@ class Register extends React.Component  {
           confirmPassword:'',
           mobile:'',
           obj:{},
+          name:'',
           data:'',
           isLoading:false,
           loader:false
@@ -36,11 +37,12 @@ class Register extends React.Component  {
 
   this.state.obj["email"]=this.state.email;
   this.state.obj["password"]=this.state.password;
+  this.state.obj["name"]=this.state.name;
   
   var postData = this.state.obj;
   var that=this;
  
-/*
+
   fetch(`https://pure-badlands-16289.herokuapp.com/api/users/sign_up`, {
       method: 'post',
       body: JSON.stringify(postData),
@@ -52,11 +54,9 @@ class Register extends React.Component  {
       return response.json()
     })
     .then(function (data) {
-      that.setState({
-        data:data
-      })
     
-    })*/
+    
+    })
   }
 
 
@@ -83,6 +83,7 @@ class Register extends React.Component  {
               <form onSubmit={this.registerFunction.bind(this)} >
               <p className="h4 text-center py-4">Register </p>
               <div className="grey-text">
+              <Input label="name" icon="user" group type="text" validate error="wrong" success="right" name="name" value={this.state.name} onChange={this.handleChange}/>
                 <Input label="email" icon="envelope" group type="email" validate error="wrong" success="right" name="email" value={this.state.email} onChange={this.handleChange}/>
                 <Input label="password" icon="lock" group type="password" validate value={this.state.password} name="password" onChange={this.handleChange}/>
                 <Input label="confirm password" icon="lock" group type="password" validate value={this.state.confirmPassword} name="confirmPassword" onChange={this.handleChange}/>

@@ -3,13 +3,13 @@ html {
     min-height: 100%;
   }
   body {
-    margin-bottom: 400px; /* Margin bottom by footer height */
+    margin-bottom: 200px; /* Margin bottom by footer height */
   }
   .footer {
     position: absolute;
     bottom: 0;
     width: 100%;
-    margin-top: 1000px;
+    margin-top: 100px;
     height: 40px; /* Set the fixed height of the footer here */
     line-height: 40px; /* Vertically center the text there */
   }

@@ -95,7 +95,7 @@ export default class NavBar extends React.Component {
             <Router>
                 <div class="container">
                <Navbar color="light blue" expand="md" dark fixed="top" >
-                    <NavbarBrand href="#">
+                    <NavbarBrand href="/">
                         NewSite
                     </NavbarBrand>
                     { !this.state.isWideEnough && <NavbarToggler onClick = { this.onClick } />}

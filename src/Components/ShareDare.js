@@ -3,6 +3,8 @@ import { Container, Row, Col, Input, Button,Fa,CardBody,Card,CardHeader,Grid,Vie
 import './Custom.css';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { hashHistory } from 'react-router';
+import Navbar from './NavBar';
+import Result from './Result';
 
 import SocialShare from './SocialShare';
 
@@ -62,8 +64,8 @@ class ShareDare extends React.Component  {
       localStorage.clear();
       this.props.history.push('/');
   }
-  btnClickResult(){
-    
+  btnClickResult(e){
+    this.props.history.push('/results');
 
   }
 
@@ -87,7 +89,7 @@ class ShareDare extends React.Component  {
                     <br />
  
                     <div className="text-center">
-                          <input value={this.state.link}
+                          <input  className="form-control" value={this.state.link}
                               onChange={({target: {value}}) => this.setState({value, copied: false})} />
 
  
@@ -101,33 +103,10 @@ class ShareDare extends React.Component  {
         <SocialShare  link={this.state.link}/>
       
           
-      <button  onClick={this.btnClickResult} type="button" class="btn btn-secondary btn-rounded">See all result</button>
+      <button  onClick={this.btnClickResult.bind(this)} type="button" class="btn btn-secondary btn-rounded">See all result</button>
       <button  onClick={this.btnClickDelete} type="button" class="btn btn-warning btn-rounded">Delete this dare</button>
 
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#basicExampleModal">
-                              Results
-</button>
-
-<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Results</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        
-      
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
+    
 
 
                 

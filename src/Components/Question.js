@@ -7,8 +7,7 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 import whatsapp from './whatsapp.jpg';
 import SocialShare from './SocialShare';
 import Result from './Result';
-import { withRouter } from 'react-router';
-
+import Navbar from './NavBar';
 
 
 class Question extends React.Component  {
@@ -84,13 +83,11 @@ btnClick(){
   }
   var data = {question_id: this.state.question_id , option_id:this.state.option_id };
   this.state.AnswerArray.push(data);
-  //console.log(this.state.AnswerArray);
   document.getElementById(this.state.option_id).classList.remove("blue-option");
   if(this.state.questionNumber===this.props.questionData.data.length -1 )
   { 
      
      this.state.obj["user_id"]=this.props.userData;
-     //this.state.obj[]
     this.state.obj["data"]=this.state.AnswerArray;
    
     console.log(this.state.obj);
@@ -140,7 +137,7 @@ this.props.history.push('/');
      localStorage.clear();
      return;
   }
-btnClickResult(){
+btnClickResult(e){
   this.props.history.push('/results');
 }
 
@@ -207,13 +204,13 @@ btnClickResult(){
                     <br />
  
                     <div className="text-center">
-                          <input value={this.state.link}
+                          <input value={this.state.link} className="form-control"
                               onChange={({target: {value}}) => this.setState({value, copied: false})} />
 
                       
         <CopyToClipboard text={this.state.link}
           onCopy={() => this.setState({copied: true})}>
-          <button>Copy Link</button>
+          <button  class="btn btn-secondary btn-rounded">>Copy Link</button>
         </CopyToClipboard>
  
         {this.state.copied ? <span style={{color: 'red'}}>Copied.</span> : null}
@@ -221,7 +218,7 @@ btnClickResult(){
         <SocialShare  link={this.state.link}/>
 
 
-      <button  onClick={this.btnClickResult} type="button" class="btn btn-secondary btn-rounded">See all result</button>
+      <button  onClick={this.btnClickResult.bind(this)} type="button" class="btn btn-secondary btn-rounded">See all result</button>
       <button  onClick={this.btnClickDelete} type="button" class="btn btn-warning btn-rounded">Delete this dare</button>
 
                   {localStorage.setItem('link',this.state.link)}
