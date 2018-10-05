@@ -4,15 +4,16 @@ import './Custom.css';
 class Contact extends React.Component  {
   render() {
     return(
-        <div className="contact-body">
-            <div className="col align-self-center">
-            <div className="col-12 col-sm-3 col-lg-8">
+      <div class="contact-body">
+            <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-8">
       <Container>
         <Row>
-          <Col md="6">
-          <Card style={{width: '500px'}}>
+          <Col md="8" >
+          <Card>
               <CardBody>
-              <CardHeader color="primary-color" tag="h3">Write to us</CardHeader>
+              <CardHeader  color="primary-color" tag="h4">Write to us</CardHeader>
             <form>
               <div className="grey-text">
                 <Input label="Your name" icon="user" group type="text" validate error="wrong" success="right"/>

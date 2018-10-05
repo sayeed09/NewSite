@@ -80,13 +80,14 @@ class Login extends React.Component  {
   
 );}
     return(
-        <div className="contact-body">
-            <div className="col align-self-center">
-            <div className="col-12 col-sm-3 col-lg-8">
+      <div class="contact-body">
+            <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-8">
       <Container>
         <Row>
-          <Col md="6">
-          <Card style={{width: '500px'}}>
+          <Col md="8" >
+          <Card>
               <CardBody>
 
               <form  onSubmit={this.loginFunction.bind(this)}>
