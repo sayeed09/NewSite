@@ -14,29 +14,7 @@ class ShareDare extends React.Component  {
     super(props);
     this.state={
         link:'',
-        data:
-      [{
-        id: 1,
-        name: "Simon Bailey"
-      }, {
-        id: 2,
-        name: "Thomas Burleson"
-      }, {
-        id: 3,
-        name: "Will Button"
-      }, {
-        id: 4,
-        name: "Ben Clinkinbeard"
-      }, {
-        id: 5,
-        name: "Kent Dodds"
-      }, {
-        id: 6,
-        name: "Trevor Ewen"
-      }, {
-        id: 7,
-        name: "Aaron Frost"
-      }]
+      
      
 }
 
@@ -94,7 +72,7 @@ class ShareDare extends React.Component  {
  
         <CopyToClipboard text={this.state.link}
           onCopy={() => this.setState({copied: true})}>
-          <button  class="btn btn-secondary btn-rounded">Copy Link</button>
+          <button  style={{width: '120px', height: '40px', padding: '0.65em', textTransform: 'capitalize'}} class="btn btn-secondary btn-rounded">Copy Link</button>
         </CopyToClipboard>
  
         {this.state.copied ? <span style={{color: 'red'}}>Copied.</span> : null}
@@ -102,8 +80,8 @@ class ShareDare extends React.Component  {
         <SocialShare  link={this.state.link}/>
       
           
-      <button  onClick={this.btnClickResult.bind(this)} type="button" class="btn btn-secondary btn-rounded">See all result</button>
-      <button  onClick={this.btnClickDelete} type="button" class="btn btn-warning btn-rounded">Delete this dare</button>
+      <button  style={{width: '120px', height: '40px', padding: '0.65em', textTransform: 'capitalize'}} onClick={this.btnClickResult.bind(this)} type="button" class="btn btn-secondary btn-rounded">See Result</button>
+      <button  style={{width: '130px', height: '40px', padding: '0.65em', textTransform: 'capitalize'}} onClick={this.btnClickDelete} type="button" class="btn btn-warning btn-rounded">Delete Dare</button>
 
     
 

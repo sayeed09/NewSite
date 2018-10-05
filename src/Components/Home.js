@@ -96,7 +96,10 @@ _onCreateButtonClick(){
       that.setState({
         user_id:data.data.user_id
       })
-    })
+    }).catch(function(error){
+      alert('Server Error Please try again');
+      return
+    });
 
 
   this.setState({
@@ -115,7 +118,7 @@ _onCreateButtonClick(){
     render() {
     if((!this.state.createComponent)){
       return(
-        <Question questionData = {this.state.questionData} userData ={this.state.user_id}  userName={this.state.name} />
+        <Question history={this.props.history} questionData = {this.state.questionData} userData ={this.state.user_id}  userName={this.state.name} />
       )
     }
     else{

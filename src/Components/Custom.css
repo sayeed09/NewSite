@@ -59,3 +59,10 @@ html {
   margin: 0; 
 }
 
+.custom-btn {
+  width: '120px';
+  height: '40px';
+  padding: '0.65em';
+  text-transform: 'capitalize'
+}
+

@@ -13,7 +13,10 @@ class Login extends React.Component  {
           password:'',
           obj:{},
           data:'',
-          loader:false
+          loader:false,
+          btndisable:true,
+          errEmail:'',
+          errPass:''
         }
         this.handleChange=this.handleChange.bind(this);
         this.state.loginFunction=this.loginFunction.bind(this);
@@ -23,6 +26,7 @@ class Login extends React.Component  {
     handleChange (e) {
       const { name, value } = e.target;
       this.setState({ [name]: value });
+      
   }
 
   loginFunction(e){
@@ -35,7 +39,6 @@ class Login extends React.Component  {
   
   var postData = this.state.obj;
   var that=this;
-  PubSub.publish('UPDATE_NAV_MENU', this.state.email);
 
   fetch(`https://pure-badlands-16289.herokuapp.com/api/users/sign_in`, {
       method: 'post',
@@ -49,8 +52,18 @@ class Login extends React.Component  {
     })
     .then(function (data) {
       that.setState({
-        loader:false
+        loader:false,
+      
       })
+      if(data.error==="Incorrect Username/Password"){
+        alert("Incorrect Username/Password");
+        return;
+      }
+      if(data.data.auth_token!=null){
+        PubSub.publish('UPDATE_NAV_MENU', data.data.name);
+        alert("sucessfully logged in");
+      }
+      
    
     
     })
@@ -61,8 +74,8 @@ class Login extends React.Component  {
  if(this.state.loader){
   return(
     <div class="text-center">
-    <img className="home-img" style={{height:'80px', width:'100px',justifyContent: 'center',
-    alignItems:'center'}} src={loader}  className="img-responsive " />
+    <img className="home-img" style={{height:'80px', width:'100px',marginTop:"300px",
+        alignItems:'center'}} src={loader}  className="img-responsive " />
   </div>
   
 );}
@@ -79,8 +92,8 @@ class Login extends React.Component  {
               <form  onSubmit={this.loginFunction.bind(this)}>
               <p className="h4 text-center py-4">Log In </p>
               <div className="grey-text">
-                <Input label="Your email" icon="envelope" group name="email" type="email" validate error="wrong" success="right" value={this.state.email} onChange= {this.handleChange} />
-                <Input label="Your password" icon="lock" group type="password" name="password" validate value={this.state.password} onChange = {this.handleChange} />
+                <Input label="Your email" icon="envelope" group name="email" type="email" required validate error="wrong" success="right" value={this.state.email} onChange= {this.handleChange} />
+                <Input label="Your password" icon="lock" group type="password" name="password" validate required value={this.state.password} onChange = {this.handleChange} />
                 <p className="font-small grey-text d-flex justify-content-end"><Link to="/forgotpassword"> Forgot Password? </Link> </p>
               </div>
               <div className="text-center py-4 mt-3">

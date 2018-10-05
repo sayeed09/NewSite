@@ -15,7 +15,7 @@ import ResponsePlayer from './Components/ResponsePlayer';
 import Temp from './Components/temp';
 import Result from './Components/Result';
 import Register from './Components/Register';
-
+import CustomQuestion from './Components/CustomQuestion';
 
 class App extends Component {
   render() {

@@ -2,7 +2,6 @@ import React from 'react';
 import { Container, Row, Col, Input, Button,Fa,CardBody,Card,CardHeader,Grid,View } from 'mdbreact';
 import './Custom.css';
 import home from './home.jpg';
-//import data from './data';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import whatsapp from './whatsapp.jpg';
 import SocialShare from './SocialShare';
@@ -108,8 +107,10 @@ btnClick(){
         that.setState({
           link:data.data.link
         })
-      })
-  console.log(this.state.link);
+      }).catch(function(error){
+        alert('Server Error Please try again');
+        return;
+      });
   localStorage.setItem('flag',true);
     this.setState({
       showDareComponent:true,
@@ -124,6 +125,7 @@ btnClick(){
 btnClickDelete(){
   var that=this;
   const { user_id } = this.props.userData
+  /*
  fetch(`https://pure-badlands-16289.herokuapp.com/api/delete_dare/${user_id}`)
  .then(function (response) {
   return response.json()
@@ -132,7 +134,7 @@ btnClickDelete(){
 
   console.log(data.data);
   
-})
+})*/
 this.props.history.push('/');
      localStorage.clear();
      return;
@@ -210,7 +212,7 @@ btnClickResult(e){
                       
         <CopyToClipboard text={this.state.link}
           onCopy={() => this.setState({copied: true})}>
-          <button  class="btn btn-secondary btn-rounded">>Copy Link</button>
+          <button style={{width: '120px', height: '40px', padding: '0.65em', textTransform: 'capitalize'}}  class="btn btn-secondary btn-rounded">Copy Link</button>
         </CopyToClipboard>
  
         {this.state.copied ? <span style={{color: 'red'}}>Copied.</span> : null}
@@ -218,8 +220,8 @@ btnClickResult(e){
         <SocialShare  link={this.state.link}/>
 
 
-      <button  onClick={this.btnClickResult.bind(this)} type="button" class="btn btn-secondary btn-rounded">See all result</button>
-      <button  onClick={this.btnClickDelete} type="button" class="btn btn-warning btn-rounded">Delete this dare</button>
+      <button style={{width: '120px', height: '40px', padding: '0.65em', textTransform: 'capitalize'}} onClick={this.btnClickResult.bind(this)} type="button" class="btn btn-secondary btn-rounded">See result</button>
+      <button style={{width: '120px', height: '40px', padding: '0.65em', textTransform: 'capitalize'}} onClick={this.btnClickDelete} type="button" class="btn btn-warning btn-rounded">Delete  dare</button>
 
                   {localStorage.setItem('link',this.state.link)}
                   {localStorage.setItem('user_id', this.props.userData)}

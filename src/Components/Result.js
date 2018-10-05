@@ -113,13 +113,12 @@ btnClick(e){
 
 
         
-                  <button type="button" onClick={this.btnClick.bind(this)} class="btn btn-secondary btn-rounded">Back</button>
+                  
                   </div>
                   }
                   {this.state.showNoResultComponent &&
                   <div>
                   <h4 class="text-center">No Records Found</h4>
-                  <button type="button" onClick={this.btnClick.bind(this)} class="btn btn-secondary btn-rounded">Back</button>
                   </div>
                   }
                 </div>

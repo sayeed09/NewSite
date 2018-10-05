@@ -21,8 +21,8 @@ import {
     render() {
       return (
         <div class = "row">
-        <div class="col-md-3"></div>
-    <div className="col-md-2 Demo__some-network">  
+        <div class="col-3"></div>
+    <div className="col-2 Demo__some-network">  
         <FacebookShareButton
                 url={this.state.link}
                 quote="Hey How much you know me I challenge you! Play Now.."
@@ -33,7 +33,7 @@ import {
     </FacebookShareButton>
     </div>
 
-    <div className="col-md-2 Demo__some-network"> 
+    <div className="col-2 Demo__some-network"> 
     <WhatsappShareButton
             url={this.state.link}
             title="Hey How much you know me I challenge you! Play Now.."
@@ -43,7 +43,7 @@ import {
         </WhatsappShareButton>
     </div>
 
-    <div className="col-md-2 Demo__some-network">
+    <div className="col-2 Demo__some-network">
         <TwitterShareButton
             url={this.state.link}
             title="Hey How much you know me I challenge you! Play Now.."

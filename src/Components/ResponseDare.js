@@ -1,10 +1,8 @@
 import React from 'react';
-import { withRouter } from "react-router";
 import { Container, Row, Col, Input, Button,Fa,CardBody,Card,CardHeader,Grid,View } from 'mdbreact';
 import './Custom.css';
 import { Progress } from 'react-sweet-progress';
 import "react-sweet-progress/lib/style.css";
-import Navbar from './NavBar';
 
 class ResponseDare extends React.Component  {
   constructor(props){
@@ -44,7 +42,7 @@ btnresult(e){
 onAnswerClick(option_id,question_id,e){
     var chk=document.getElementsByClassName("green");
     var chk1=document.getElementsByClassName("red");
-    if(chk.item(0) != null && chk1.item(0) != null ) {
+    if(chk.item(0) != null || chk1.item(0) != null ) {
         return
         }
     this.setState({
@@ -59,7 +57,7 @@ onAnswerClick(option_id,question_id,e){
             score:this.state.score + 1,
         });
         document.getElementById(option_id).classList.add("green");
-             
+             return;
     }
     else{
         document.getElementById(question_id).classList.add("green");
