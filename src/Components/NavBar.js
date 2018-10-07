@@ -11,9 +11,11 @@ import ShareDare from './ShareDare';
 import Result from './Result';
 import * as PubSub from 'pubsub-js';
 import Register from './Register';
-
-
-
+import EditQuestion from './EditQuestion';
+import AdminQuestion from './AdminQuestion';
+import ShowScore from './ShowScore';
+import DareResult from './DareResult';
+import CustomQuestion from './CustomQuestion';
 export default class NavBar extends React.Component {
     constructor(props) {
         super(props);
@@ -141,7 +143,11 @@ export default class NavBar extends React.Component {
                 <Route  path="/results" component={Result} />
                 <Route  path="/register" component={Register} />
                 <Route path="/responsedare" component={ResponseDare} />
-                
+                <Route path ="/editquestion/:id" component={EditQuestion} />
+                <Route path ="/adminquestion" component={AdminQuestion} />
+                <Route path ="/score" component={ShowScore} />
+                <Route path ="/userresults" component={DareResult} />
+                <Route path ="/customquestion" component={CustomQuestion} />
                     </div>
             </Router>
         );

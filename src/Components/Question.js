@@ -3,7 +3,6 @@ import { Container, Row, Col, Input, Button,Fa,CardBody,Card,CardHeader,Grid,Vie
 import './Custom.css';
 import home from './home.jpg';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
-import whatsapp from './whatsapp.jpg';
 import SocialShare from './SocialShare';
 import Result from './Result';
 import Navbar from './NavBar';
@@ -140,7 +139,7 @@ this.props.history.push('/');
      return;
   }
 btnClickResult(e){
-  this.props.history.push('/results');
+  this.props.history.push('/userresults');
 }
 
   render() {

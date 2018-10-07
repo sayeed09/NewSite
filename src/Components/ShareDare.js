@@ -42,7 +42,7 @@ class ShareDare extends React.Component  {
       this.props.history.push('/');
   }
   btnClickResult(e){
-    this.props.history.push('/results');
+    this.props.history.push('/userresults');
 
   }
 

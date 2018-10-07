@@ -16,18 +16,13 @@ import Temp from './Components/temp';
 import Result from './Components/Result';
 import Register from './Components/Register';
 import CustomQuestion from './Components/CustomQuestion';
-
+import AdminQuestion from './Components/AdminQuestion';
 class App extends Component {
   render() {
     return (
-<BrowserRouter>
-      <div className="App">
-      <NavBar />
-      <FooterPage />  
-      </div>
-      </BrowserRouter>
+<CustomQuestion />
 
-);
+    );
   }
 }
 

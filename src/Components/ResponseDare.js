@@ -1,8 +1,8 @@
 import React from 'react';
 import { Container, Row, Col, Input, Button,Fa,CardBody,Card,CardHeader,Grid,View } from 'mdbreact';
 import './Custom.css';
-import { Progress } from 'react-sweet-progress';
 import "react-sweet-progress/lib/style.css";
+import ShowScore from './ShowScore';
 
 class ResponseDare extends React.Component  {
   constructor(props){
@@ -23,21 +23,13 @@ class ResponseDare extends React.Component  {
 
 }
 
-this.btnFunc=this.btnFunc.bind(this);
 this.btnClick=this.btnClick.bind(this);
 
-  
+  localStorage.setItem("rflg",true);
+
 }
 
 
-btnFunc(e)
-{
-  this.props.history.push('/');
-    
-}
-btnresult(e){
-  this.props.history.push('/results');
-}
 
 onAnswerClick(option_id,question_id,e){
     var chk=document.getElementsByClassName("green");
@@ -163,39 +155,13 @@ btnClick(){
         </Row>
       </Container>
             }
+                  { localStorage.setItem("s",this.state.score)}
+                      {localStorage.setItem("t",this.props.questionData.data.length)}
              {(this.state.showResultComponent) && 
+                
+                      
 
-<Container>
-<Row>
-  <Col md="8" >
-      <div class="card">
-        <div class="card-body">
-          <div class="avatar mx-auto white">
-            <h5 class="text-center" ><strong>
-             Congrats </strong> </h5>
-           
-          </div>
-          <br />
-          
-          <div className="text-center">
-          <h6><strong> Your Score {this.state.score} /{this.props.questionData.data.length}</strong></h6>
-          <br />
-           <Progress
-                type="circle"
-                percent={this.state.score * 10}
-                />
-                <br /> <br />
-          <p>Now, it’s your turn. Create your own challange and send to your friends!
- Create Your Dare  </p>
-
-          <button onClick={this.btnFunc.bind(this)}type="button" class="btn btn-secondary btn-rounded">Create Your Dare</button>
-          <button onClick={this.btnresult.bind(this)}type="button" class="btn btn-secondary btn-rounded">See all results</button>
-          </div>
-        </div>
-      </div>
-  </Col>
-</Row>
-</Container>
+                <ShowScore history={this.props.history}/>
 
              }
 

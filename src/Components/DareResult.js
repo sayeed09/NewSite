@@ -5,7 +5,7 @@ import { Progress } from 'react-sweet-progress';
 import "react-sweet-progress/lib/style.css";
 import loader from './loader.gif'
 
-class Result extends React.Component  {
+class DareResult extends React.Component  {
   constructor(props){
     super(props);
     this.state={
@@ -14,17 +14,13 @@ class Result extends React.Component  {
       loader:true,
       obj:{},
       showNoResultComponent:false,
+    
 }
 
   
 }
 
 componentWillMount(){
-  if(localStorage.getItem('rflg')){
-    this.setState({
-      responseComponent:true
-    })
-  }
   var that=this;
   this.state.obj["link"]=localStorage.getItem('link');
   var postData=this.state.obj;
@@ -53,9 +49,8 @@ componentWillMount(){
     
 }
 
-btnClickResponse(e){
-  
-  this.props.history.push('/score');
+btnClick(e){
+  this.props.history.push('/sharedare');
 }
 
 
@@ -95,6 +90,7 @@ btnClickResponse(e){
                       <tr>
                         <th scope="col">Name</th>
                         <th scope="col">Score</th>
+                        <th scope="col">Delete</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -106,30 +102,25 @@ btnClickResponse(e){
                             <td>
                           {item.name}</td>
                           <td>{item.score}</td>
+                          <td><Button class="primary">Delete</Button></td>
                           </tr>
                           
                       
                     ))}
-                    
-                  
                   </tbody>
                   </table>
-                    
+                <button style={{width: '120px', height: '40px', padding: '0.65em', textTransform: 'capitalize'}} onClick={this.btnClick.bind(this)} type="button" class="btn btn-secondary btn-rounded">Back</button>
                   
                   </div>
                   }
                   {this.state.showNoResultComponent &&
                   <div>
                   <h4 class="text-center">No Records Found</h4>
-                  <button style={{width: '120px', height: '40px', padding: '0.65em', textTransform: 'capitalize'}} onClick={this.btnClick.bind(this)} type="button" class="btn btn-secondary btn-rounded">Back</button>
+                  <button style={{width: '120px', height: '40px', padding: '0.65em', textTransform: 'capitalize', marginLeft:'100px'}} onClick={this.btnClick.bind(this)} type="button" class="btn btn-secondary btn-rounded">Back</button>
 
                   </div>
                   }
-                   {
-                    this.state.responseComponent &&
-                    <button class="text-center" style={{width: '120px', height: '40px', padding: '0.65em',marginLeft:'100px', textTransform: 'capitalize'}} onClick={this.btnClickResponse.bind(this)} type="button" class="btn btn-secondary btn-rounded">Back</button>
-                    
-                  }
+                   
                 </div>
               </div>
           </Col>
@@ -143,4 +134,4 @@ btnClickResponse(e){
   }
 };
 
-export default Result;
+export default DareResult;

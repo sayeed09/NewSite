@@ -16,8 +16,8 @@ class ResponsePlayer extends React.Component  {
         dareid:''
     }
     
-    this.state.link=window.location.href;
-   // this.state.link="https://glacial-tundra-88546.herokuapp.com/dare/62/test";
+    //this.state.link=window.location.href;
+    this.state.link="https://glacial-tundra-88546.herokuapp.com/dare/67/test";
     localStorage.setItem('link',this.state.link);
     const { dare_id } = this.props.match.params;
     this.state.dareid=this.props.match.params;
@@ -42,6 +42,10 @@ class ResponsePlayer extends React.Component  {
 }
 
 componentDidMount(){
+  if(localStorage.getItem('rflg')){
+    this.props.history.push('/score');
+    return;
+  }
   if(localStorage.getItem('flag'))
   {
     this.props.history.push('/sharedare');
