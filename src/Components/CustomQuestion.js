@@ -1,6 +1,19 @@
 import React from "react";
 import { string } from "prop-types";
-
+import {
+  Container,
+  Row,
+  Col,
+  Input,
+  Button,
+  Fa,
+  CardBody,
+  Card,
+  CardHeader,
+  Grid,
+  View
+} from "mdbreact";
+import "./Custom.css";
 const questionModel = [
   {
     questionID: "",
@@ -15,12 +28,21 @@ class CustomQuestion extends React.Component {
     super();
     this.state = {
       name: "",
+      answerOption:'',
       questions: new Array(2),
       answer: new Array(2),
       questionLength: 5,
       isPush: false
     };
+    this.handleChange = this.handleChange.bind(this);
+   
   }
+  handleChange(event) {
+    this.setState({
+      answerOption: event.target.value
+    });
+  }
+  
 
   handleQuestionNameChange(idx, e) {
     var isQuestionExits = questionModel.filter(function(item) {
@@ -45,7 +67,6 @@ class CustomQuestion extends React.Component {
 
   handleSubmit = evt => {
     const { name, questions } = this.state;
-    console.log(this.state.questions);
   };
 
   handleAddQuestion(e) {
@@ -103,7 +124,10 @@ class CustomQuestion extends React.Component {
       this.setState({ questionLength: this.state.questionLength - 5 });
     }
   };
+  handleRemoveOption(idx,e){
 
+    
+  }
   render() {
     var questionArray = [];
     var optionsArray = [];
@@ -112,88 +136,180 @@ class CustomQuestion extends React.Component {
       questionArray.push(i);
     }
     return (
-      <form onSubmit={this.handleSubmit}>
-        <h4>questions</h4>
+      <div class="contact-body">
+        <div class="row">
+          <div class="col-md-3" />
+          <div class="col-md-8">
+            <Container>
+              <Row>
+                <Col md="8">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="avatar mx-auto white">
+                        <h5
+                          class="text-center"
+                          style={{
+                            fontSize: "15px",
+                            margin: "0 auto",
+                            width: "120px",
+                            height: "40px",
+                            paddingTop: "10px",
+                            paddingRight: "20px"
+                          }}
+                        >
+                          <strong>Add Question</strong>{" "}
+                        </h5>
+                      </div>
+                      <br />
+                      <form onSubmit={this.handleSubmit}>
 
-        {questionArray.map(function(question, idx) {
-          if (
-            questionModel.length - 1 <= idx &&
-            questionModel[0].options.length === 0
-          ) {
-            for (var i = 0; i < 2; i++) {
-              optionsArray.push(i);
-            }
-          } else {
-            if (questionModel.length - 1 >= idx) {
-              var limit = 2;
-              if (questionModel[idx].options.length > 0) {
-                limit = questionModel[idx].options.length;
-              }
-              for (var i = 0; i < limit; i++) {
-                optionsArray.push(i);
-              }
-            } else {
-              for (var i = 0; i < 2; i++) {
-                optionsArray.push(i);
-              }
-            }
-          }
-          var quesrions = optionsArray.map(function(options, optionId) {
-            return (
-              <input
-                type="text"
-                placeholder={`options ${optionId + 1} `}
-                value={question.name}
-                onChange={that.handleQuestionNameChange.bind(
-                  that,
-                  idx,
-                  optionId
-                )}
-                class="form-control"
-              />
-            );
-          });
-          optionsArray = [];
-          return (
-            <div className="question">
-              <input
-                type="text"
-                placeholder={`question ${idx + 1} `}
-                value={question.name}
-                onChange={that.handleQuestionNameChange.bind(that, idx)}
-                class="form-control"
-              />
-              {quesrions}
-              <button
-                class="btn"
-                type="button"
-                onClick={that.handleAddOptions.bind(that, idx)}
-                className="small"
-              >
-                Add options
-              </button>
-              {(idx + 1) % 5 === 0 && (
-                <button
-                  type="button"
-                  onClick={that.handleRemoveQuestion(that, idx)}
-                  className="small"
-                >
-                  -
-                </button>
-              )}
-            </div>
-          );
-        })}
-        <button
-          class="btn"
-          type="button"
-          onClick={this.handleAddQuestion.bind(this)}
-          className="small"
-        >
-          Add question
-        </button>
-        <button>Submit</button>
-      </form>
+                        {questionArray.map(function(question, idx) {
+                          if (
+                            questionModel.length - 1 <= idx &&
+                            questionModel[0].options.length === 0
+                          ) {
+                            for (var i = 0; i < 2; i++) {
+                              optionsArray.push(i);
+                            }
+                          } else {
+                            if (questionModel.length - 1 >= idx) {
+                              var limit = 2;
+                              if (questionModel[idx].options.length > 0) {
+                                limit = questionModel[idx].options.length;
+                              }
+                              for (var i = 0; i < limit; i++) {
+                                optionsArray.push(i);
+                              }
+                            } else {
+                              for (var i = 0; i < 2; i++) {
+                                optionsArray.push(i);
+                              }
+                            }
+                          }
+                          var quesrions = optionsArray.map(function(
+                            options,
+                            optionId
+                          ) {
+                            return (
+                              <div>
+                       
+                              <input
+                                type="text"
+                                placeholder={`options ${optionId + 1} `}
+                                value={question.name}
+                                onChange={that.handleQuestionNameChange.bind(
+                                  that,
+                                  idx,
+                                  optionId
+                                )}
+                                class="form-control"
+                              />
+                          
+                              <br />
+                            
+                              </div>
+                            );
+                          });
+                          optionsArray = [];
+                          return (
+                            <div className="question">
+                              <input
+                                type="text"
+                                placeholder={`question ${idx + 1} `}
+                                value={question.name}
+                                onChange={that.handleQuestionNameChange.bind(
+                                  that,
+                                  idx
+                                )}
+                                class="form-control"
+                              />
+                              <br />
+                              {quesrions}
+                            
+                                 <button
+                                 type="button"
+                                 onClick={that.handleRemoveOption(that, idx)}
+                                 style={{
+                                   width: "130px",
+                                   height: "40px",
+                                   padding: "0.65em",
+                                   textTransform: "capitalize"
+                                 }}
+                                 class="btn btn-info"
+                               >
+                                 <i class="fa fa-minus" aria-hidden="true" />
+                                 &nbsp; Option
+                               </button>
+                            
+                              <button
+                                type="button"
+                                onClick={that.handleAddOptions.bind(that, idx)}
+                                style={{
+                                  width: "130px",
+                                  height: "40px",
+                                  padding: "0.65em",
+                                  textTransform: "capitalize"
+                                }}
+                                class="btn btn-info"
+                              >
+                                <i class="fa fa-plus" aria-hidden="true" />
+                                &nbsp; options
+                              </button>
+                              
+                              <br />
+                              {(idx + 1) % 5 === 0 && (
+                                 <button
+                                 type="button"
+                                 onClick={that.handleRemoveQuestion(that, idx)}
+                                 style={{
+                                   width: "130px",
+                                   height: "40px",
+                                   padding: "0.65em",
+                                   textTransform: "capitalize"
+                                 }}
+                                 class="btn btn-info"
+                               >
+                                 <i class="fa fa-minus" aria-hidden="true" />
+                                 &nbsp; Question
+                               </button>
+                              )}
+                            </div>
+                          );
+                        })}
+                        <button
+                          type="button"
+                          onClick={this.handleAddQuestion.bind(this)}
+                          style={{
+                            width: "130px",
+                            height: "40px",
+                            padding: "0.65em",
+                            textTransform: "capitalize"
+                          }}
+                          class="btn btn-info"
+                        >
+                          <i class="fa fa-plus" aria-hidden="true" />
+                          &nbsp; Question
+                        </button>
+                        <button
+                          class="btn btn-info"
+                          style={{
+                            width: "130px",
+                            height: "40px",
+                            padding: "0.65em",
+                            textTransform: "capitalize"
+                          }}
+                        >
+                          Submit
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+            </Container>
+          </div>
+        </div>
+      </div>
     );
   }
 }

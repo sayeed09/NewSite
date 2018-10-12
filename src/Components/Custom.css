@@ -1,43 +1,42 @@
 html {
-    position: relative;
-    min-height: 100%;
-  }
-  body {
-    margin-bottom: 200px; /* Margin bottom by footer height */
-  }
-  .footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    margin-top: 100px;
-    height: 40px; /* Set the fixed height of the footer here */
-    line-height: 40px; /* Vertically center the text there */
-  }
-  
-  .contact-body{
-      margin-top: 100px;
-      margin-bottom: 100px;
-      /* margin-left: 360px; */
-  }
-  .home{
-    margin-top: 100px;
-    margin-bottom: 200px;
-    margin-left: 360px;
-  }
-  .answer-body{
-    border: 2px solid red;
-    border-radius: 8px;
-    padding: 10px;
-    margin-top: 25px;
-    margin-bottom: 15px;
-  
-  }
+  position: relative;
+  min-height: 100%;
+}
+body {
+  margin-bottom: 200px; /* Margin bottom by footer height */
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  margin-top: 100px;
+  height: 40px; /* Set the fixed height of the footer here */
+  line-height: 40px; /* Vertically center the text there */
+}
 
-  /*-------------------------------------------------------------------------------*/
-.green{
+.contact-body {
+  margin-top: 100px;
+  margin-bottom: 100px;
+  /* margin-left: 360px; */
+}
+.home {
+  margin-top: 100px;
+  margin-bottom: 200px;
+  margin-left: 360px;
+}
+.answer-body {
+  border: 2px solid red;
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: 25px;
+  margin-bottom: 15px;
+}
+
+/*-------------------------------------------------------------------------------*/
+.green {
   background-color: green;
 }
-.blue-option{
+.blue-option {
   background-color: darkcyan;
 }
 .Demo__some-network {
@@ -53,16 +52,15 @@ html {
   opacity: 0.75;
 }
 
-.quantity::-webkit-inner-spin-button, 
-.quantity::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
+.quantity::-webkit-inner-spin-button,
+.quantity::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .custom-btn {
-  width: '120px';
-  height: '40px';
-  padding: '0.65em';
-  text-transform: 'capitalize'
+  width: "120px";
+  height: "40px";
+  padding: "0.65em";
+  text-transform: "capitalize";
 }
-

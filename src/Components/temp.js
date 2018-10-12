@@ -2,7 +2,7 @@ import React from 'react';
 class Temp extends React.Component {
     constructor(props) {
       super(props);
-      this.state = { values: [] };
+      this.state = { values: [""] };
       this.handleSubmit = this.handleSubmit.bind(this);
     }
   
@@ -32,6 +32,7 @@ class Temp extends React.Component {
     }
   
     handleSubmit(event) {
+      console.log(this.state.values)
       alert('A name was submitted: ' + this.state.values.join(', '));
       event.preventDefault();
     }
