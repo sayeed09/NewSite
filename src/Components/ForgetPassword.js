@@ -22,6 +22,9 @@ class ForgetPassword extends React.Component {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   }
+  btnPrevious(e){
+    this.props.history.push("/login");
+  }
   render() {
     return (
       <div class="contact-body">
@@ -34,7 +37,7 @@ class ForgetPassword extends React.Component {
                   <Card>
                     <CardBody>
                       <form>
-                        <p className="h4 text-center py-4">Reset ForgetPassword </p>
+                        <p className="h4 text-center py-4">Forget Password </p>
                         <div className="grey-text">
                           <Input
                             label="Your email"
@@ -51,6 +54,9 @@ class ForgetPassword extends React.Component {
                           />
                           <Button color="cyan" type="submit">
                             Reset
+                          </Button><br />
+                          <Button onClick={this.btnPrevious.bind(this)} color="cyan" type="submit">
+                            Back
                           </Button>
                         </div>
                       </form>

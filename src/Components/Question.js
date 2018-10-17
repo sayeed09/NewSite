@@ -17,7 +17,8 @@ import home from "./home.jpg";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import SocialShare from "./SocialShare";
 import Result from "./Result";
-import Navbar from "./NavBar";
+import { Progress } from "react-sweet-progress";
+import loader from "./loader.gif";
 
 class Question extends React.Component {
   constructor(props) {
@@ -33,7 +34,8 @@ class Question extends React.Component {
       tmp1: 0,
       showDeleteComponent: false,
       showResultComponent: false,
-      obj: {}
+      obj: {},
+      loader: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -90,6 +92,9 @@ class Question extends React.Component {
       .getElementById(this.state.option_id)
       .classList.remove("blue-option");
     if (this.state.questionNumber === this.props.questionData.data.length - 1) {
+      this.setState({
+        loader:true
+      })
       this.state.obj["user_id"] = this.props.userData;
       this.state.obj["data"] = this.state.AnswerArray;
 
@@ -107,7 +112,8 @@ class Question extends React.Component {
         })
         .then(function(data) {
           that.setState({
-            link: data.data.link
+            link: data.data.link,
+            loader:false
           });
         })
         .catch(function(error) {
@@ -125,27 +131,44 @@ class Question extends React.Component {
     });
   }
 
-  btnClickDelete() {
+  btnClickDelete(e) {
     var that = this;
-    const { user_id } = this.props.userData;
-    /*
- fetch(`https://pure-badlands-16289.herokuapp.com/api/delete_dare/${user_id}`)
+    var user_id  = this.props.userData;
+    
+ fetch(`https://pure-badlands-16289.herokuapp.com/api/users/delete_dare/${user_id}`)
  .then(function (response) {
   return response.json()
 })
 .then(function (data) {
 
   
-})*/
-    this.props.history.push("/");
-    localStorage.clear();
-    return;
+});
+ localStorage.clear();
+    this.props.history.push("/home");
+   
   }
   btnClickResult(e) {
     this.props.history.push("/userresults");
   }
 
   render() {
+    if (this.state.loader) {
+      return (
+        <div class="text-center">
+          <img
+            className="home-img"
+            style={{
+              height: "80px",
+              width: "100px",
+              marginTop: "300px",
+              alignItems: "center"
+            }}
+            src={loader}
+            className="img-responsive "
+          />
+        </div>
+      );
+    }
     var ques = this.props.questionData;
     var answers;
     var i = -1;
@@ -205,6 +228,7 @@ class Question extends React.Component {
                           </h6>
                         </div>
                         <br />
+                        <Progress percent={this.state.questionNumber * 10} />
                         <h5
                           class="card-title text-center"
                           style={{ fontSize: "35px" }}
@@ -299,7 +323,7 @@ class Question extends React.Component {
                               padding: "0.65em",
                               textTransform: "capitalize"
                             }}
-                            onClick={this.btnClickDelete}
+                            onClick={this.btnClickDelete.bind(this)}
                             type="button"
                             class="btn btn-warning btn-rounded"
                           >

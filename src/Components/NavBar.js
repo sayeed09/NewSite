@@ -29,6 +29,14 @@ import ShowScore from "./ShowScore";
 import DareResult from "./DareResult";
 import CustomQuestion from "./CustomQuestion";
 import ForgetPassword from "./ForgetPassword";
+import SimpleCrypto from "simple-crypto-js";
+import Temp from "./temp";
+import ChangePassword from "./ChangePassword";
+import Adminadd from "./Adminadd";
+import UserAdded from "./UserAdded";
+import { withRouter } from "react-router";
+import AdminPanel from "./AdminPanel";
+
 export default class NavBar extends React.Component {
   constructor(props) {
     super(props);
@@ -39,12 +47,40 @@ export default class NavBar extends React.Component {
       abtflg: false,
       contactflg: false,
       loginflg: false,
-      isLoggedIn: false
+      isLoggedIn: false,
+      obj: {}
     };
     this.onClick = this.onClick.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
   }
 
+  btnLogout(e) {
+    var _secretKey = "thekeyof12NewSite";
+    var simpleCrypto = new SimpleCrypto(_secretKey);
+    var chiperText = localStorage.getItem("token");
+    var decipherText = simpleCrypto.decrypt(chiperText);
+    this.state.obj["auth_token"] = decipherText;
+    var postData = this.state.obj;
+    var that = this;
+    localStorage.clear();
+    fetch(`https://pure-badlands-16289.herokuapp.com/api/users/logout`, {
+      method: "post",
+      body: JSON.stringify(postData),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        that.setState({
+          isLoggedIn: false
+        });
+
+        return;
+      });
+  }
   componentWillMount() {
     PubSub.subscribe("UPDATE_NAV_MENU", this.subscriberData.bind(this));
   }
@@ -53,6 +89,7 @@ export default class NavBar extends React.Component {
       isLoggedIn: true,
       name: data
     });
+    localStorage.setItem("name", this.state.name);
   }
   onClick() {
     this.setState({
@@ -140,7 +177,7 @@ export default class NavBar extends React.Component {
                     Contact us
                   </NavLink>
                 </NavItem>
-                {!this.state.isLoggedIn && (
+                {!(localStorage.getItem("token") != null) && (
                   <NavItem
                     active={this.state.loginflg}
                     onClick={() => {
@@ -152,15 +189,22 @@ export default class NavBar extends React.Component {
                     </NavLink>
                   </NavItem>
                 )}
-                {this.state.isLoggedIn && (
+                {localStorage.getItem("token") != null && (
                   <Dropdown>
                     <DropdownToggle nav caret>
                       Hi {this.state.name}
+                      {localStorage.getItem("name")}
                     </DropdownToggle>
                     <DropdownMenu>
-                      <DropdownItem href="#">My Account</DropdownItem>
-                      <DropdownItem href="#">Create My Dare</DropdownItem>
-                      <DropdownItem href="#">Logout</DropdownItem>
+                      <DropdownItem href="/changepassword">
+                        Change Password
+                      </DropdownItem>
+                      <DropdownItem
+                        href="/login"
+                        onClick={this.btnLogout.bind(this)}
+                      >
+                        Logout
+                      </DropdownItem>
                     </DropdownMenu>
                   </Dropdown>
                 )}
@@ -182,6 +226,12 @@ export default class NavBar extends React.Component {
           <Route path="/userresults" component={DareResult} />
           <Route path="/customquestion" component={CustomQuestion} />
           <Route path="/forgotpassword" component={ForgetPassword} />
+          <Route path="/home" component={Home} />
+          <Route path="/temp" component={Temp} />
+          <Route path="/changepassword" component={ChangePassword} />
+          <Route path="/adminadd" component={Adminadd} />
+          <Route path="/user-question" component={UserAdded} />
+          <Route path="/admin" component={AdminPanel} />
         </div>
       </Router>
     );

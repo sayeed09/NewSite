@@ -13,6 +13,7 @@ import {
 } from "mdbreact";
 import "./Custom.css";
 import ResponseDare from "./ResponseDare";
+import loader from "./loader.gif";
 
 class ResponsePlayer extends React.Component {
   constructor(props) {
@@ -22,11 +23,12 @@ class ResponsePlayer extends React.Component {
       name: "",
       showComponent: false,
       link: "",
-      dareid: ""
+      dareid: "",
+      loader:true
     };
 
-    //this.state.link=window.location.href;
-    this.state.link = "https://glacial-tundra-88546.herokuapp.com/dare/67/test";
+    this.state.link=window.location.href;
+    //this.state.link = "https://glacial-tundra-88546.herokuapp.com/dare/22/test";
     localStorage.setItem("link", this.state.link);
     const { dare_id } = this.props.match.params;
     this.state.dareid = this.props.match.params;
@@ -39,8 +41,10 @@ class ResponsePlayer extends React.Component {
       .then(function(data) {
         that.setState({
           questionData: data,
-          dare_name: data.name
+          dare_name: data.name,
+          loader:false
         });
+        console.log(that.state.questionData);
       });
 
     this.handleChange = this.handleChange.bind(this);
@@ -77,6 +81,24 @@ class ResponsePlayer extends React.Component {
   }
 
   render() {
+    if (this.state.loader) {
+      return (
+        <div class="text-center">
+          <img
+            className="home-img"
+            style={{
+              height: "80px",
+              width: "100px",
+              marginTop: "300px",
+              alignItems: "center"
+            }}
+            src={loader}
+            className="img-responsive "
+          />
+        </div>
+      );
+    }
+
     return (
       <div>
         <div class="contact-body">

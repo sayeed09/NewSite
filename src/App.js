@@ -21,7 +21,12 @@ import AdminQuestion from "./Components/AdminQuestion";
 
 class App extends Component {
   render() {
-    return<CustomQuestion />;
+    return<BrowserRouter>
+    <div className="App">
+    <NavBar />
+    <FooterPage />  
+    </div>
+    </BrowserRouter>;
   }
 }
 

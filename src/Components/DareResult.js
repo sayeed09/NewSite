@@ -25,6 +25,7 @@ class DareResult extends React.Component {
       questionNumber: 0,
       loader: true,
       obj: {},
+      delObj:{},
       showNoResultComponent: false
     };
   }
@@ -53,9 +54,31 @@ class DareResult extends React.Component {
             showNoResultComponent: true
           });
         }
+        console.log(data.data);
       });
   }
-
+  btnDelete(id, e) {
+    var that = this;
+    this.state.delObj["id"]=id;
+    var postData = this.state.delObj;
+    fetch(
+      `https://pure-badlands-16289.herokuapp.com/api/users/delete_result
+    `,
+      {
+        method: "post",
+        body: JSON.stringify(postData),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    )
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        
+      });
+  }
   btnClick(e) {
     this.props.history.push("/sharedare");
   }
@@ -121,7 +144,15 @@ class DareResult extends React.Component {
                                   <td>{item.name}</td>
                                   <td>{item.score}</td>
                                   <td>
-                                    <Button class="primary">Delete</Button>
+                                    <Button
+                                      onClick={this.btnDelete.bind(
+                                        this,
+                                        item.id
+                                      )}
+                                      class="btn btn-secondary btn-rounded"
+                                    >
+                                      Delete
+                                    </Button>
                                   </td>
                                 </tr>
                               ))}

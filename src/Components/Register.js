@@ -14,6 +14,7 @@ import {
 import "./Custom.css";
 import loader from "./loader.gif";
 import { Link } from "react-router-dom";
+var md5 = require("md5");
 
 class Register extends React.Component {
   constructor(props) {
@@ -27,7 +28,8 @@ class Register extends React.Component {
       name: "",
       data: "",
       isLoading: false,
-      loader: false
+      loader: false,
+      errors: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.state.registerFunction = this.registerFunction.bind(this);
@@ -38,14 +40,20 @@ class Register extends React.Component {
     this.setState({ [name]: value });
   }
   registerFunction(e) {
+    if (this.state.password !== this.state.confirmPassword) {
+      this.setState({
+        errors: "password & confirm password are not same"
+      });
+      e.preventDefault();
+      return;
+    }
     e.preventDefault();
-    alert(this.state.email);
     this.setState({
-      isLoading: true
+      loader: true
     });
 
     this.state.obj["email"] = this.state.email;
-    this.state.obj["password"] = this.state.password;
+    this.state.obj["password"] = md5(this.state.password);
     this.state.obj["name"] = this.state.name;
 
     var postData = this.state.obj;
@@ -61,7 +69,20 @@ class Register extends React.Component {
       .then(function(response) {
         return response.json();
       })
-      .then(function(data) {});
+      .then(function(data) {
+        that.setState({
+          loader: false
+        });
+        if (data.error != null) {
+          that.setState({
+            errors: "Email Already Registered"
+          });
+        } else {
+          that.setState({
+            errors: "Successfully account created please login to continue"
+          });
+        }
+      });
   }
 
   render() {
@@ -73,6 +94,7 @@ class Register extends React.Component {
             style={{
               height: "80px",
               width: "100px",
+              marginTop: "200px",
               justifyContent: "center",
               alignItems: "center"
             }}
@@ -84,19 +106,20 @@ class Register extends React.Component {
     }
 
     return (
-      <div className="contact-body">
-        <div className="col align-self-center">
-          <div className="col-12 col-sm-3 col-lg-8">
+      <div class="contact-body">
+        <div class="row">
+          <div class="col-md-3" />
+          <div class="col-md-8">
             <Container>
               <Row>
-                <Col md="6">
-                  <Card style={{ width: "500px" }}>
+                <Col md="8">
+                  <Card>
                     <CardBody>
                       <form onSubmit={this.registerFunction.bind(this)}>
-                        <p className="h4 text-center py-4">Register </p>
+                        <p className="h4 text-center py-4">Sign Up </p>
                         <div className="grey-text">
                           <Input
-                            label="name"
+                            label="name*"
                             icon="user"
                             group
                             type="text"
@@ -106,9 +129,10 @@ class Register extends React.Component {
                             name="name"
                             value={this.state.name}
                             onChange={this.handleChange}
+                            required
                           />
                           <Input
-                            label="email"
+                            label="email*"
                             icon="envelope"
                             group
                             type="email"
@@ -118,9 +142,10 @@ class Register extends React.Component {
                             name="email"
                             value={this.state.email}
                             onChange={this.handleChange}
+                            required
                           />
                           <Input
-                            label="password"
+                            label="password*"
                             icon="lock"
                             group
                             type="password"
@@ -128,9 +153,10 @@ class Register extends React.Component {
                             value={this.state.password}
                             name="password"
                             onChange={this.handleChange}
+                            required
                           />
                           <Input
-                            label="confirm password"
+                            label="confirm password*"
                             icon="lock"
                             group
                             type="password"
@@ -138,6 +164,7 @@ class Register extends React.Component {
                             value={this.state.confirmPassword}
                             name="confirmPassword"
                             onChange={this.handleChange}
+                            required
                           />
                           <Input
                             label="mobile"
@@ -145,20 +172,28 @@ class Register extends React.Component {
                             group
                             type="number"
                             className="quantity"
-                            validate
                             value={this.state.mobile}
                             name="mobile"
                             onChange={this.handleChange}
                           />
+                          <span
+                            style={{
+                              color: "red",
+                              fontSize: "14px",
+                              marginLeft: "3px"
+                            }}
+                          >
+                            {this.state.errors}
+                          </span>
                         </div>
                         <div className="text-center py-4 mt-3">
                           <Button color="cyan" type="submit">
-                            Register
+                            Sign Up
                           </Button>
                         </div>
                         <p className="font-small grey-text d-flex justify-content-center">
                           Already have an account?{" "}
-                          <Link to="/login"> Sign in</Link>
+                          <Link to="/login">Sign in</Link>
                         </p>
                       </form>
                     </CardBody>

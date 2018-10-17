@@ -15,6 +15,7 @@ import {
 import "./Custom.css";
 import "react-sweet-progress/lib/style.css";
 import ShowScore from "./ShowScore";
+import { Progress } from "react-sweet-progress";
 
 class ResponseDare extends React.Component {
   constructor(props) {
@@ -30,12 +31,15 @@ class ResponseDare extends React.Component {
       tmp: "",
       tmp1: "",
       score: 0,
-      obj: {}
+      obj: {},
+      per:''
     };
 
     this.btnClick = this.btnClick.bind(this);
-
-    localStorage.setItem("rflg", true);
+   this.setState({
+     per:100/this.props.questionData.data.length
+   }) 
+   
   }
 
   onAnswerClick(option_id, question_id, e) {
@@ -101,6 +105,7 @@ class ResponseDare extends React.Component {
       this.setState({
         showResultComponent: true
       });
+      localStorage.setItem("rflg", true);
     }
     this.setState({
       questionNumber: this.state.questionNumber + 1,
@@ -165,6 +170,7 @@ class ResponseDare extends React.Component {
                               {this.props.questionData.data.length}{" "}
                             </strong>{" "}
                           </h6>
+                          <Progress percent={this.state.questionNumber * this.state.per} />
                         </div>
                         <br />
                         <h5

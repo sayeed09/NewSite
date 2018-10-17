@@ -1,3 +1,4 @@
+import common from "@material-ui/core/es/colors/common";
 import React from "react";
 import {
   Container,
@@ -16,7 +17,7 @@ import "./Custom.css";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Navbar from "./NavBar";
 import Result from "./Result";
-
+import loader from "./loader.gif";
 import SocialShare from "./SocialShare";
 
 class ShareDare extends React.Component {
@@ -26,31 +27,62 @@ class ShareDare extends React.Component {
       link: ""
     };
 
-    this.state.link = localStorage.getItem("link");
+    if (this.props.link != null) {
+      this.state.link = this.props.link;
+      localStorage.setItem("link", this.state.link);
+      localStorage.setItem("user_id", this.props.user_id);
+    } else {
+      this.state.link = localStorage.getItem("link");
+    }
     this.btnClickDelete = this.btnClickDelete.bind(this);
   }
   btnClickDelete() {
-    alert("dare deleted");
-
-    /* var that=this;
-        var user_id = localStorage.getItem('user_id');
-        fetch(`https://pure-badlands-16289.herokuapp.com/api/delete_dare/${user_id}`)
-        .then(function (response) {
-        return response.json()
-        })
-        .then(function (data) {
-
-        
-})
-*/
-    localStorage.clear();
-    this.props.history.push("/");
+    var that = this;
+    var user_id = localStorage.getItem("user_id");
+    fetch(
+      `https://pure-badlands-16289.herokuapp.com/api/users/delete_dare/${user_id}`
+    )
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {});
+    if (localStorage.getItem("link") != null) {
+      this.props.history.push("/user-question");
+      localStorage.removeItem("dareCreated");
+      localStorage.removeItem("link");
+    } else {
+      localStorage.clear();
+      this.props.history.push("/");
+    }
   }
   btnClickResult(e) {
     this.props.history.push("/userresults");
   }
+  componentWillMount() {
+    if (localStorage.length === 0) {
+      this.props.history.push("/");
+    } else {
+    }
+  }
 
   render() {
+    if (this.state.link === "") {
+      return (
+        <div class="text-center">
+          <img
+            className="home-img"
+            style={{
+              height: "80px",
+              width: "100px",
+              marginTop: "300px",
+              alignItems: "center"
+            }}
+            src={loader}
+            className="img-responsive "
+          />
+        </div>
+      );
+    }
     return (
       <div class="contact-body">
         <div class="row">

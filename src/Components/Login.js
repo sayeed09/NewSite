@@ -15,6 +15,11 @@ import "./Custom.css";
 import loader from "./loader.gif";
 import * as PubSub from "pubsub-js";
 import { Link } from "react-router-dom";
+import SimpleCrypto from "simple-crypto-js";
+import ShareDare from "./ShareDare";
+import AdminQuestion from "./AdminQuestion";
+import AdminPanel from "./AdminPanel";
+var md5 = require("md5");
 
 class Login extends React.Component {
   constructor(props) {
@@ -27,7 +32,11 @@ class Login extends React.Component {
       loader: false,
       btndisable: true,
       errEmail: "",
-      errPass: ""
+      errPass: "",
+      errors: "",
+      is_dare: false,
+      isLoggedIn: false,
+      isAdmin: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.state.loginFunction = this.loginFunction.bind(this);
@@ -35,16 +44,28 @@ class Login extends React.Component {
 
   handleChange(e) {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
+    this.setState({ [name]: value, errors: "" });
   }
-
+componentWillMount(){
+  if((localStorage.getItem('token')!=null) && (localStorage.getItem('name')==="Admin")){
+    this.props.history.push("/adminquestion")
+    return
+  } 
+  if(localStorage.getItem('token')!=null){
+    if(localStorage.getItem('link')!=null){
+      this.props.history.push("/sharedare")
+    }else{
+      this.props.history.push("/user-question")
+    }
+  }
+}
   loginFunction(e) {
     this.setState({
       loader: true
     });
-    e.preventDefault();
+
     this.state.obj["email"] = this.state.email;
-    this.state.obj["password"] = this.state.password;
+    this.state.obj["password"] = md5(this.state.password);
 
     var postData = this.state.obj;
     var that = this;
@@ -63,13 +84,45 @@ class Login extends React.Component {
         that.setState({
           loader: false
         });
+
         if (data.error === "Incorrect Username/Password") {
-          alert("Incorrect Username/Password");
+          that.setState({
+            errors: "Incorrect username/password"
+          });
           return;
         }
         if (data.data.auth_token != null) {
+          that.setState({ auth_token: data.data.auth_token });
           PubSub.publish("UPDATE_NAV_MENU", data.data.name);
-          alert("sucessfully logged in");
+          var _secretKey = "thekeyof12NewSite";
+          var simpleCrypto = new SimpleCrypto(_secretKey);
+          var plainText = data.data.auth_token;
+          var chiperText = simpleCrypto.encrypt(plainText);
+          localStorage.setItem("token", chiperText);
+          if (data.data.is_admin) {
+            console.log(data.data.admin_data);
+            that.setState({
+              adminData: data.data.admin_data,
+              isLoggedIn: true,
+              
+            });
+            that.setState({
+              isAdmin:true
+            })
+          } else {
+            if (data.data.is_dare) {
+              that.setState({
+                isDareCreated: true,
+                isLoggedIn: true,
+                link: data.data.link,
+                user_id: data.data.user_id
+              });
+              localStorage.setItem("dareCreated", true);
+            } else {
+              that.props.history.push("/user-question");
+              localStorage.setItem("dareCreated", false);
+            }
+          }
         }
       });
   }
@@ -94,62 +147,84 @@ class Login extends React.Component {
     }
     return (
       <div class="contact-body">
-        <div class="row">
-          <div class="col-md-3" />
-          <div class="col-md-8">
-            <Container>
-              <Row>
-                <Col md="8">
-                  <Card>
-                    <CardBody>
-                      <form onSubmit={this.loginFunction.bind(this)}>
-                        <p className="h4 text-center py-4">Log In </p>
-                        <div className="grey-text">
-                          <Input
-                            label="Your email"
-                            icon="envelope"
-                            group
-                            name="email"
-                            type="email"
-                            required
-                            validate
-                            error="wrong"
-                            success="right"
-                            value={this.state.email}
-                            onChange={this.handleChange}
-                          />
-                          <Input
-                            label="Your password"
-                            icon="lock"
-                            group
-                            type="password"
-                            name="password"
-                            validate
-                            required
-                            value={this.state.password}
-                            onChange={this.handleChange}
-                          />
-                          <p className="font-small grey-text d-flex justify-content-end">
-                            <Link to="/forgotpassword"> Forgot Password? </Link>{" "}
+        {!this.state.isLoggedIn && (
+          <div class="row">
+            <div class="col-md-3" />
+            <div class="col-md-8">
+              <Container>
+                <Row>
+                  <Col md="8">
+                    <Card>
+                      <CardBody>
+                        <form onSubmit={this.loginFunction.bind(this)}>
+                          <p className="h4 text-center py-4">Log In </p>
+                          <div className="grey-text">
+                            <Input
+                              label="Your email"
+                              icon="envelope"
+                              group
+                              name="email"
+                              type="email"
+                              required
+                              validate
+                              error="wrong"
+                              success="right"
+                              value={this.state.email}
+                              onChange={this.handleChange}
+                            />
+                            <Input
+                              label="Your password"
+                              icon="lock"
+                              group
+                              type="password"
+                              name="password"
+                              validate
+                              required
+                              value={this.state.password}
+                              onChange={this.handleChange}
+                            />
+                            <span
+                              style={{
+                                color: "red",
+                                fontSize: "15px",
+                                marginLeft: "3px"
+                              }}
+                            >
+                              {this.state.errors}
+                            </span>
+                            <p className="font-small grey-text d-flex justify-content-end">
+                              <Link to="/forgotpassword">
+                                {" "}
+                                Forgot Password?{" "}
+                              </Link>{" "}
+                            </p>
+                          </div>
+                          <div className="text-center py-4 mt-3">
+                            <Button color="cyan" type="submit">
+                              Login
+                            </Button>
+                          </div>
+                          <p className="font-small grey-text d-flex justify-content-center">
+                            Don't have an account?{" "}
+                            <Link to="/register">Sign up</Link>
                           </p>
-                        </div>
-                        <div className="text-center py-4 mt-3">
-                          <Button color="cyan" type="submit">
-                            Login
-                          </Button>
-                        </div>
-                        <p className="font-small grey-text d-flex justify-content-center">
-                          Don't have an account?{" "}
-                          <Link to="/register">Sign up</Link>
-                        </p>
-                      </form>
-                    </CardBody>
-                  </Card>
-                </Col>
-              </Row>
-            </Container>
+                        </form>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
+              </Container>
+            </div>
           </div>
-        </div>
+        )}
+        {this.state.isDareCreated && (
+          <ShareDare
+            link={this.state.link}
+            history={this.props.history}
+            user_id={this.state.user_id}
+          />
+        )}
+        {this.state.isAdmin && <AdminQuestion history={this.props.history}/>}
       </div>
     );
   }

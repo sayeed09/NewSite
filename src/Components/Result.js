@@ -60,6 +60,9 @@ class Result extends React.Component {
         }
       });
   }
+  btnClick(e){
+    this.props.history.push("/score")
+  }
 
   btnClickResponse(e) {
     this.props.history.push("/score");
@@ -133,19 +136,8 @@ class Result extends React.Component {
                       {this.state.showNoResultComponent && (
                         <div>
                           <h4 class="text-center">No Records Found</h4>
-                          <button
-                            style={{
-                              width: "120px",
-                              height: "40px",
-                              padding: "0.65em",
-                              textTransform: "capitalize"
-                            }}
-                            onClick={this.btnClick.bind(this)}
-                            type="button"
-                            class="btn btn-secondary btn-rounded"
-                          >
-                            Back
-                          </button>
+                         
+                         
                         </div>
                       )}
                       {this.state.responseComponent && (
