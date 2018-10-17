@@ -45,9 +45,7 @@ class CustomQuestion extends React.Component {
     this.handleRemoveOption = this.handleRemoveOption.bind(this);
   }
   componentWillMount() {
-    if(localStorage.getItem('dareCreated')){
-      this.props.history.push("/sharedare")
-    }
+    
     if (localStorage.getItem("token") === null) {
       this.props.history.push("/login");
       return;
