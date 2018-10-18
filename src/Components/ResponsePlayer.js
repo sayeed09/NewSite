@@ -44,7 +44,6 @@ class ResponsePlayer extends React.Component {
           dare_name: data.name,
           loader:false
         });
-        console.log(that.state.questionData);
       });
 
     this.handleChange = this.handleChange.bind(this);

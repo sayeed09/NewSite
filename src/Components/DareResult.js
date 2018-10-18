@@ -28,36 +28,41 @@ class DareResult extends React.Component {
       delObj:{},
       showNoResultComponent: false
     };
+    this.getData=this.getData.bind(this);
   }
 
-  componentWillMount() {
-    var that = this;
-    this.state.obj["link"] = localStorage.getItem("link");
-    var postData = this.state.obj;
-    fetch(`https://pure-badlands-16289.herokuapp.com/api/users/result`, {
-      method: "post",
-      body: JSON.stringify(postData),
-      headers: {
-        "Content-Type": "application/json"
-      }
+  
+getData(e){
+  var that = this;
+  this.state.obj["link"] = localStorage.getItem("link");
+  var postData = this.state.obj;
+  fetch(`https://pure-badlands-16289.herokuapp.com/api/users/result`, {
+    method: "post",
+    body: JSON.stringify(postData),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+    .then(function(response) {
+      return response.json();
     })
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(data) {
-        that.setState({
-          data: data.data,
-          loader: false
-        });
-        if (data.data.length < 1) {
-          that.setState({
-            showNoResultComponent: true
-          });
-        }
-        console.log(data.data);
+    .then(function(data) {
+      that.setState({
+        data: data.data,
+        loader: false
       });
+      if (data.data.length < 1) {
+        that.setState({
+          showNoResultComponent: true
+        });
+      }
+    });
+}
+  componentWillMount() {
+  this.getData();
   }
   btnDelete(id, e) {
+    this.setState({loader:true})
     var that = this;
     this.state.delObj["id"]=id;
     var postData = this.state.delObj;
@@ -76,7 +81,10 @@ class DareResult extends React.Component {
         return response.json();
       })
       .then(function(data) {
-        
+        that.setState({
+          loader:false
+        })
+        that.getData.bind(that)
       });
   }
   btnClick(e) {
