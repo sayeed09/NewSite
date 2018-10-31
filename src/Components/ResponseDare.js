@@ -24,7 +24,8 @@ class ResponseDare extends React.Component {
       showComponent: false,
       showResultComponent: false,
       name: "",
-      AnswerArray: new Array(10),
+      AnswerArray: new Array(),
+      resonseArray: new Array(),
       questionNumber: 0,
       cnt: 1,
       addClass: false,
@@ -32,14 +33,14 @@ class ResponseDare extends React.Component {
       tmp1: "",
       score: 0,
       obj: {},
-      per:''
+      per: "",
+      responseData: {}
     };
 
     this.btnClick = this.btnClick.bind(this);
-   this.setState({
-     per:100/this.props.questionData.data.length
-   }) 
-   
+    this.setState({
+      per: 100 / this.props.questionData.data.length
+    });
   }
 
   onAnswerClick(option_id, question_id, e) {
@@ -52,6 +53,8 @@ class ResponseDare extends React.Component {
       tmp: option_id,
       tmp1: question_id
     });
+    this.state.responseData[question_id]=option_id;
+   
     var data = { questionId: question_id, AnswerId: option_id };
     this.state.AnswerArray.push(data);
     if (option_id == question_id) {
@@ -81,6 +84,7 @@ class ResponseDare extends React.Component {
     }
 
     if (this.state.questionNumber === this.props.questionData.data.length - 1) {
+      console.log(this.state.responseData);
       this.state.obj["link"] = this.props.link;
       this.state.obj["score"] = this.state.score;
       this.state.obj["name"] = this.props.name;
@@ -170,7 +174,9 @@ class ResponseDare extends React.Component {
                               {this.props.questionData.data.length}{" "}
                             </strong>{" "}
                           </h6>
-                          <Progress percent={this.state.questionNumber * this.state.per} />
+                          <Progress
+                            percent={((this.state.questionNumber/this.props.questionData.data.length) * 100).toFixed(2)}
+                          />
                         </div>
                         <br />
                         <h5

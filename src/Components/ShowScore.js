@@ -63,7 +63,7 @@ class ShowScore extends React.Component {
                         <br />
                         <Progress
                           type="circle"
-                          percent={localStorage.getItem("s") * 10}
+                          percent={((localStorage.getItem("s"))/ (localStorage.getItem("t"))* 100).toFixed(2)}
                         />
                         <br /> <br />
                         <p>

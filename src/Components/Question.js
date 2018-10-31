@@ -93,8 +93,8 @@ class Question extends React.Component {
       .classList.remove("blue-option");
     if (this.state.questionNumber === this.props.questionData.data.length - 1) {
       this.setState({
-        loader:true
-      })
+        loader: true
+      });
       this.state.obj["user_id"] = this.props.userData;
       this.state.obj["data"] = this.state.AnswerArray;
 
@@ -113,7 +113,7 @@ class Question extends React.Component {
         .then(function(data) {
           that.setState({
             link: data.data.link,
-            loader:false
+            loader: false
           });
         })
         .catch(function(error) {
@@ -133,19 +133,17 @@ class Question extends React.Component {
 
   btnClickDelete(e) {
     var that = this;
-    var user_id  = this.props.userData;
-    
- fetch(`https://pure-badlands-16289.herokuapp.com/api/users/delete_dare/${user_id}`)
- .then(function (response) {
-  return response.json()
-})
-.then(function (data) {
+    var user_id = this.props.userData;
 
-  
-});
- localStorage.clear();
+    fetch(
+      `https://pure-badlands-16289.herokuapp.com/api/users/delete_dare/${user_id}`
+    )
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {});
+    localStorage.clear();
     this.props.history.push("/home");
-   
   }
   btnClickResult(e) {
     this.props.history.push("/userresults");
@@ -228,7 +226,13 @@ class Question extends React.Component {
                           </h6>
                         </div>
                         <br />
-                        <Progress percent={this.state.questionNumber * 10} />
+                        <Progress
+                          percent={(
+                            (this.state.questionNumber /
+                              this.props.questionData.data.length) *
+                            100
+                          ).toFixed(2)}
+                        />
                         <h5
                           class="card-title text-center"
                           style={{ fontSize: "35px" }}

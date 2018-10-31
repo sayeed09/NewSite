@@ -59,6 +59,7 @@ class ShareDare extends React.Component {
     this.props.history.push("/userresults");
   }
   componentWillMount() {
+    
     if (localStorage.length === 0) {
       this.props.history.push("/");
     } else {

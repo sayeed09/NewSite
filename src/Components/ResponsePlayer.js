@@ -27,8 +27,8 @@ class ResponsePlayer extends React.Component {
       loader:true
     };
 
-    this.state.link=window.location.href;
-    //this.state.link = "https://glacial-tundra-88546.herokuapp.com/dare/22/test";
+   // this.state.link=window.location.href;
+    this.state.link = "https://glacial-tundra-88546.herokuapp.com/dare/42/test";
     localStorage.setItem("link", this.state.link);
     const { dare_id } = this.props.match.params;
     this.state.dareid = this.props.match.params;

@@ -27,7 +27,7 @@ class Home extends React.Component {
       data: [],
       res: "",
       obj: {},
-      user_id:''
+      user_id: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this._onButtonClick = this._onButtonClick.bind(this);
@@ -42,8 +42,7 @@ class Home extends React.Component {
         that.setState({
           questionData: data
         });
-      })
-      
+      });
   }
   _onButtonClick() {
     var that = this;
@@ -92,18 +91,18 @@ class Home extends React.Component {
           that.setState({
             user_id: data.data.user_id
           });
-        })
-  
-     
+        });
+
       this.setState({
         createComponent: false
       });
-     
-   
     }
   }
 
   componentDidMount() {
+    if (localStorage.getItem("dareCreated")) {
+      this.props.history.push("/sharedare");
+    }
     if (localStorage.getItem("flag")) {
       this.props.history.push("/sharedare");
       return;
