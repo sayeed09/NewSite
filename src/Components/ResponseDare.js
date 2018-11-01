@@ -43,7 +43,7 @@ class ResponseDare extends React.Component {
     });
   }
 
-  onAnswerClick(option_id, question_id, e) {
+  onAnswerClick(question_id,option_id,qid , e) {
     var chk = document.getElementsByClassName("green");
     var chk1 = document.getElementsByClassName("red");
     if (chk.item(0) != null || chk1.item(0) != null) {
@@ -53,7 +53,7 @@ class ResponseDare extends React.Component {
       tmp: option_id,
       tmp1: question_id
     });
-    this.state.responseData[question_id]=option_id;
+    this.state.responseData[qid]=option_id;
    
     var data = { questionId: question_id, AnswerId: option_id };
     this.state.AnswerArray.push(data);
@@ -84,10 +84,10 @@ class ResponseDare extends React.Component {
     }
 
     if (this.state.questionNumber === this.props.questionData.data.length - 1) {
-      console.log(this.state.responseData);
       this.state.obj["link"] = this.props.link;
       this.state.obj["score"] = this.state.score;
       this.state.obj["name"] = this.props.name;
+      this.state.obj["answer_sheet"]=this.state.responseData;
       var postData = this.state.obj;
       var that = this;
       const { dare_id } = this.props.dareid;
@@ -131,7 +131,8 @@ class ResponseDare extends React.Component {
                 onClick={that.onAnswerClick.bind(
                   that,
                   val.option_id,
-                  item.answer_id
+                  item.answer_id,
+                  item.question_id
                 )}
               >
                 <div id={val.option_id} class="answer-body">
