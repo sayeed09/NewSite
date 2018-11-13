@@ -20,9 +20,6 @@ const CLOUDINARY_UPLOAD_PRESET = "swfktg2j";
 const CLOUDINARY_UPLOAD_URL =
   "https://api.cloudinary.com/v1_1/dd0xblcox/image/upload";
 
-const optionArray = [];
-const optionIdArray = [];
-const captionArray = [];
 const options = [
   {
     option_id: "",
@@ -33,6 +30,9 @@ class EditQuestion extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      optionArray: [],
+      optionIdArray: [],
+      captionArray: [],
       options: [""],
       question: "",
       id: "",
@@ -49,8 +49,6 @@ class EditQuestion extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   componentWillMount() {
-  
-
     const { id } = this.props.match.params;
     this.setState({ qid: this.props.match.params });
     console.log(this.state.qid);
@@ -90,7 +88,7 @@ class EditQuestion extends React.Component {
     })
       .then(function(data) {
         that.state.imageOptionsLink[i] = data.data.secure_url;
-        optionArray[i] = data.data.secure_url;
+        this.state.optionArray[i] = data.data.secure_url;
         that.setState({
           loader: false
         });
@@ -135,17 +133,17 @@ class EditQuestion extends React.Component {
 
     if (this.state.question_type === "text") {
     }
-    for (var i = 0; i < optionArray.length; i++) {
+    for (var i = 0; i < this.state.optionArray.length; i++) {
       if (this.state.question_type === "text") {
         var optionModel = {
-          option_id: optionIdArray[i],
-          option: optionArray[i]
+          option_id: this.state.optionIdArray[i],
+          option: this.state.optionArray[i]
         };
       } else {
         var optionModel = {
-          option_id: optionIdArray[i],
-          option: optionArray[i],
-          caption: captionArray[i]
+          option_id: this.state.optionIdArray[i],
+          option: this.state.optionArray[i],
+          caption: this.state.captionArray[i]
         };
         this.state.answerArray.push(optionModel);
       }
@@ -190,13 +188,13 @@ class EditQuestion extends React.Component {
     }
   }
   onChangeOption(idx, e) {
-    optionArray[idx] = e.target.value;
+    this.state.optionArray[idx] = e.target.value;
     this.setState({
       a: 45
     });
   }
   onChangeCaption(idx, e) {
-    captionArray[idx] = e.target.value;
+    this.state.captionArray[idx] = e.target.value;
     this.setState({
       a: 45
     });
@@ -229,14 +227,14 @@ class EditQuestion extends React.Component {
       var that = this;
       if (this.state.question_type === "text") {
         this.state.options.map(function(item) {
-          optionArray.push(item.option);
-          optionIdArray.push(item.option_id);
+          that.state.optionArray.push(item.option);
+          that.state.optionIdArray.push(item.option_id);
         });
       } else {
         this.state.options.map(function(item) {
-          optionArray.push(item.option);
-          captionArray.push(item.caption);
-          optionIdArray.push(item.option_id);
+          that.state.optionArray.push(item.option);
+          that.state.captionArray.push(item.caption);
+          that.state.optionIdArray.push(item.option_id);
         });
       }
       this.setState({
@@ -272,7 +270,7 @@ class EditQuestion extends React.Component {
                             <input
                               type="text"
                               class="form-control"
-                              value={optionArray[i]}
+                              value={this.state.optionArray[i]}
                               name="question"
                               onChange={this.onChangeOption.bind(that, i)}
                             />
@@ -285,13 +283,13 @@ class EditQuestion extends React.Component {
                                   width: "200px",
                                   padding: "20px"
                                 }}
-                                src={optionArray[i]}
+                                src={this.state.optionArray[i]}
                               />
 
                               <input
                                 type="text"
                                 class="form-control"
-                                value={captionArray[i]}
+                                value={this.state.captionArray[i]}
                                 name="question"
                                 onChange={that.onChangeCaption.bind(that, i)}
                               />
