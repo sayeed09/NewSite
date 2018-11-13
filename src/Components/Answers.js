@@ -117,15 +117,7 @@ class Answers extends React.Component {
                                   {item.option_type === "text" ? (
                                     item.option
                                   ) : (
-                                    <img
-                                      style={{
-                                        height: "30px",
-                                        width: "30px",
-
-                                        alignItems: "center"
-                                      }}
-                                      src={item.option}
-                                    />
+                                     item.caption
                                   )}
                                 </td>
                                 <td />

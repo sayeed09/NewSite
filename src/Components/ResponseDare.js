@@ -42,6 +42,7 @@ class ResponseDare extends React.Component {
       per: 100 / this.props.questionData.data.length
     });
   }
+  
 
   onAnswerClick(selected_id, answer_id, question_id, e) {
     var chk = document.getElementsByClassName("green");
@@ -140,6 +141,7 @@ class ResponseDare extends React.Component {
                     {val.option_value}
                   </div>
                 ) : (
+                  <div>
                   <img
                     id={val.option_id}
                     class="answer-body"
@@ -150,6 +152,8 @@ class ResponseDare extends React.Component {
                     }}
                     src={val.option_value}
                   />
+                  <p>{val.caption}</p>
+                  </div>
                 )}
               </a>
             );

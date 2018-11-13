@@ -25,6 +25,7 @@ class Adminadd extends React.Component {
     super(props);
     this.state = {
       options: [""],
+      imageCaption: [""],
       question: "",
       id: "",
       obj: {},
@@ -33,13 +34,14 @@ class Adminadd extends React.Component {
       selectedOption: "text",
       selectedFile: null,
       imageOptionsLink: [],
-      cnt:0
+      cnt: 0,
+      question_type: "text"
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   handleImageUpload(e, file, i) {
-     var ins = i+1;
+    var ins = i + 1;
     this.setState({
       loader: true
     });
@@ -58,7 +60,7 @@ class Adminadd extends React.Component {
         that.setState({
           loader: false
         });
-        alert("Image of option " + ins + " successfully uploaded");
+        // alert("Image of option " + ins + " successfully uploaded");
       })
       .catch(function(err) {
         console.log(err);
@@ -106,6 +108,15 @@ class Adminadd extends React.Component {
               />
             ) : (
               <div>
+                <input
+                  required
+                  type="text"
+                  class="form-control"
+                  placeholder={`Caption for Image  ${i + 1} `}
+                  value={el || ""}
+                  onChange={that.handleChange.bind(this, i)}
+                />{" "}
+                <br />
                 <label class="filelabel">
                   Click here to Upload Image for Option {i + 1}
                   <input
@@ -115,6 +126,11 @@ class Adminadd extends React.Component {
                     onChange={this.fileChangedHandler.bind(this, i)}
                   />
                 </label>
+                {this.state.imageOptionsLink[i] != null ? (
+                  <p style={{ color: "green" }}>Image Uploaded Successfully</p>
+                ) : (
+                  ""
+                )}
               </div>
             )}{" "}
             <br />
@@ -147,6 +163,11 @@ class Adminadd extends React.Component {
     options[i] = event.target.value;
     this.setState({ options });
   }
+  handleImageOption(i, event) {
+    let options = [...this.state.imageCaption];
+    options[i] = event.target.value;
+    this.setState({ options });
+  }
 
   addClick() {
     this.setState(prevState => ({ options: [...prevState.options, ""] }));
@@ -156,6 +177,9 @@ class Adminadd extends React.Component {
     let options = [...this.state.options];
     options.splice(i, 1);
     this.setState({ options });
+    if (this.state.question_type === "image") {
+      this.state.imageOptionsLink.slice(i, 1);
+    }
   }
 
   handleSubmit(event) {
@@ -164,13 +188,15 @@ class Adminadd extends React.Component {
     });
 
     this.state.obj["question"] = this.state.question;
+    this.state.obj["question_type"] = this.state.selectedOption;
     if (this.state.selectedOption === "text") {
       this.state.obj["options"] = this.state.options;
     } else {
       this.state.obj["options"] = this.state.imageOptionsLink;
+      this.state.obj["captions"]=this.state.options;
     }
     this.state.data["data"] = this.state.obj;
-    this.state.data["question_type"] = this.state.selectedOption;
+
     var _secretKey = "thekeyof12NewSite";
     var simpleCrypto = new SimpleCrypto(_secretKey);
     var chiperText = localStorage.getItem("token");
@@ -193,6 +219,7 @@ class Adminadd extends React.Component {
         that.setState({
           loader: false
         });
+        alert("successfully Added");
         that.props.history.push("/adminquestion");
       });
   }
