@@ -43,29 +43,29 @@ class ResponseDare extends React.Component {
     });
   }
 
-  onAnswerClick(question_id,option_id,qid , e) {
+  onAnswerClick(selected_id, answer_id, question_id, e) {
     var chk = document.getElementsByClassName("green");
     var chk1 = document.getElementsByClassName("red");
     if (chk.item(0) != null || chk1.item(0) != null) {
       return;
     }
     this.setState({
-      tmp: option_id,
-      tmp1: question_id
+      tmp: answer_id,
+      tmp1: selected_id
     });
-    this.state.responseData[qid]=option_id;
-   
-    var data = { questionId: question_id, AnswerId: option_id };
+    this.state.responseData[question_id] = selected_id;
+
+    var data = { questionId: question_id, AnswerId: selected_id };
     this.state.AnswerArray.push(data);
-    if (option_id == question_id) {
+    if (answer_id == selected_id) {
       this.setState({
         score: this.state.score + 1
       });
-      document.getElementById(option_id).classList.add("green");
+      document.getElementById(answer_id).classList.add("green");
       return;
     } else {
-      document.getElementById(question_id).classList.add("green");
-      document.getElementById(option_id).classList.add("red");
+      document.getElementById(selected_id).classList.add("red");
+      document.getElementById(answer_id).classList.add("green");
     }
   }
 
@@ -79,15 +79,15 @@ class ResponseDare extends React.Component {
     if (this.state.tmp === this.state.tmp1) {
       document.getElementById(this.state.tmp).classList.remove("green");
     } else {
-      document.getElementById(this.state.tmp).classList.remove("red");
-      document.getElementById(this.state.tmp1).classList.remove("green");
+      document.getElementById(this.state.tmp).classList.remove("green");
+      document.getElementById(this.state.tmp1).classList.remove("red");
     }
 
     if (this.state.questionNumber === this.props.questionData.data.length - 1) {
       this.state.obj["link"] = this.props.link;
       this.state.obj["score"] = this.state.score;
       this.state.obj["name"] = this.props.name;
-      this.state.obj["answer_sheet"]=this.state.responseData;
+      this.state.obj["answer_sheet"] = this.state.responseData;
       var postData = this.state.obj;
       var that = this;
       const { dare_id } = this.props.dareid;
@@ -135,10 +135,22 @@ class ResponseDare extends React.Component {
                   item.question_id
                 )}
               >
-                <div id={val.option_id} class="answer-body">
-                  {val.option_value}
-                  <br />
-                </div>
+                {item.question_type === "text" ? (
+                  <div id={val.option_id} class="answer-body">
+                    {val.option_value}
+                  </div>
+                ) : (
+                  <img
+                    id={val.option_id}
+                    class="answer-body"
+                    style={{
+                      height: "150px",
+                      width: "200px",
+                      padding: "20px"
+                    }}
+                    src={val.option_value}
+                  />
+                )}
               </a>
             );
           }
@@ -176,7 +188,11 @@ class ResponseDare extends React.Component {
                             </strong>{" "}
                           </h6>
                           <Progress
-                            percent={((this.state.questionNumber/this.props.questionData.data.length) * 100).toFixed(2)}
+                            percent={(
+                              (this.state.questionNumber /
+                                this.props.questionData.data.length) *
+                              100
+                            ).toFixed(2)}
                           />
                         </div>
                         <br />

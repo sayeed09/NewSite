@@ -29,9 +29,15 @@ class ShowScore extends React.Component {
   }
 
   componentWillMount() {
-    if (localStorage.getItem("rflg") === true) {
+    if (localStorage.getItem("rflg")) {
       this.props.history.push("/score");
+      return;
     }
+    if(localStorage.getItem('flag')){
+      this.props.history.push("/sharedare");
+      return;
+    }
+    
   }
 
   render() {

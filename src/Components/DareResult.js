@@ -61,6 +61,9 @@ getData(e){
   componentWillMount() {
   this.getData();
   }
+  btnAnswerView(id,e){
+   this.props.history.push("/answers/"+ id);
+  }
   btnDelete(id, e) {
     this.setState({loader:true})
     var that = this;
@@ -143,6 +146,7 @@ getData(e){
                               <tr>
                                 <th scope="col">Name</th>
                                 <th scope="col">Score</th>
+                                <th scope="col">Answers</th>
                                 <th scope="col">Delete</th>
                               </tr>
                             </thead>
@@ -151,6 +155,17 @@ getData(e){
                                 <tr>
                                   <td>{item.name}</td>
                                   <td>{item.score}</td>
+                                  <td>
+                                    <Button
+                                      onClick={this.btnAnswerView.bind(
+                                        this,
+                                        item.id
+                                      )}
+                                      class="btn btn-secondary btn-rounded"
+                                    >
+                                      View
+                                    </Button>
+                                    </td>
                                   <td>
                                     <Button
                                       onClick={this.btnDelete.bind(

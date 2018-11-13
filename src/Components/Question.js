@@ -185,9 +185,22 @@ class Question extends React.Component {
                   item.question_id
                 )}
               >
-                <div id={val.option_id} class="answer-body">
-                  {val.option_value}
-                </div>
+                {item.question_type === "text" ? (
+                  <div id={val.option_id} class="answer-body">
+                    {val.option_value}
+                  </div>
+                ) : (
+                  <img
+                    id={val.option_id}
+                    class="answer-body"
+                    style={{
+                      height: "150px",
+                      width: "200px",
+                      padding: "20px"
+                    }}
+                    src={val.option_value}
+                  />
+                )}
               </a>
             );
           }

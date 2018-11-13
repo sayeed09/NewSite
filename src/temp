@@ -9,10 +9,317 @@
 
 
 
+// image upload code
 
-
-
-
-
-
+import React from 'react';
+import ImageUploader from 'react-images-upload';
+ 
+class Temp extends React.Component {
+ 
+    constructor(props) {
+        super(props);
+         this.state = { pictures: [],selectedFile: null };
+         this.onDrop = this.onDrop.bind(this);
+    }
+ 
+    onDrop(picture) {
+        this.setState({
+            pictures: this.state.pictures.concat(picture),
+        });
+        console.log(this.state.pictures)
+    }
+    fileChangedHandler = (event) => {
+        this.setState({selectedFile: event.target.files[0]})
+      }
+      uploadHandler = () => {
+          var that=this;
+        const formData = new FormData()
+        formData.append('myFile', this.state.selectedFile, this.state.selectedFile.name)
+        var postData = formData
+        fetch(`ftp://u241678919@files18.hostinger.in/public_html/Images`, {
+          method: "post",
+          body: JSON.stringify(postData),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        })
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(data) {
+            
+          });
+      }
       
+    render() {
+        return (
+            <div>
+            <ImageUploader
+                withIcon={true}
+                buttonText='Choose image'
+                onChange={this.onDrop}
+                imgExtension={['.jpg', '.png']}
+                maxFileSize={5242880}
+                singleImage={true}
+            />
+            <input type="file" onChange={this.fileChangedHandler} />
+            <button onClick={this.uploadHandler}>upload</button>
+            </div>
+        );
+    }
+}
+export default Temp;
+
+
+
+
+      ////   Image Question 
+
+      import React from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Input,
+  Button,
+  Fa,
+  CardBody,
+  Card,
+  CardHeader,
+  Grid,
+  View
+} from "mdbreact";
+import "./Custom.css";
+import home from "./home.jpg";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import SocialShare from "./SocialShare";
+import Result from "./Result";
+import { Progress } from "react-sweet-progress";
+import loader from "./loader.gif";
+export default class Temp extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      questionNumber: 0,
+      cnt: 1,
+      tmp: "",
+      tmp1: 0,
+      showDeleteComponent: false,
+      showResultComponent: false,
+      obj: {},
+      loader: false,
+      data: [
+        {
+          question_id: "3",
+          question_type: "image",
+          question: "Which animal you like most?",
+          options: [
+            {
+              option_id: "9",
+              option_value:
+                "https://images.pexels.com/photos/145939/pexels-photo-145939.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+            },
+            {
+              option_id: "10",
+              option_value:
+                "https://images.pexels.com/photos/145939/pexels-photo-145939.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+            },
+            {
+              option_id: "11",
+              option_value:
+                "https://images.pexels.com/photos/145939/pexels-photo-145939.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+            },
+            {
+              option_id: "12",
+              option_value:
+                "https://images.pexels.com/photos/145939/pexels-photo-145939.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+            }
+          ]
+        },
+        {
+          question_id: "4",
+          question_type: "image",
+          question: "What would make you most happy?",
+          options: [
+            {
+              option_id: "13",
+              option_value:
+                "https://images.pexels.com/photos/145939/pexels-photo-145939.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+            },
+            {
+              option_id: "14",
+              option_value:
+                "https://images.pexels.com/photos/145939/pexels-photo-145939.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+            },
+            {
+              option_id: "15",
+              option_value:
+                "https://images.pexels.com/photos/145939/pexels-photo-145939.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+            },
+            {
+              option_id: "16",
+              option_value:
+                "https://images.pexels.com/photos/145939/pexels-photo-145939.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+            }
+          ]
+        },
+        {
+          question_id: "5",
+          question_type: "text",
+          question: "What do you look for most in your friend?",
+          options: [
+            {
+              option_id: "17",
+              option_value: "Loyalty"
+            },
+            {
+              option_id: "18",
+              option_value: "Kindness"
+            },
+            {
+              option_id: "19",
+              option_value: "Humor"
+            },
+            {
+              option_id: "20",
+              option_value: "Intelligence"
+            }
+          ]
+        }
+      ]
+    };
+    this.btnClick = this.btnClick.bind(this);
+  }
+  onAnswerClick(option_id, question_id, question_type, e) {
+    this.setState({
+      option_id: option_id,
+      question_id: question_id
+    });
+    if (this.state.tmp1 === 0) {
+      this.setState({
+        tmp1: this.state.tmp1 + 1
+      });
+    }
+   
+      var blue_div = document.getElementsByClassName("blue-option");
+      if (blue_div.item(0) !== null) {
+        blue_div.item(0).classList.remove("blue-option");
+      }
+    
+      document.getElementById(option_id).classList.add("blue-option");
+    
+  }
+  btnClick() {
+    var chk = document.getElementsByClassName("blue-option");
+    if (chk.item(0) === null) {
+      alert("Please select option");
+      return;
+    }
+
+    document
+      .getElementById(this.state.option_id)
+      .classList.remove("blue-option");
+
+    this.setState({
+      questionNumber: this.state.questionNumber + 1,
+      cnt: this.state.cnt + 1
+    });
+  }
+
+  render() {
+    var ques = this.state.data;
+    var answers;
+    var i = -1;
+    var that = this;
+
+    var question = ques.map(function(item) {
+      i = i + 1;
+      if (i === that.state.questionNumber) {
+        answers = item.options.map(function(val) {
+          if (i === that.state.questionNumber) {
+            return (
+              <a
+                onClick={that.onAnswerClick.bind(
+                  that,
+                  val.option_id,
+                  item.question_id,
+                  item.question_type
+                )}
+              >
+                {item.question_type === "text" ? (
+                  <div id={val.option_id} class="answer-body">
+                    {val.option_value}
+                  </div>
+                ) : (
+                  <img
+                    id={val.option_id}
+                    class="answer-body"
+                    style={{
+                      height: "150px",
+                      width: "200px",
+                      padding: "20px"
+                    }}
+                    src={val.option_value}
+                  />
+                )}
+              </a>
+            );
+          }
+        });
+        return <div>{item.question}</div>;
+      }
+    });
+
+    return (
+      <div class="contact-body">
+        <div class="row">
+          <div class="col-md-3" />
+          <div class="col-md-8">
+            <Container>
+              <Row>
+                <Col md="8">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="avatar mx-auto white">
+                        <h6
+                          class="text-center"
+                          style={{
+                            fontSize: "15px",
+                            margin: "0 auto",
+                            width: "120px",
+                            height: "40px",
+                            paddingTop: "10px",
+                            paddingRight: "20px"
+                          }}
+                        />
+                      </div>
+                      <br />
+
+                      <h5
+                        class="card-title text-center"
+                        style={{ fontSize: "35px" }}
+                      >
+                        <strong>{question}</strong>
+                      </h5>
+                      <div className="text-center">
+                        <br />
+                        {answers}
+                        <button
+                          onClick={this.btnClick}
+                          type="button"
+                          class="btn btn-secondary btn-rounded"
+                        >
+                          Next
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+            </Container>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}

@@ -100,7 +100,6 @@ componentWillMount(){
           var chiperText = simpleCrypto.encrypt(plainText);
           localStorage.setItem("token", chiperText);
           if (data.data.is_admin) {
-            console.log(data.data.admin_data);
             that.setState({
               adminData: data.data.admin_data,
               isLoggedIn: true,

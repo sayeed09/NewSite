@@ -46,9 +46,9 @@ class ShareDare extends React.Component {
         return response.json();
       })
       .then(function(data) {});
-    if (localStorage.getItem("link") != null) {
+    if (localStorage.getItem("token") != null) {
       this.props.history.push("/user-question");
-      localStorage.removeItem("dareCreated");
+      localStorage.setItem("dareCreated",false);
       localStorage.removeItem("link");
     } else {
       localStorage.clear();
@@ -60,10 +60,10 @@ class ShareDare extends React.Component {
   }
   componentWillMount() {
     
-    if (localStorage.length === 0) {
+    if (localStorage.getItem('link')==null) {
       this.props.history.push("/");
-    } else {
-    }
+      return;
+    } 
   }
 
   render() {

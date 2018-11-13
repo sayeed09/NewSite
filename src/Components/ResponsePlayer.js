@@ -27,9 +27,23 @@ class ResponsePlayer extends React.Component {
       loader:true
     };
 
-   // this.state.link=window.location.href;
-    this.state.link = "https://glacial-tundra-88546.herokuapp.com/dare/44/test";
+    this.state.link=window.location.href;
+    //this.state.link = "https://glacial-tundra-88546.herokuapp.com/dare/53/test";
     localStorage.setItem("link", this.state.link);
+    
+
+    this.handleChange = this.handleChange.bind(this);
+    this._onCreateButtonClick = this._onCreateButtonClick.bind(this);
+  }
+  componentWillMount(){
+    if (localStorage.getItem("rflg")) {
+      this.props.history.push("/score");
+      return;
+    }
+    if (localStorage.getItem("flag")) {
+      this.props.history.push("/sharedare");
+      return;
+    }
     const { dare_id } = this.props.match.params;
     this.state.dareid = this.props.match.params;
 
@@ -44,22 +58,13 @@ class ResponsePlayer extends React.Component {
           dare_name: data.name,
           loader:false
         });
+      })
+      .catch(function(error) {
+        alert("Link Expired or Invalid")
+        that.props.history.push("/home")
       });
-
-    this.handleChange = this.handleChange.bind(this);
-    this._onCreateButtonClick = this._onCreateButtonClick.bind(this);
   }
 
-  componentDidMount() {
-    if (localStorage.getItem("rflg")) {
-      this.props.history.push("/score");
-      return;
-    }
-    if (localStorage.getItem("flag")) {
-      this.props.history.push("/sharedare");
-      return;
-    }
-  }
 
   handleChange(event) {
     this.setState({

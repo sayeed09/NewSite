@@ -29,7 +29,7 @@ class EditQuestion extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   componentWillMount() {
-    const { id } = this.props.match.params;
+    var id  = this.props.match.params;
     this.setState({ qid: this.props.match.params });
     console.log(this.state.qid);
     var that = this;

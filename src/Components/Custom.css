@@ -64,3 +64,16 @@ body {
   padding: "0.65em";
   text-transform: "capitalize";
 }
+/*     file upload button */
+.filelabel{
+  padding: 10px;
+  background:darkcyan; 
+  display: table;
+  color: #fff;
+   }
+
+
+
+input[type="file"] {
+  display: none;
+}

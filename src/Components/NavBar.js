@@ -36,7 +36,7 @@ import Adminadd from "./Adminadd";
 import UserAdded from "./UserAdded";
 import { withRouter } from "react-router";
 import AdminPanel from "./AdminPanel";
-
+import Answers from "./Answers";
 export default class NavBar extends React.Component {
   constructor(props) {
     super(props);
@@ -196,6 +196,16 @@ export default class NavBar extends React.Component {
                       {localStorage.getItem("name")}
                     </DropdownToggle>
                     <DropdownMenu>
+                      {localStorage.getItem('name')==="Admin" ? 
+                      <DropdownItem href="/adminquestion">
+                      Menu
+                    </DropdownItem>
+                      :
+                      localStorage.getItem('dareCreated') ? (
+                        <DropdownItem href="/sharedare">Menu</DropdownItem>
+                      ) : (
+                        <DropdownItem href="/user-question">Menu</DropdownItem>
+                      )}
                       <DropdownItem href="/changepassword">
                         Change Password
                       </DropdownItem>
@@ -219,7 +229,6 @@ export default class NavBar extends React.Component {
           <Route path="/sharedare" component={ShareDare} />
           <Route path="/results" component={Result} />
           <Route path="/register" component={Register} />
-          <Route path="/responsedare" component={ResponseDare} />
           <Route path="/editquestion/:id" component={EditQuestion} />
           <Route path="/adminquestion" component={AdminQuestion} />
           <Route path="/score" component={ShowScore} />
@@ -232,6 +241,7 @@ export default class NavBar extends React.Component {
           <Route path="/adminadd" component={Adminadd} />
           <Route path="/user-question" component={UserAdded} />
           <Route path="/admin" component={AdminPanel} />
+          <Route path="/answers/:id" component={Answers} />
         </div>
       </Router>
     );

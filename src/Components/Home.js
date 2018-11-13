@@ -14,6 +14,8 @@ import {
 import "./Custom.css";
 import home from "./home.jpg";
 import Question from "./Question";
+//import AdSense from "react-adsense";
+
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -42,6 +44,10 @@ class Home extends React.Component {
         that.setState({
           questionData: data
         });
+      })
+      .catch(function(error) {
+        alert("Something went wrong please try again");
+        that.props.history.push("/home");
       });
   }
   _onButtonClick() {
@@ -91,6 +97,10 @@ class Home extends React.Component {
           that.setState({
             user_id: data.data.user_id
           });
+        })
+        .catch(function(error) {
+          alert("Something went wrong please try again");
+          that.props.history.push("/home");
         });
 
       this.setState({

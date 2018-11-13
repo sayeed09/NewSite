@@ -28,12 +28,18 @@ class Result extends React.Component {
       showNoResultComponent: false
     };
   }
+  btnAnswerView(id,e){
+    this.props.history.push("/answers/"+ id);
+   }
 
   componentWillMount() {
     if (localStorage.getItem("rflg")) {
       this.setState({
         responseComponent: true
       });
+    }
+    else{
+      this.props.history.push("/home")
     }
     var that = this;
     this.state.obj["link"] = localStorage.getItem("link");
@@ -120,6 +126,7 @@ class Result extends React.Component {
                               <tr>
                                 <th scope="col">Name</th>
                                 <th scope="col">Score</th>
+                                <th scope="col">Answers</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -127,6 +134,17 @@ class Result extends React.Component {
                                 <tr>
                                   <td>{item.name}</td>
                                   <td>{item.score}</td>
+                                  <td>
+                                    <Button
+                                      onClick={this.btnAnswerView.bind(
+                                        this,
+                                        item.id
+                                      )}
+                                      class="btn btn-secondary btn-rounded"
+                                    >
+                                      View
+                                    </Button>
+                                    </td>
                                 </tr>
                               ))}
                             </tbody>
