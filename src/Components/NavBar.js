@@ -89,6 +89,7 @@ export default class NavBar extends React.Component {
       isLoggedIn: true,
       name: data
     });
+
     localStorage.setItem("name", this.state.name);
   }
   onClick() {
@@ -192,16 +193,15 @@ export default class NavBar extends React.Component {
                 {localStorage.getItem("token") != null && (
                   <Dropdown>
                     <DropdownToggle nav caret>
-                      Hi {this.state.name}
-                      {localStorage.getItem("name")}
+                      Hi {""}
+                      {this.state.name != null
+                        ? this.state.name
+                        : localStorage.getItem("name")}
                     </DropdownToggle>
                     <DropdownMenu>
-                      {localStorage.getItem('name')==="Admin" ? 
-                      <DropdownItem href="/adminquestion">
-                      Menu
-                    </DropdownItem>
-                      :
-                      localStorage.getItem('dareCreated') ? (
+                      {localStorage.getItem("name") === "Admin" ? (
+                        <DropdownItem href="/adminquestion">Menu</DropdownItem>
+                      ) : localStorage.getItem("dareCreated") ? (
                         <DropdownItem href="/sharedare">Menu</DropdownItem>
                       ) : (
                         <DropdownItem href="/user-question">Menu</DropdownItem>
