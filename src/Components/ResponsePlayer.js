@@ -28,7 +28,7 @@ class ResponsePlayer extends React.Component {
     };
 
     this.state.link=window.location.href;
-    //this.state.link = "https://glacial-tundra-88546.herokuapp.com/dare/57/test";
+    //this.state.link = "https://glacial-tundra-88546.herokuapp.com/dare/63/test";
     localStorage.setItem("link", this.state.link);
     
 
@@ -36,6 +36,9 @@ class ResponsePlayer extends React.Component {
     this._onCreateButtonClick = this._onCreateButtonClick.bind(this);
   }
   componentWillMount(){
+   
+
+     
     if (localStorage.getItem("rflg")) {
       this.props.history.push("/score");
       return;
@@ -44,6 +47,9 @@ class ResponsePlayer extends React.Component {
       this.props.history.push("/sharedare");
       return;
     }
+  
+
+  
     const { dare_id } = this.props.match.params;
     this.state.dareid = this.props.match.params;
 
@@ -64,7 +70,8 @@ class ResponsePlayer extends React.Component {
         that.props.history.push("/home")
       });
   }
-
+  
+  
 
   handleChange(event) {
     this.setState({

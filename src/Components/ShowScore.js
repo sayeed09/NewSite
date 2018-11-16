@@ -33,11 +33,10 @@ class ShowScore extends React.Component {
       this.props.history.push("/score");
       return;
     }
-    if(localStorage.getItem('flag')){
+    if (localStorage.getItem("flag")) {
       this.props.history.push("/sharedare");
       return;
     }
-    
   }
 
   render() {
@@ -69,7 +68,11 @@ class ShowScore extends React.Component {
                         <br />
                         <Progress
                           type="circle"
-                          percent={((localStorage.getItem("s"))/ (localStorage.getItem("t"))* 100).toFixed(2)}
+                          percent={(
+                            (localStorage.getItem("s") /
+                              localStorage.getItem("t")) *
+                            100
+                          ).toFixed(2)}
                         />
                         <br /> <br />
                         <p>

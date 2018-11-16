@@ -65,15 +65,13 @@ body {
   text-transform: "capitalize";
 }
 /*     file upload button */
-.filelabel{
+.filelabel {
   padding: 10px;
-  background:darkcyan; 
+  background: darkcyan;
   display: table;
   color: #fff;
-   }
+}
 
-
-/*
 input[type="file"] {
   display: none;
-}*/
+}

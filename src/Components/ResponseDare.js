@@ -119,6 +119,7 @@ class ResponseDare extends React.Component {
   }
 
   render() {
+    
     var answers;
     var i = -1;
     var that = this;
@@ -223,10 +224,11 @@ class ResponseDare extends React.Component {
                 </Row>
               </Container>
             )}
+            
             {localStorage.setItem("s", this.state.score)}
             {localStorage.setItem("t", this.props.questionData.data.length)}
             {this.state.showResultComponent && (
-              <ShowScore history={this.props.history} />
+              <ShowScore history={this.props.history} link={this.props.link}/>
             )}
           </div>
         </div>

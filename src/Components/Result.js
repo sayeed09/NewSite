@@ -42,7 +42,10 @@ class Result extends React.Component {
       this.props.history.push("/home")
     }
     var that = this;
-    this.state.obj["link"] = localStorage.getItem("link");
+    var arr=[];
+    arr=JSON.parse(localStorage.getItem('PlayedDare'));
+    var link=arr.slice(-1);
+    this.state.obj["link"] = link;
     var postData = this.state.obj;
     fetch(`https://pure-badlands-16289.herokuapp.com/api/users/result`, {
       method: "post",

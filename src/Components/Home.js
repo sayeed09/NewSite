@@ -45,10 +45,7 @@ class Home extends React.Component {
           questionData: data
         });
       })
-      .catch(function(error) {
-        alert("Something went wrong please try again");
-        that.props.history.push("/home");
-      });
+      .catch(function(error) {});
   }
   _onButtonClick() {
     var that = this;

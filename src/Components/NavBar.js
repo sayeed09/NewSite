@@ -37,6 +37,7 @@ import UserAdded from "./UserAdded";
 import { withRouter } from "react-router";
 import AdminPanel from "./AdminPanel";
 import Answers from "./Answers";
+import VerifyEmail from "./VerifyEmail";
 export default class NavBar extends React.Component {
   constructor(props) {
     super(props);
@@ -242,6 +243,7 @@ export default class NavBar extends React.Component {
           <Route path="/user-question" component={UserAdded} />
           <Route path="/admin" component={AdminPanel} />
           <Route path="/answers/:id" component={Answers} />
+          <Route path="/verify_email/" component={VerifyEmail} />
         </div>
       </Router>
     );

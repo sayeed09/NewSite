@@ -81,6 +81,7 @@ componentWillMount(){
         return response.json();
       })
       .then(function(data) {
+       
         that.setState({
           loader: false
         });

@@ -74,12 +74,17 @@ class Register extends React.Component {
           loader: false
         });
         if (data.error != null) {
+          if(data.error==="Please verify your email"){
+            that.setState({
+              errors:"Please Verify your email"
+            })
+          }
           that.setState({
             errors: "Email Already Registered"
           });
         } else {
           that.setState({
-            errors: "Successfully account created please login to continue"
+            errors: "We have sent you an activation link to create your account on your mail"
           });
         }
       });
