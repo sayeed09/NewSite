@@ -36,44 +36,11 @@ export default class VerifyEmail extends React.Component {
         return response.json();
       })
       .then(function(data) {
-        console.log(data);
-        if (data.error === "Incorrect Username/Password") {
-          that.setState({
-            loader: false,
-            errors: "Incorrect username/password"
-          });
-          return;
-        }
         if (data.data.auth_token != null) {
-          that.setState({ auth_token: data.data.auth_token });
-          PubSub.publish("UPDATE_NAV_MENU", data.data.name);
-          var _secretKey = "thekeyof12NewSite";
-          var simpleCrypto = new SimpleCrypto(_secretKey);
-          var plainText = data.data.auth_token;
-          var chiperText = simpleCrypto.encrypt(plainText);
-          localStorage.setItem("token", chiperText);
-          if (data.data.is_admin) {
-            that.setState({
-              adminData: data.data.admin_data,
-              isLoggedIn: true
-            });
-            that.setState({
-              isAdmin: true
-            });
-          } else {
-            if (data.data.is_dare) {
-              that.setState({
-                isDareCreated: true,
-                isLoggedIn: true,
-                link: data.data.link,
-                user_id: data.data.user_id
-              });
-              localStorage.setItem("dareCreated", true);
-            } else {
-              that.props.history.push("/user-question");
-              localStorage.setItem("dareCreated", false);
-            }
-          }
+          alert("Successfully Account Created, Login to Continue");
+          that.props.history.push("/login"); 
+        } else {
+          alert("Something went wrong");
         }
       });
   }
@@ -96,10 +63,6 @@ export default class VerifyEmail extends React.Component {
         </div>
       );
     }
-    return (
-      <div style={{ marginTop: "80px" }}>
-        
-      </div>
-    );
+    return <div style={{ marginTop: "80px" }} />;
   }
 }

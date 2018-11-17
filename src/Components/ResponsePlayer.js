@@ -24,54 +24,61 @@ class ResponsePlayer extends React.Component {
       showComponent: false,
       link: "",
       dareid: "",
-      loader:true
+      loader: true
     };
 
-    this.state.link=window.location.href;
-    //this.state.link = "https://glacial-tundra-88546.herokuapp.com/dare/63/test";
+     this.state.link=window.location.href;
+   // this.state.link = "https://glacial-tundra-88546.herokuapp.com/dare/76/test";
     localStorage.setItem("link", this.state.link);
-    
+
 
     this.handleChange = this.handleChange.bind(this);
     this._onCreateButtonClick = this._onCreateButtonClick.bind(this);
   }
-  componentWillMount(){
-   
+  componentWillMount() {
 
-     
-    if (localStorage.getItem("rflg")) {
-      this.props.history.push("/score");
-      return;
+    if (localStorage.getItem('links') != null) {
+      var retrievedData = localStorage.getItem('links');
+      var links = JSON.parse(retrievedData);
+      if (links.includes(window.location.href)) {
+        this.props.history.push("/score");
+        return;
+      }
     }
-    if (localStorage.getItem("flag")) {
-      this.props.history.push("/sharedare");
-      return;
-    }
-  
+    /*
+   if (localStorage.getItem("rflg")) {
+     this.props.history.push("/score");
+     return;
+   }*/
+   if (localStorage.getItem("flag")) {
+     this.props.history.push("/sharedare");
+     return;
+   }
 
-  
+
+
     const { dare_id } = this.props.match.params;
     this.state.dareid = this.props.match.params;
 
     var that = this;
     fetch(`https://pure-badlands-16289.herokuapp.com/api/dares/${dare_id}/test`)
-      .then(function(response) {
+      .then(function (response) {
         return response.json();
       })
-      .then(function(data) {
+      .then(function (data) {
         that.setState({
           questionData: data,
           dare_name: data.name,
-          loader:false
+          loader: false
         });
       })
-      .catch(function(error) {
+      .catch(function (error) {
         alert("Link Expired or Invalid")
         that.props.history.push("/home")
       });
   }
-  
-  
+
+
 
   handleChange(event) {
     this.setState({

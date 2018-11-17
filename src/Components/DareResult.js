@@ -87,6 +87,7 @@ getData(e){
         that.setState({
           loader:false
         })
+        alert("This Result is deleted")
         that.getData.bind(that)
       });
   }

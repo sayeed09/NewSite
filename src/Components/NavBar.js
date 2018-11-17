@@ -56,6 +56,7 @@ export default class NavBar extends React.Component {
   }
 
   btnLogout(e) {
+    
     var _secretKey = "thekeyof12NewSite";
     var simpleCrypto = new SimpleCrypto(_secretKey);
     var chiperText = localStorage.getItem("token");
@@ -78,7 +79,7 @@ export default class NavBar extends React.Component {
         that.setState({
           isLoggedIn: false
         });
-
+        
         return;
       });
   }
@@ -211,7 +212,7 @@ export default class NavBar extends React.Component {
                         Change Password
                       </DropdownItem>
                       <DropdownItem
-                        href="/login"
+                        href="/home"
                         onClick={this.btnLogout.bind(this)}
                       >
                         Logout

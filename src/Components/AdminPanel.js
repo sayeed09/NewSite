@@ -28,6 +28,9 @@ class AdminPanel extends React.Component {
     this.state = { obj: {}, data: "", loader: true };
   }
   componentWillMount() {
+    this.getData();
+  }
+  getData() {
     var that = this;
     var _secretKey = "thekeyof12NewSite";
     var simpleCrypto = new SimpleCrypto(_secretKey);
@@ -47,7 +50,6 @@ class AdminPanel extends React.Component {
         return response.json();
       })
       .then(function(data) {
-        console.log(data.data);
         that.setState({
           loader: false,
           data: data.data
@@ -70,6 +72,27 @@ class AdminPanel extends React.Component {
       this.props.history.push("/admin");
     }
   }
+  btnClickUser(id, e) {
+    var that = this;
+    this.setState({
+      loader: true
+    });
+    var that = this;
+    var user_id = id;
+    fetch(`https://pure-badlands-16289.herokuapp.com/api/users/${user_id}`, {
+      method: "DELETE"
+    })
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        that.setState({
+          loader: false
+        });
+        that.getData();
+      });
+  }
+
   btnClickDelete(id, e) {
     var that = this;
     this.setState({
@@ -87,7 +110,7 @@ class AdminPanel extends React.Component {
         that.setState({
           loader: false
         });
-        that.props.history.push("/admin");
+        that.getData();
       });
   }
 
@@ -179,7 +202,7 @@ class AdminPanel extends React.Component {
                     </Button>
                   </td>
                   <td>
-                    <Button>
+                    <Button onClick={that.btnClickUser.bind(that, item.id)}>
                       <i class="fa fa-trash" aria-hidden="true" />
                     </Button>
                   </td>

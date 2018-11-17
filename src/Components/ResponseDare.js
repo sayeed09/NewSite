@@ -42,7 +42,7 @@ class ResponseDare extends React.Component {
       per: 100 / this.props.questionData.data.length
     });
   }
-  
+
 
   onAnswerClick(selected_id, answer_id, question_id, e) {
     var chk = document.getElementsByClassName("green");
@@ -103,14 +103,25 @@ class ResponseDare extends React.Component {
           }
         }
       )
-        .then(function(response) {
+        .then(function (response) {
           return response.json();
         })
-        .then(function(data) {});
+        .then(function (data) { });
       this.setState({
         showResultComponent: true
       });
       localStorage.setItem("rflg", true);
+      if (localStorage.getItem('links') != null) {
+        var retrievedData = localStorage.getItem('links');
+        var links = JSON.parse(retrievedData);
+        links.push(window.location.href);
+        localStorage.setItem('links', JSON.stringify(links));
+      }
+      else {
+        var linkArr = [];
+        linkArr.push(window.location.href);
+        localStorage.setItem('links', JSON.stringify(linkArr));
+      }
     }
     this.setState({
       questionNumber: this.state.questionNumber + 1,
@@ -119,14 +130,14 @@ class ResponseDare extends React.Component {
   }
 
   render() {
-    
+
     var answers;
     var i = -1;
     var that = this;
-    var question = this.props.questionData.data.map(function(item) {
+    var question = this.props.questionData.data.map(function (item) {
       i = i + 1;
       if (i === that.state.questionNumber) {
-        answers = item.options.map(function(val) {
+        answers = item.options.map(function (val) {
           if (i === that.state.questionNumber) {
             return (
               <a
@@ -142,20 +153,20 @@ class ResponseDare extends React.Component {
                     {val.option_value}
                   </div>
                 ) : (
-                  <div>
-                  <img
-                    id={val.option_id}
-                    class="answer-body"
-                    style={{
-                      height: "150px",
-                      width: "200px",
-                      padding: "20px"
-                    }}
-                    src={val.option_value}
-                  />
-                  <p>{val.caption}</p>
-                  </div>
-                )}
+                    <div>
+                      <img
+                        id={val.option_id}
+                        class="answer-body"
+                        style={{
+                          height: "150px",
+                          width: "200px",
+                          padding: "20px"
+                        }}
+                        src={val.option_value}
+                      />
+                      <p>{val.caption}</p>
+                    </div>
+                  )}
               </a>
             );
           }
@@ -224,11 +235,11 @@ class ResponseDare extends React.Component {
                 </Row>
               </Container>
             )}
-            
+
             {localStorage.setItem("s", this.state.score)}
             {localStorage.setItem("t", this.props.questionData.data.length)}
             {this.state.showResultComponent && (
-              <ShowScore history={this.props.history} link={this.props.link}/>
+              <ShowScore history={this.props.history} link={this.props.link} />
             )}
           </div>
         </div>

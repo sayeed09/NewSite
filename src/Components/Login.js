@@ -46,19 +46,19 @@ class Login extends React.Component {
     const { name, value } = e.target;
     this.setState({ [name]: value, errors: "" });
   }
-componentWillMount(){
-  if((localStorage.getItem('token')!=null) && (localStorage.getItem('name')==="Admin")){
-    this.props.history.push("/adminquestion")
-    return
-  } 
-  if(localStorage.getItem('token')!=null){
-    if(localStorage.getItem('link')!=null){
-      this.props.history.push("/sharedare")
-    }else{
-      this.props.history.push("/user-question")
+  componentWillMount() {
+    if ((localStorage.getItem('token') != null) && (localStorage.getItem('name') === "Admin")) {
+      this.props.history.push("/adminquestion")
+      return
+    }
+    if (localStorage.getItem('token') != null) {
+      if (localStorage.getItem('link') != null) {
+        this.props.history.push("/sharedare")
+      } else {
+        this.props.history.push("/user-question")
+      }
     }
   }
-}
   loginFunction(e) {
     this.setState({
       loader: true
@@ -77,15 +77,20 @@ componentWillMount(){
         "Content-Type": "application/json"
       }
     })
-      .then(function(response) {
+      .then(function (response) {
         return response.json();
       })
-      .then(function(data) {
-       
+      .then(function (data) {
+
         that.setState({
           loader: false
         });
-
+        if (data.error === "Please verify your email") {
+          that.setState({
+            errors: "Please verify your email"
+          });
+          return;
+        }
         if (data.error === "Incorrect Username/Password") {
           that.setState({
             errors: "Incorrect username/password"
@@ -104,10 +109,10 @@ componentWillMount(){
             that.setState({
               adminData: data.data.admin_data,
               isLoggedIn: true,
-              
+
             });
             that.setState({
-              isAdmin:true
+              isAdmin: true
             })
           } else {
             if (data.data.is_dare) {
@@ -224,7 +229,7 @@ componentWillMount(){
             user_id={this.state.user_id}
           />
         )}
-        {this.state.isAdmin && <AdminQuestion history={this.props.history}/>}
+        {this.state.isAdmin && <AdminQuestion history={this.props.history} />}
       </div>
     );
   }
