@@ -47,9 +47,11 @@ class ShareDare extends React.Component {
       })
       .then(function(data) {});
     if (localStorage.getItem("token") != null) {
-      this.props.history.push("/user-question");
       localStorage.setItem("dareCreated",false);
       localStorage.removeItem("link");
+      this.props.history.push("/user-question");
+     
+      
     } else {
       localStorage.clear();
       this.props.history.push("/");

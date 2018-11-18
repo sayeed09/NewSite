@@ -93,20 +93,7 @@ class CustomQuestion extends React.Component {
       loader: true
     });
     e.preventDefault();
-    if (questionModel[this.state.cnt].question === "") {
-      alert("Please enter the question")
-      return;
-    }
-    if (questionModel[this.state.cnt].answer === "" || questionModel[this.state.cnt].answer == undefined) {
-      alert("Please select the answer");
-      return;
-    }
-    for (var i = 0; i < questionModel[this.state.cnt].options.length - 1; i++) {
-      if (questionModel[this.state.cnt].options[i] === "" || questionModel[this.state.cnt].options[i] == undefined) {
-        alert("Please fill the options");
-        return;
-      }
-    }
+  
     questionModel[this.state.cnt].answer = questionModel[this.state.cnt].options[answerIndx];
 
     if (this.state.cnt === 4 && questionModel.length == 10) {
@@ -391,6 +378,7 @@ class CustomQuestion extends React.Component {
                                   <div>
                                     <input
                                       type="text"
+                                      required
                                       placeholder={`question ${idx + 1} `}
                                       value={questionModel[idx].question === "" ? question.name : questionModel[idx].question}
                                       onChange={that.handleQuestionNameChange.bind(
