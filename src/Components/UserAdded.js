@@ -20,6 +20,9 @@ class UserAdded extends React.Component {
     this.state = {};
   }
   componentWillMount() {
+    if(localStorage.getItem('dareCreated')&& localStorage.getItem('token')!=""){
+        this.props.history.push("/sharedare")
+    }
     if (localStorage.getItem("token") === null) {
       this.props.history.push("/login");
       return;

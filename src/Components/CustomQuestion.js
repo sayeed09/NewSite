@@ -3,7 +3,6 @@ import { string } from "prop-types";
 import SimpleCrypto from "simple-crypto-js";
 import Sharedare from "./ShareDare";
 import loader from "./loader.gif";
-
 import {
   Container,
   Row,
@@ -26,6 +25,7 @@ const questionModel = [
     options: ["", ""]
   }
 ];
+var answerIndx;
 
 class CustomQuestion extends React.Component {
   constructor() {
@@ -39,13 +39,15 @@ class CustomQuestion extends React.Component {
       isPush: false,
       obj: {},
       shareComponent: false,
-      loader: ""
+      loader: "",
+      cnt: 0,
+      answerIndex: 0
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleRemoveOption = this.handleRemoveOption.bind(this);
   }
   componentWillMount() {
-    
+
     if (localStorage.getItem("token") === null) {
       this.props.history.push("/login");
       return;
@@ -66,11 +68,15 @@ class CustomQuestion extends React.Component {
     }
   }
   handleChange(index, id, event) {
-    questionModel[index].answer = questionModel[index].options[id];
+    answerIndx = id;
+    // this.setState({
+    //answerIndex:id
+    // })
+    //questionModel[index].answer = questionModel[index].options[id];
   }
 
   handleQuestionNameChange(idx, e) {
-    var isQuestionExits = questionModel.filter(function(item) {
+    var isQuestionExits = questionModel.filter(function (item) {
       return item.questionID === idx.toString();
     });
 
@@ -87,6 +93,56 @@ class CustomQuestion extends React.Component {
       loader: true
     });
     e.preventDefault();
+    if (questionModel[this.state.cnt].question === "") {
+      alert("Please enter the question")
+      return;
+    }
+    if (questionModel[this.state.cnt].answer === "" || questionModel[this.state.cnt].answer == undefined) {
+      alert("Please select the answer");
+      return;
+    }
+    for (var i = 0; i < questionModel[this.state.cnt].options.length - 1; i++) {
+      if (questionModel[this.state.cnt].options[i] === "" || questionModel[this.state.cnt].options[i] == undefined) {
+        alert("Please fill the options");
+        return;
+      }
+    }
+    questionModel[this.state.cnt].answer = questionModel[this.state.cnt].options[answerIndx];
+
+    if (this.state.cnt === 4 && questionModel.length == 10) {
+      for (var i = 0; i < 5; i++) {
+        questionModel.pop();
+      }
+    }
+    if (this.state.cnt === 4 && questionModel.length == 15) {
+      for (var i = 0; i < 10; i++) {
+        questionModel.pop();
+      }
+    }
+    if (this.state.cnt === 4 && questionModel.length == 20) {
+      for (var i = 0; i < 15; i++) {
+        questionModel.pop();
+      }
+    }
+    if (this.state.cnt === 9 && questionModel.length == 15) {
+      for (var i = 0; i < 5; i++) {
+        questionModel.pop();
+      }
+    }
+    if (this.state.cnt === 9 && questionModel.length == 20) {
+      for (var i = 0; i < 10; i++) {
+        questionModel.pop();
+      }
+    }
+    if (this.state.cnt === 14 && questionModel.length == 20) {
+      for (var i = 0; i < 5; i++) {
+        questionModel.pop();
+      }
+    }
+
+
+    console.log(questionModel);
+
     var _secretKey = "thekeyof12NewSite";
     var simpleCrypto = new SimpleCrypto(_secretKey);
     var chiperText = localStorage.getItem("token");
@@ -104,29 +160,38 @@ class CustomQuestion extends React.Component {
         "Content-Type": "application/json"
       }
     })
-      .then(function(response) {
+      .then(function (response) {
         return response.json();
       })
-      .then(function(data) {
+      .then(function (data) {
         if (data.data.link != null) {
           that.setState({
             shareComponent: true,
             loader: false,
-            link:data.data.link
+            link: data.data.link
           });
-          localStorage.setItem('dareCreated',true);
+          localStorage.setItem('dareCreated', true);
           localStorage.setItem('user_id', data.data.user_id);
           localStorage.setItem('link', data.data.link);
+
+          for (var i = 0; i < questionModel.length - 1; i++) {
+            questionModel.pop();
+          }
         }
       })
-      .catch(function(error) {
+      .catch(function (error) {
         alert("Server Error Please try again");
         return;
       });
+
   }
 
   handleAddQuestion(e) {
-    console.log(questionModel);
+    {
+      this.setState({
+        cnt: this.state.cnt + 1
+      })
+    }
     if (this.state.questionLength < 20) {
       this.setState({ questionLength: this.state.questionLength + 5 });
     }
@@ -164,11 +229,56 @@ class CustomQuestion extends React.Component {
     for (var i = 0; i < 5; i++) {
       questionModel.pop();
     }
+    if (questionModel.length === 5) {
+      this.setState({
+        cnt: 4
+      })
+    }
+    if (questionModel.length === 10) {
+      this.setState({
+        cnt: 9
+      })
+    }
+    if (questionModel.length === 15) {
+      this.setState({
+        cnt: 14
+      })
+    }
     if (this.state.questionLength > 5) {
       this.setState({ questionLength: this.state.questionLength - 5 });
     }
   };
+  nextbtnClick(e) {
+    e.preventDefault();
+    questionModel[this.state.cnt].answer = questionModel[this.state.cnt].options[answerIndx];
 
+    if (questionModel[this.state.cnt].question === "") {
+      alert("Please enter the question")
+      return;
+    }
+    if (questionModel[this.state.cnt].answer === "" || questionModel[this.state.cnt].answer == undefined) {
+      alert("Please select the answer");
+      return;
+    }
+    for (var i = 0; i < questionModel[this.state.cnt].options.length - 1; i++) {
+      if (questionModel[this.state.cnt].options[i] === "" || questionModel[this.state.cnt].options[i] == undefined) {
+        alert("Please fill the options");
+        return;
+      }
+    }
+
+
+    this.setState({
+      cnt: this.state.cnt + 1
+    })
+
+  }
+  prevbtnClick(e) {
+    e.preventDefault();
+    this.setState({
+      cnt: this.state.cnt - 1
+    })
+  }
   render() {
     if (this.state.loader) {
       return (
@@ -205,23 +315,13 @@ class CustomQuestion extends React.Component {
                     <div class="card">
                       <div class="card-body">
                         <div class="avatar mx-auto white">
-                          <h5
-                            class="text-center"
-                            style={{
-                              fontSize: "15px",
-                              margin: "0 auto",
-                              width: "120px",
-                              height: "40px",
-                              paddingTop: "10px",
-                              paddingRight: "20px"
-                            }}
-                          >
-                            <strong>Add Question</strong>{" "}
-                          </h5>
+                          <h3 class="text-center">Question {this.state.cnt + 1} </h3>
+
                         </div>
                         <br />
                         <form onSubmit={this.handleSubmit.bind(that)}>
-                          {questionArray.map(function(question, idx) {
+                          {questionArray.map(function (question, idx) {
+
                             if (
                               questionModel.length - 1 <= idx &&
                               questionModel[0].options.length === 0
@@ -244,140 +344,140 @@ class CustomQuestion extends React.Component {
                                 }
                               }
                             }
-                            var quesrions = optionsArray.map(function(
+                            var quesrions = optionsArray.map(function (
                               options,
                               optionId
                             ) {
                               return (
-                                <div>
-                                  <input
-                                    required
-                                    type="radio"
-                                    name={idx}
-                                    value={question.name}
-                                    onChange={that.handleChange.bind(
-                                      that,
-                                      idx,
-                                      optionId
-                                    )}
-                                  />
-                                  <input
-                                    type="text"
-                                    placeholder={`options ${optionId + 1} `}
-                                    value={question.name}
-                                    onChange={that.handleOptionName.bind(
-                                      that,
-                                      idx,
-                                      optionId
-                                    )}
-                                    class="form-control"
-                                  />
 
-                                  <br />
+                                <div>
+                                  {that.state.cnt == idx &&
+                                    <div>
+                                      <input
+                                        required
+                                        type="radio"
+                                        name={idx}
+                                        checked={questionModel[idx].answer !== "" ? (questionModel[idx].options[optionId] === questionModel[idx].answer) ? "checked" : null : null}
+                                        value={questionModel[idx].answer === "" ? question.name : questionModel[idx].answer}
+                                        onChange={that.handleChange.bind(
+                                          that,
+                                          idx,
+                                          optionId
+                                        )}
+                                      />
+                                      <input
+                                        type="text"
+                                        required
+                                        placeholder={`options ${optionId + 1} `}
+                                        value={questionModel[idx].options[optionId] === "" ? question.name : questionModel[idx].options[optionId]}
+                                        onChange={that.handleOptionName.bind(
+                                          that,
+                                          idx,
+                                          optionId
+                                        )}
+                                        class="form-control"
+                                      />
+
+                                      <br />
+                                    </div>
+                                  }
                                 </div>
                               );
                             });
                             optionsArray = [];
                             return (
                               <div className="question">
-                                <input
-                                  type="text"
-                                  placeholder={`question ${idx + 1} `}
-                                  value={question.name}
-                                  onChange={that.handleQuestionNameChange.bind(
-                                    that,
-                                    idx
-                                  )}
-                                  class="form-control"
-                                />
-                                <br />
-                                {quesrions}
-
-                                <button
-                                  type="button"
-                                  onClick={() =>
-                                    that.handleRemoveOption(that, idx)
-                                  }
-                                  style={{
-                                    width: "130px",
-                                    height: "40px",
-                                    padding: "0.65em",
-                                    textTransform: "capitalize"
-                                  }}
-                                  class="btn btn-info"
-                                >
-                                  <i class="fa fa-minus" aria-hidden="true" />
-                                  &nbsp; Option
+                                {that.state.cnt == idx &&
+                                  <div>
+                                    <input
+                                      type="text"
+                                      placeholder={`question ${idx + 1} `}
+                                      value={questionModel[idx].question === "" ? question.name : questionModel[idx].question}
+                                      onChange={that.handleQuestionNameChange.bind(
+                                        that,
+                                        idx
+                                      )}
+                                      class="form-control"
+                                    />
+                                    <br />
+                                    {quesrions}
+                                    {questionModel[idx].options.length > 2 &&
+                                      <button
+                                        type="button"
+                                        onClick={() =>
+                                          that.handleRemoveOption(that, idx)
+                                        }
+                                        class="btn btn-outline-info  btn-sm"
+                                      >
+                                        <i class="fa fa-minus" aria-hidden="true" />
+                                        &nbsp; Option
                                 </button>
-
-                                <button
-                                  type="button"
-                                  onClick={that.handleAddOptions.bind(
-                                    that,
-                                    idx
-                                  )}
-                                  style={{
-                                    width: "130px",
-                                    height: "40px",
-                                    padding: "0.65em",
-                                    textTransform: "capitalize"
-                                  }}
-                                  class="btn btn-info"
-                                >
-                                  <i class="fa fa-plus" aria-hidden="true" />
-                                  &nbsp; options
-                                </button>
-
-                                <br />
-                                {(idx + 1) % 5 === 0 && (
-                                  <button
-                                    type="button"
-                                    onClick={that.handleRemoveQuestion(
-                                      that,
-                                      idx
-                                    )}
-                                    style={{
-                                      width: "130px",
-                                      height: "40px",
-                                      padding: "0.65em",
-                                      textTransform: "capitalize"
-                                    }}
-                                    class="btn btn-info"
-                                  >
-                                    <i class="fa fa-minus" aria-hidden="true" />
-                                    &nbsp; Question
+                                    }
+                                    {questionModel[idx].options.length < 6 &&
+                                      <button onClick={that.handleAddOptions.bind(
+                                        that,
+                                        idx
+                                      )} type="button" class="btn btn-outline-info  btn-sm"> <i class="fa fa-plus" aria-hidden="true" />
+                                        &nbsp; Option</button>
+                                    }
+                                    <br />
+                                    {questionModel.length > 5 &&
+                                      <div>
+                                        {(idx + 1) % 5 === 0 && (
+                                          <button
+                                            type="button"
+                                            onClick={that.handleRemoveQuestion(
+                                              that,
+                                              idx
+                                            )}
+                                            class="btn btn-outline-info  btn-sm"
+                                          >
+                                            <i class="fa fa-minus" aria-hidden="true" />
+                                            &nbsp; Question
                                   </button>
-                                )}
+                                        )}
+                                      </div>
+                                    }
+                                  </div>
+                                }
                               </div>
                             );
+
                           })}
-                          <button
-                            type="button"
-                            onClick={this.handleAddQuestion.bind(this)}
-                            style={{
-                              width: "130px",
-                              height: "40px",
-                              padding: "0.65em",
-                              textTransform: "capitalize"
-                            }}
-                            class="btn btn-info"
-                          >
-                            <i class="fa fa-plus" aria-hidden="true" />
-                            &nbsp; Question
-                          </button>
-                          <br />
-                          <button
-                            class="btn btn-info"
-                            style={{
-                              width: "130px",
-                              height: "40px",
-                              padding: "0.65em",
-                              textTransform: "capitalize"
-                            }}
-                          >
-                            Submit
-                          </button>
+
+                          {((this.state.cnt === 4) || (this.state.cnt === 9) || (this.state.cnt === 14) || (this.state.cnt === 19)) &&
+                            <div>
+                              {this.state.cnt < 19 &&
+                                <div>
+                                  <button onClick={this.handleAddQuestion.bind(this)} type="button" class="btn btn-outline-info btn-sm"> <i class="fa fa-plus" aria-hidden="true" />
+                                    &nbsp; Question</button>
+
+                                </div>
+                              }
+                              <br />
+
+                              <input class="btn btn-primary btn-md" type="submit" value="Submit" />
+
+                            </div>
+                          }
+
                         </form>
+                        {this.state.cnt > 0 &&
+                          <button onClick={this.prevbtnClick.bind(this)}
+                            class="btn btn-secondary btn-sm "
+                          >
+                            Previous Question
+                            </button>
+                        }
+                        {this.state.cnt == questionModel.length - 1 ? "" :
+                          <button type="button" style={{ marginRight: "2px" }} class="btn btn-secondary btn-sm " onClick={that.nextbtnClick.bind(that)}
+
+                          >
+                            Next Question
+                                </button>
+                        }
+
+
                       </div>
                     </div>
                   </Col>
@@ -392,3 +492,4 @@ class CustomQuestion extends React.Component {
   }
 }
 export default CustomQuestion;
+``
