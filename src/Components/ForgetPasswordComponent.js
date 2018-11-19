@@ -66,7 +66,7 @@ export default class VerifyEmail extends React.Component {
                     that.setState({
                         loader: false
                     })
-                    if (data.error !== "") {
+                    if (data.error === "Hash does not match") {
                         alert("Invalid Link ")
                     }
                     else {
