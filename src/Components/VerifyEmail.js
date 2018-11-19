@@ -37,7 +37,8 @@ export default class VerifyEmail extends React.Component {
       })
       .then(function(data) {
         if (data.data.auth_token != null) {
-          alert("Successfully Account Created, Login to Continue");
+         sessionStorage.setItem('verified',true);
+         // alert("Successfully Account Created, Login to Continue");
           that.props.history.push("/login"); 
         } else {
           alert("Something went wrong");

@@ -36,7 +36,9 @@ class Login extends React.Component {
       errors: "",
       is_dare: false,
       isLoggedIn: false,
-      isAdmin: false
+      isAdmin: false,
+      emailVerified: false,
+      forgetPassword: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.state.loginFunction = this.loginFunction.bind(this);
@@ -47,6 +49,16 @@ class Login extends React.Component {
     this.setState({ [name]: value, errors: "" });
   }
   componentWillMount() {
+    if (sessionStorage.getItem('forgetverified')) {
+      this.setState({
+        forgetPassword: true
+      })
+    }
+    if (sessionStorage.getItem('verified')) {
+      this.setState({
+        emailVerified: true
+      })
+    }
     if ((localStorage.getItem('token') != null) && (localStorage.getItem('name') === "Admin")) {
       this.props.history.push("/adminquestion")
       return
@@ -162,6 +174,10 @@ class Login extends React.Component {
                     <Card>
                       <CardBody>
                         <form onSubmit={this.loginFunction.bind(this)}>
+                          {this.state.forgetPassword &&
+                            <span style={{ color: "green" }} className="label label-success text-center py-4">Your Passord is changed successfully</span>}
+                          {this.state.emailVerified &&
+                            <span style={{ color: "green" }} className="label label-success text-center py-4">Your account is activated, you can login now</span>}
                           <p className="h4 text-center py-4">Log In </p>
                           <div className="grey-text">
                             <Input

@@ -38,6 +38,7 @@ import { withRouter } from "react-router";
 import AdminPanel from "./AdminPanel";
 import Answers from "./Answers";
 import VerifyEmail from "./VerifyEmail";
+import ForgetPasswordComponent from "./ForgetPasswordComponent";
 export default class NavBar extends React.Component {
   constructor(props) {
     super(props);
@@ -56,7 +57,7 @@ export default class NavBar extends React.Component {
   }
 
   btnLogout(e) {
-    
+
     var _secretKey = "thekeyof12NewSite";
     var simpleCrypto = new SimpleCrypto(_secretKey);
     var chiperText = localStorage.getItem("token");
@@ -72,14 +73,14 @@ export default class NavBar extends React.Component {
         "Content-Type": "application/json"
       }
     })
-      .then(function(response) {
+      .then(function (response) {
         return response.json();
       })
-      .then(function(data) {
+      .then(function (data) {
         that.setState({
           isLoggedIn: false
         });
-        
+
         return;
       });
   }
@@ -206,8 +207,8 @@ export default class NavBar extends React.Component {
                       ) : localStorage.getItem("dareCreated") ? (
                         <DropdownItem href="/sharedare">Menu</DropdownItem>
                       ) : (
-                        <DropdownItem href="/user-question">Menu</DropdownItem>
-                      )}
+                            <DropdownItem href="/user-question">Menu</DropdownItem>
+                          )}
                       <DropdownItem href="/changepassword">
                         Change Password
                       </DropdownItem>
@@ -245,6 +246,7 @@ export default class NavBar extends React.Component {
           <Route path="/admin" component={AdminPanel} />
           <Route path="/answers/:id" component={Answers} />
           <Route path="/verify_email/" component={VerifyEmail} />
+          <Route path="/forget_password/" component={ForgetPasswordComponent} />
         </div>
       </Router>
     );

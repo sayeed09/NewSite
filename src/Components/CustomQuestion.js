@@ -93,43 +93,14 @@ class CustomQuestion extends React.Component {
       loader: true
     });
     e.preventDefault();
-  
+    var lenght = questionModel.length;
     questionModel[this.state.cnt].answer = questionModel[this.state.cnt].options[answerIndx];
 
-    if (this.state.cnt === 4 && questionModel.length == 10) {
-      for (var i = 0; i < 5; i++) {
+    if (this.state.cnt + 1 < questionModel.length) {
+      for (var i = 0; i < (lenght - (this.state.cnt + 1)); i++) {
         questionModel.pop();
       }
     }
-    if (this.state.cnt === 4 && questionModel.length == 15) {
-      for (var i = 0; i < 10; i++) {
-        questionModel.pop();
-      }
-    }
-    if (this.state.cnt === 4 && questionModel.length == 20) {
-      for (var i = 0; i < 15; i++) {
-        questionModel.pop();
-      }
-    }
-    if (this.state.cnt === 9 && questionModel.length == 15) {
-      for (var i = 0; i < 5; i++) {
-        questionModel.pop();
-      }
-    }
-    if (this.state.cnt === 9 && questionModel.length == 20) {
-      for (var i = 0; i < 10; i++) {
-        questionModel.pop();
-      }
-    }
-    if (this.state.cnt === 14 && questionModel.length == 20) {
-      for (var i = 0; i < 5; i++) {
-        questionModel.pop();
-      }
-    }
-
-
-    console.log(questionModel);
-
     var _secretKey = "thekeyof12NewSite";
     var simpleCrypto = new SimpleCrypto(_secretKey);
     var chiperText = localStorage.getItem("token");
@@ -182,14 +153,14 @@ class CustomQuestion extends React.Component {
     if (this.state.questionLength < 20) {
       this.setState({ questionLength: this.state.questionLength + 5 });
     }
-    for (var i = 0; i < 5; i++) {
-      var question = {
-        question: "",
-        answer: "",
-        options: ["", ""]
-      };
-      questionModel.push(question);
-    }
+
+    var question = {
+      question: "",
+      answer: "",
+      options: ["", ""]
+    };
+    questionModel.push(question);
+
     console.log(questionModel);
   }
   handleRemoveOption(e, idx) {
@@ -212,31 +183,10 @@ class CustomQuestion extends React.Component {
     }
   }
 
-  handleRemoveQuestion = idx => () => {
-    for (var i = 0; i < 5; i++) {
-      questionModel.pop();
-    }
-    if (questionModel.length === 5) {
-      this.setState({
-        cnt: 4
-      })
-    }
-    if (questionModel.length === 10) {
-      this.setState({
-        cnt: 9
-      })
-    }
-    if (questionModel.length === 15) {
-      this.setState({
-        cnt: 14
-      })
-    }
-    if (this.state.questionLength > 5) {
-      this.setState({ questionLength: this.state.questionLength - 5 });
-    }
-  };
+
   nextbtnClick(e) {
     e.preventDefault();
+
     questionModel[this.state.cnt].answer = questionModel[this.state.cnt].options[answerIndx];
 
     if (questionModel[this.state.cnt].question === "") {
@@ -253,6 +203,20 @@ class CustomQuestion extends React.Component {
         return;
       }
     }
+    if (questionModel.length >= 5) {
+      if (this.state.questionLength < 20) {
+        this.setState({ questionLength: this.state.questionLength + 1 });
+      }
+    }
+    if ((this.state.cnt >= 4) && (this.state.cnt + 1 == questionModel.length)) {
+      var question = {
+        question: "",
+        answer: "",
+        options: ["", ""]
+      };
+      questionModel.push(question);
+    }
+
 
 
     this.setState({
@@ -261,6 +225,7 @@ class CustomQuestion extends React.Component {
 
   }
   prevbtnClick(e) {
+
     e.preventDefault();
     this.setState({
       cnt: this.state.cnt - 1
@@ -409,23 +374,7 @@ class CustomQuestion extends React.Component {
                                         &nbsp; Option</button>
                                     }
                                     <br />
-                                    {questionModel.length > 5 &&
-                                      <div>
-                                        {(idx + 1) % 5 === 0 && (
-                                          <button
-                                            type="button"
-                                            onClick={that.handleRemoveQuestion(
-                                              that,
-                                              idx
-                                            )}
-                                            class="btn btn-outline-info  btn-sm"
-                                          >
-                                            <i class="fa fa-minus" aria-hidden="true" />
-                                            &nbsp; Question
-                                  </button>
-                                        )}
-                                      </div>
-                                    }
+
                                   </div>
                                 }
                               </div>
@@ -433,20 +382,9 @@ class CustomQuestion extends React.Component {
 
                           })}
 
-                          {((this.state.cnt === 4) || (this.state.cnt === 9) || (this.state.cnt === 14) || (this.state.cnt === 19)) &&
-                            <div>
-                              {this.state.cnt < 19 &&
-                                <div>
-                                  <button onClick={this.handleAddQuestion.bind(this)} type="button" class="btn btn-outline-info btn-sm"> <i class="fa fa-plus" aria-hidden="true" />
-                                    &nbsp; Question</button>
+                          {(this.state.cnt >= 4) &&
+                            <input class="btn btn-primary btn-md" type="submit" value="Submit" />
 
-                                </div>
-                              }
-                              <br />
-
-                              <input class="btn btn-primary btn-md" type="submit" value="Submit" />
-
-                            </div>
                           }
 
                         </form>
@@ -457,7 +395,7 @@ class CustomQuestion extends React.Component {
                             Previous Question
                             </button>
                         }
-                        {this.state.cnt == questionModel.length - 1 ? "" :
+                        {this.state.cnt < 19 &&
                           <button type="button" style={{ marginRight: "2px" }} class="btn btn-secondary btn-sm " onClick={that.nextbtnClick.bind(that)}
 
                           >

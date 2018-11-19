@@ -107,16 +107,16 @@ class Question extends React.Component {
           "Content-Type": "application/json"
         }
       })
-        .then(function(response) {
+        .then(function (response) {
           return response.json();
         })
-        .then(function(data) {
+        .then(function (data) {
           that.setState({
             link: data.data.link,
             loader: false
           });
         })
-        .catch(function(error) {
+        .catch(function (error) {
           alert("Server Error Please try again");
           return;
         });
@@ -124,6 +124,17 @@ class Question extends React.Component {
       this.setState({
         showDareComponent: true
       });
+      if (localStorage.getItem('links') != null) {
+        var retrievedData = localStorage.getItem('links');
+        var links = JSON.parse(retrievedData);
+        links.push(window.location.href);
+        localStorage.setItem('links', JSON.stringify(links));
+      }
+      else {
+        var linkArr = [];
+        linkArr.push(window.location.href);
+        localStorage.setItem('links', JSON.stringify(linkArr));
+      }
     }
     this.setState({
       questionNumber: this.state.questionNumber + 1,
@@ -138,10 +149,10 @@ class Question extends React.Component {
     fetch(
       `https://pure-badlands-16289.herokuapp.com/api/users/delete_dare/${user_id}`
     )
-      .then(function(response) {
+      .then(function (response) {
         return response.json();
       })
-      .then(function(data) {});
+      .then(function (data) { });
     localStorage.clear();
     this.props.history.push("/home");
   }
@@ -172,10 +183,10 @@ class Question extends React.Component {
     var i = -1;
     var that = this;
 
-    var question = ques.data.map(function(item) {
+    var question = ques.data.map(function (item) {
       i = i + 1;
       if (i === that.state.questionNumber) {
-        answers = item.options.map(function(val) {
+        answers = item.options.map(function (val) {
           if (i === that.state.questionNumber) {
             return (
               <a
@@ -190,20 +201,20 @@ class Question extends React.Component {
                     {val.option_value}
                   </div>
                 ) : (
-                  <div>
-                    <img
-                      id={val.option_id}
-                      class="answer-body"
-                      style={{
-                        height: "150px",
-                        width: "200px",
-                        padding: "20px"
-                      }}
-                      src={val.option_value}
-                    />
-                    <p>{val.caption}</p>
-                  </div>
-                )}
+                    <div>
+                      <img
+                        id={val.option_id}
+                        class="answer-body"
+                        style={{
+                          height: "150px",
+                          width: "200px",
+                          padding: "20px"
+                        }}
+                        src={val.option_value}
+                      />
+                      <p>{val.caption}</p>
+                    </div>
+                  )}
               </a>
             );
           }

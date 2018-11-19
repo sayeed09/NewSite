@@ -106,9 +106,14 @@ class Home extends React.Component {
     }
   }
 
-  componentDidMount() {
+  componentWilMount() {
+   if(localStorage.getItem('dareCreated')===false){
+     this.props.history.push("/user-question")
+     return;
+   }
     if (localStorage.getItem("dareCreated")) {
       this.props.history.push("/sharedare");
+      return;
     }
     if (localStorage.getItem("flag")) {
       this.props.history.push("/sharedare");

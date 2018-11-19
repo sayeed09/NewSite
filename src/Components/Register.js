@@ -29,7 +29,8 @@ class Register extends React.Component {
       data: "",
       isLoading: false,
       loader: false,
-      errors: ""
+      errors: "",
+      signup: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.state.registerFunction = this.registerFunction.bind(this);
@@ -66,26 +67,31 @@ class Register extends React.Component {
         "Content-Type": "application/json"
       }
     })
-      .then(function(response) {
+      .then(function (response) {
         return response.json();
       })
-      .then(function(data) {
+      .then(function (data) {
         that.setState({
           loader: false
         });
-        if (data.error != null) {
-          if(data.error==="Please verify your email"){
+        if (data.error === "Email already registed!") {
+
+          that.setState({
+            errors: "Email already registed!"
+          })
+          return;
+        }
+        else {
+
+          if (data.data.message === "User saved succesfully") {
             that.setState({
-              errors:"Please Verify your email"
-            })
+              signUp: true,
+
+            });
           }
-          that.setState({
-            errors: "Email Already Registered"
-          });
-        } else {
-          that.setState({
-            errors: "We have sent you an activation link to create your account on your mail"
-          });
+          else {
+            alert("Something went wrong please try again")
+          }
         }
       });
   }
@@ -120,87 +126,95 @@ class Register extends React.Component {
                 <Col md="8">
                   <Card>
                     <CardBody>
-                      <form onSubmit={this.registerFunction.bind(this)}>
-                        <p className="h4 text-center py-4">Sign Up </p>
-                        <div className="grey-text">
-                          <Input
-                            label="name*"
-                            icon="user"
-                            group
-                            type="text"
-                            validate
-                            error="wrong"
-                            success="right"
-                            name="name"
-                            value={this.state.name}
-                            onChange={this.handleChange}
-                            required
-                          />
-                          <Input
-                            label="email*"
-                            icon="envelope"
-                            group
-                            type="email"
-                            validate
-                            error="wrong"
-                            success="right"
-                            name="email"
-                            value={this.state.email}
-                            onChange={this.handleChange}
-                            required
-                          />
-                          <Input
-                            label="password*"
-                            icon="lock"
-                            group
-                            type="password"
-                            validate
-                            value={this.state.password}
-                            name="password"
-                            onChange={this.handleChange}
-                            required
-                          />
-                          <Input
-                            label="confirm password*"
-                            icon="lock"
-                            group
-                            type="password"
-                            validate
-                            value={this.state.confirmPassword}
-                            name="confirmPassword"
-                            onChange={this.handleChange}
-                            required
-                          />
-                          <Input
-                            label="mobile"
-                            icon="mobile"
-                            group
-                            type="number"
-                            className="quantity"
-                            value={this.state.mobile}
-                            name="mobile"
-                            onChange={this.handleChange}
-                          />
-                          <span
-                            style={{
-                              color: "red",
-                              fontSize: "14px",
-                              marginLeft: "3px"
-                            }}
-                          >
-                            {this.state.errors}
-                          </span>
-                        </div>
-                        <div className="text-center py-4 mt-3">
-                          <Button color="cyan" type="submit">
-                            Sign Up
+                      {!this.state.signUp &&
+                        <form onSubmit={this.registerFunction.bind(this)}>
+                          <p className="h4 text-center py-4">Sign Up </p>
+                          <div className="grey-text">
+                            <Input
+                              label="name*"
+                              icon="user"
+                              group
+                              type="text"
+                              validate
+                              error="wrong"
+                              success="right"
+                              name="name"
+                              value={this.state.name}
+                              onChange={this.handleChange}
+                              required
+                            />
+                            <Input
+                              label="email*"
+                              icon="envelope"
+                              group
+                              type="email"
+                              validate
+                              error="wrong"
+                              success="right"
+                              name="email"
+                              value={this.state.email}
+                              onChange={this.handleChange}
+                              required
+                            />
+                            <Input
+                              label="password*"
+                              icon="lock"
+                              group
+                              type="password"
+                              validate
+                              value={this.state.password}
+                              name="password"
+                              onChange={this.handleChange}
+                              required
+                            />
+                            <Input
+                              label="confirm password*"
+                              icon="lock"
+                              group
+                              type="password"
+                              validate
+                              value={this.state.confirmPassword}
+                              name="confirmPassword"
+                              onChange={this.handleChange}
+                              required
+                            />
+                            <Input
+                              label="mobile"
+                              icon="mobile"
+                              group
+                              type="number"
+                              className="quantity"
+                              value={this.state.mobile}
+                              name="mobile"
+                              onChange={this.handleChange}
+                            />
+                            <span
+                              style={{
+                                color: "red",
+                                fontSize: "14px",
+                                marginLeft: "3px"
+                              }}
+                            >
+                              {this.state.errors}
+                            </span>
+                          </div>
+                          <div className="text-center py-4 mt-3">
+                            <Button color="cyan" type="submit">
+                              Sign Up
                           </Button>
+                          </div>
+                          <p className="font-small grey-text d-flex justify-content-center">
+                            Already have an account?{" "}
+                            <Link to="/login">Sign in</Link>
+                          </p>
+                        </form>
+                      }
+                      {this.state.signUp &&
+                        <div>
+                          <p className="h4 text-center py-4">Account Verification </p>
+                          <span style={{ color: "red" }} class="label label-info">Your Account is created, it will Activate after you click on verification link you got in email address.</span>
                         </div>
-                        <p className="font-small grey-text d-flex justify-content-center">
-                          Already have an account?{" "}
-                          <Link to="/login">Sign in</Link>
-                        </p>
-                      </form>
+                      }
                     </CardBody>
                   </Card>
                 </Col>
