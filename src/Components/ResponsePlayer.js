@@ -28,7 +28,7 @@ class ResponsePlayer extends React.Component {
     };
 
      this.state.link=window.location.href;
- //  this.state.link = "https://glacial-tundra-88546.herokuapp.com/dare/89/test";
+    //this.state.link = "https://glacial-tundra-88546.herokuapp.com/dare/97/test";
     localStorage.setItem("link", this.state.link);
 
 
@@ -41,8 +41,15 @@ class ResponsePlayer extends React.Component {
       var retrievedData = localStorage.getItem('links');
       var links = JSON.parse(retrievedData);
       if (links.includes(window.location.href)) {
-        this.props.history.push("/score");
-        return;
+        if (localStorage.getItem('flag')) {
+          this.props.history.push("/sharedare");
+          return; 
+        }
+        else {
+          this.props.history.push("/score");
+          return;
+        }
+
       }
     }
     /*
@@ -50,10 +57,10 @@ class ResponsePlayer extends React.Component {
      this.props.history.push("/score");
      return;
    }*/
-   if (localStorage.getItem("flag")) {
-     this.props.history.push("/sharedare");
-     return;
-   }
+    // if (localStorage.getItem("flag")) {
+    //   this.props.history.push("/sharedare");
+    //   return;
+    // }
 
 
 

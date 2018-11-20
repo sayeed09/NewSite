@@ -67,7 +67,7 @@ export default class VerifyEmail extends React.Component {
                         loader: false
                     })
                     if (data.error === "Hash does not match") {
-                        alert("Invalid Link ")
+                        alert("Invalid Link")
                     }
                     else {
                         sessionStorage.setItem('forgetverified', true);

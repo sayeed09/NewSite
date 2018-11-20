@@ -57,7 +57,9 @@ export default class NavBar extends React.Component {
   }
 
   btnLogout(e) {
-
+    localStorage.removeItem('dareCreated');
+    localStorage.removeItem('name');
+    localStorage.removeItem('token');
     var _secretKey = "thekeyof12NewSite";
     var simpleCrypto = new SimpleCrypto(_secretKey);
     var chiperText = localStorage.getItem("token");
@@ -65,7 +67,6 @@ export default class NavBar extends React.Component {
     this.state.obj["auth_token"] = decipherText;
     var postData = this.state.obj;
     var that = this;
-    localStorage.clear();
     fetch(`https://pure-badlands-16289.herokuapp.com/api/users/logout`, {
       method: "post",
       body: JSON.stringify(postData),
@@ -80,7 +81,12 @@ export default class NavBar extends React.Component {
         that.setState({
           isLoggedIn: false
         });
-
+        if (localStorage.getItem('links') != null) {
+          var retrievedData = localStorage.getItem('links');
+          var links = JSON.parse(retrievedData);
+          links.pop();
+          localStorage.setItem('links', JSON.stringify(links));
+        }
         return;
       });
   }
@@ -213,7 +219,7 @@ export default class NavBar extends React.Component {
                         Change Password
                       </DropdownItem>
                       <DropdownItem
-                        href="/home"
+                        href={localStorage.getItem('s') != null ? "/score" : localStorage.getItem('flag') == "true" ? "/sharedare" : "/home"}
                         onClick={this.btnLogout.bind(this)}
                       >
                         Logout

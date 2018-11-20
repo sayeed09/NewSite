@@ -134,6 +134,17 @@ class Login extends React.Component {
                 link: data.data.link,
                 user_id: data.data.user_id
               });
+              if (localStorage.getItem('links') != null) {
+                var retrievedData = localStorage.getItem('links');
+                var links = JSON.parse(retrievedData);
+                links.push(data.data.link);
+                localStorage.setItem('links', JSON.stringify(links));
+              }
+              else {
+                var linkArr = [];
+                linkArr.push(data.data.link);
+                localStorage.setItem('links', JSON.stringify(linkArr));
+              }
               localStorage.setItem("dareCreated", true);
             } else {
               that.props.history.push("/user-question");

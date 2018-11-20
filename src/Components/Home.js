@@ -37,15 +37,29 @@ class Home extends React.Component {
     this._onCreateButtonClick = this._onCreateButtonClick.bind(this);
     var that = this;
     fetch(`https://pure-badlands-16289.herokuapp.com/api/questions/list`)
-      .then(function(response) {
+      .then(function (response) {
         return response.json();
       })
-      .then(function(data) {
+      .then(function (data) {
         that.setState({
           questionData: data
         });
       })
-      .catch(function(error) {});
+      .catch(function (error) { });
+  }
+  componentWilMount() {
+    if (localStorage.getItem('dareCreated') === false) {
+      this.props.history.push("/user-question")
+      return;
+    }
+    if (localStorage.getItem("dareCreated")) {
+      this.props.history.push("/sharedare");
+      return;
+    }
+    if (localStorage.getItem("flag")) {
+      this.props.history.push("/sharedare");
+      return;
+    }
   }
   _onButtonClick() {
     var that = this;
@@ -87,15 +101,15 @@ class Home extends React.Component {
           "Content-Type": "application/json"
         }
       })
-        .then(function(response) {
+        .then(function (response) {
           return response.json();
         })
-        .then(function(data) {
+        .then(function (data) {
           that.setState({
             user_id: data.data.user_id
           });
         })
-        .catch(function(error) {
+        .catch(function (error) {
           alert("Something went wrong please try again");
           that.props.history.push("/home");
         });
@@ -106,22 +120,10 @@ class Home extends React.Component {
     }
   }
 
-  componentWilMount() {
-   if(localStorage.getItem('dareCreated')===false){
-     this.props.history.push("/user-question")
-     return;
-   }
-    if (localStorage.getItem("dareCreated")) {
-      this.props.history.push("/sharedare");
-      return;
-    }
-    if (localStorage.getItem("flag")) {
-      this.props.history.push("/sharedare");
-      return;
-    }
-  }
+
+
   render() {
-    if (!this.state.createComponent) {
+    if (!this.state.createComponent && this.state.questionData != null) {
       return (
         <Question
           history={this.props.history}

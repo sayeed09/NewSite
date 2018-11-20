@@ -115,6 +115,17 @@ class Question extends React.Component {
             link: data.data.link,
             loader: false
           });
+          if (localStorage.getItem('links') != null) {
+            var retrievedData = localStorage.getItem('links');
+            var links = JSON.parse(retrievedData);
+            links.push(data.data.link);
+            localStorage.setItem('links', JSON.stringify(links));
+          }
+          else {
+            var linkArr = [];
+            linkArr.push(data.data.link);
+            localStorage.setItem('links', JSON.stringify(linkArr));
+          }
         })
         .catch(function (error) {
           alert("Server Error Please try again");
@@ -124,17 +135,7 @@ class Question extends React.Component {
       this.setState({
         showDareComponent: true
       });
-      if (localStorage.getItem('links') != null) {
-        var retrievedData = localStorage.getItem('links');
-        var links = JSON.parse(retrievedData);
-        links.push(window.location.href);
-        localStorage.setItem('links', JSON.stringify(links));
-      }
-      else {
-        var linkArr = [];
-        linkArr.push(window.location.href);
-        localStorage.setItem('links', JSON.stringify(linkArr));
-      }
+      
     }
     this.setState({
       questionNumber: this.state.questionNumber + 1,

@@ -22,7 +22,7 @@ class ShowScore extends React.Component {
   }
   btnFunc(e) {
     this.props.history.push("/");
-    localStorage.clear();
+    
   }
   btnresult(e) {
     this.props.history.push("/results");

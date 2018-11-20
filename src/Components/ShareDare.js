@@ -42,16 +42,16 @@ class ShareDare extends React.Component {
     fetch(
       `https://pure-badlands-16289.herokuapp.com/api/users/delete_dare/${user_id}`
     )
-      .then(function(response) {
+      .then(function (response) {
         return response.json();
       })
-      .then(function(data) {});
+      .then(function (data) { });
     if (localStorage.getItem("token") != null) {
-      localStorage.setItem("dareCreated",false);
+      localStorage.setItem("dareCreated", false);
       localStorage.removeItem("link");
       this.props.history.push("/user-question");
-     
-      
+
+
     } else {
       localStorage.clear();
       this.props.history.push("/");
@@ -61,11 +61,11 @@ class ShareDare extends React.Component {
     this.props.history.push("/userresults");
   }
   componentWillMount() {
-    
-    if (localStorage.getItem('link')==null) {
+
+    if (localStorage.getItem('link') == null) {
       this.props.history.push("/");
       return;
-    } 
+    }
   }
 
   render() {
