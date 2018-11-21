@@ -70,10 +70,10 @@ class ChangePassword extends React.Component {
           }
         }
       )
-        .then(function(response) {
+        .then(function (response) {
           return response.json();
         })
-        .then(function(data) {
+        .then(function (data) {
           that.setState({
             data: data,
             loader: true
@@ -84,6 +84,7 @@ class ChangePassword extends React.Component {
               loader: false
             });
           } else {
+            alert("Your password changed successfully")
             if (localStorage.getItem("dareCreated")) {
               that.props.history.push("/sharedare");
             } else {

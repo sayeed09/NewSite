@@ -47,7 +47,9 @@ class Home extends React.Component {
       })
       .catch(function (error) { });
   }
-  componentWilMount() {
+
+
+  componentDidMount() {
     if (localStorage.getItem('dareCreated') === false) {
       this.props.history.push("/user-question")
       return;
