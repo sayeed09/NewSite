@@ -12,6 +12,7 @@ import {
   DropdownMenu,
   DropdownItem
 } from "mdbreact";
+import loader from "./loader.gif";
 import { BrowserRouter as Router, Link, Switch, Route } from "react-router-dom";
 import About from "./About";
 import Contact from "./Contact";
@@ -39,6 +40,7 @@ import AdminPanel from "./AdminPanel";
 import Answers from "./Answers";
 import VerifyEmail from "./VerifyEmail";
 import ForgetPasswordComponent from "./ForgetPasswordComponent";
+import logo from "./logo.jpg";
 export default class NavBar extends React.Component {
   constructor(props) {
     super(props);
@@ -50,16 +52,17 @@ export default class NavBar extends React.Component {
       contactflg: false,
       loginflg: false,
       isLoggedIn: false,
-      obj: {}
+      obj: {},
+      loader: false, ref: ''
     };
     this.onClick = this.onClick.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
   }
 
   btnLogout(e) {
-    localStorage.removeItem('dareCreated');
-    localStorage.removeItem('name');
-    localStorage.removeItem('token');
+    this.setState({
+      loader: true
+    })
     var _secretKey = "thekeyof12NewSite";
     var simpleCrypto = new SimpleCrypto(_secretKey);
     var chiperText = localStorage.getItem("token");
@@ -78,19 +81,54 @@ export default class NavBar extends React.Component {
         return response.json();
       })
       .then(function (data) {
-        that.setState({
-          isLoggedIn: false
-        });
+
         if (localStorage.getItem('links') != null) {
           var retrievedData = localStorage.getItem('links');
           var links = JSON.parse(retrievedData);
-          links.pop();
+          links = links.filter(function (item) {
+            return item !== localStorage.getItem('lglink')
+          })
           localStorage.setItem('links', JSON.stringify(links));
+
         }
+        localStorage.removeItem('lglink');
+        localStorage.removeItem('token');
+        localStorage.removeItem('dareCreated');
+        localStorage.removeItem('name');
+        localStorage.removeItem('luser_id')
+        that.setState({
+          isLoggedIn: false,
+          loader: false,
+        });
+
         return;
       });
   }
   componentWillMount() {
+    var link = window.location.href;
+    var arrLink = link.split("/");
+    var content = arrLink[arrLink.length - 1];
+    if (content === "aboutus")
+      this.setState({
+        flg: false,
+        abtflg: true,
+        contactflg: false,
+        loginflg: false
+      })
+    if (content === "contactus")
+      this.setState({
+        flg: false,
+        abtflg: false,
+        contactflg: true,
+        loginflg: false
+      })
+    if (content === "login")
+      this.setState({
+        flg: false,
+        abtflg: false,
+        contactflg: false,
+        loginflg: true
+      })
     PubSub.subscribe("UPDATE_NAV_MENU", this.subscriberData.bind(this));
   }
   subscriberData(msg, data) {
@@ -147,13 +185,30 @@ export default class NavBar extends React.Component {
     }
   }
   render() {
+    if (this.state.loader) {
+      return (
+        <div class="text-center">
+          <img
+            className="home-img"
+            style={{
+              height: "80px",
+              width: "100px",
+              marginTop: "300px",
+              alignItems: "center"
+            }}
+            src={loader}
+            className="img-responsive "
+          />
+        </div>
+      );
+    }
     return (
       <Router>
         <div class="container">
-          <Navbar color="light blue" expand="md" dark fixed="top">
-            <NavbarBrand href="/">NewSite</NavbarBrand>
+          <Navbar color="white" expand="md" dark fixed="top">
+            <NavbarBrand href="/"><img src={logo} style={{ width: "130px", height: "50px" }} /></NavbarBrand>
             {!this.state.isWideEnough && (
-              <NavbarToggler onClick={this.onClick} />
+              <NavbarToggler style={{ backgroundColor: " grey" }} onClick={this.onClick} />
             )}
             <Collapse isOpen={this.state.collapse} navbar>
               <NavbarNav right>
@@ -163,8 +218,8 @@ export default class NavBar extends React.Component {
                     this.handleSelect("1");
                   }}
                 >
-                  <NavLink className="nav-link" to="/">
-                    Home
+                  <NavLink style={{ color: "black", }} className="nav-link" to="/">
+                    <b>Home</b>
                   </NavLink>
                 </NavItem>
                 <NavItem
@@ -173,8 +228,8 @@ export default class NavBar extends React.Component {
                     this.handleSelect("2");
                   }}
                 >
-                  <NavLink className="nav-link" to="/aboutus">
-                    About us
+                  <NavLink style={{ color: "black" }} className="nav-link" to="/aboutus">
+                    <b> About Us</b>
                   </NavLink>
                 </NavItem>
                 <NavItem
@@ -183,8 +238,8 @@ export default class NavBar extends React.Component {
                     this.handleSelect("3");
                   }}
                 >
-                  <NavLink className="nav-link" to="/contactus">
-                    Contact us
+                  <NavLink style={{ color: "black" }} className="nav-link" to="/contactus">
+                    <b> Contact Us</b>
                   </NavLink>
                 </NavItem>
                 {!(localStorage.getItem("token") != null) && (
@@ -194,35 +249,35 @@ export default class NavBar extends React.Component {
                       this.handleSelect("4");
                     }}
                   >
-                    <NavLink className="nav-link" to="/login">
-                      LogIn/SignUp
+                    <NavLink style={{ color: "black" }} className="nav-link" to="/login">
+                      <b>LogIn/SignUp</b>
                     </NavLink>
                   </NavItem>
                 )}
                 {localStorage.getItem("token") != null && (
                   <Dropdown>
-                    <DropdownToggle nav caret>
-                      Hi {""}
-                      {this.state.name != null
-                        ? this.state.name
-                        : localStorage.getItem("name")}
+                    <DropdownToggle style={{ color: "black" }} nav caret>
+                      <b> Hi {""}
+                        {this.state.name != null
+                          ? this.state.name
+                          : localStorage.getItem("name")}</b>
                     </DropdownToggle>
                     <DropdownMenu>
                       {localStorage.getItem("name") === "Admin" ? (
-                        <DropdownItem href="/adminquestion">Menu</DropdownItem>
+                        <DropdownItem href="/adminquestion"><b>Menu</b></DropdownItem>
                       ) : localStorage.getItem("dareCreated") ? (
-                        <DropdownItem href="/sharedare">Menu</DropdownItem>
+                        <DropdownItem href="/sharedare"><b>Menu</b></DropdownItem>
                       ) : (
-                            <DropdownItem href="/user-question">Menu</DropdownItem>
+                            <DropdownItem href="/user-question"><b>Menu</b></DropdownItem>
                           )}
-                      <DropdownItem href="/changepassword">
-                        Change Password
+                      <DropdownItem style={{ color: "black" }} href="/changepassword">
+                        <b>Change Password</b>
                       </DropdownItem>
-                      <DropdownItem
-                        href={localStorage.getItem('s') != null ? "/score" : localStorage.getItem('flag') == "true" ? "/sharedare" : "/home"}
+                      <DropdownItem style={{ paddingLeft: "0px" }}
+                        href=""
                         onClick={this.btnLogout.bind(this)}
-                      >
-                        Logout
+                      >  <Link to="/home" >
+                          <b> Logout</b></Link>
                       </DropdownItem>
                     </DropdownMenu>
                   </Dropdown>

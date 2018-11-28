@@ -27,8 +27,8 @@ class ResponsePlayer extends React.Component {
       loader: true
     };
 
-     this.state.link=window.location.href;
-    //this.state.link = "https://glacial-tundra-88546.herokuapp.com/dare/97/test";
+    this.state.link=window.location.href;
+    //this.state.link = "https://glacial-tundra-88546.herokuapp.com/dare/147/test";
     localStorage.setItem("link", this.state.link);
 
 
@@ -41,9 +41,9 @@ class ResponsePlayer extends React.Component {
       var retrievedData = localStorage.getItem('links');
       var links = JSON.parse(retrievedData);
       if (links.includes(window.location.href)) {
-        if (localStorage.getItem('flag')) {
+        if (localStorage.getItem('CPF')) {
           this.props.history.push("/sharedare");
-          return; 
+          return;
         }
         else {
           this.props.history.push("/score");
@@ -52,15 +52,8 @@ class ResponsePlayer extends React.Component {
 
       }
     }
-    /*
-   if (localStorage.getItem("rflg")) {
-     this.props.history.push("/score");
-     return;
-   }*/
-    // if (localStorage.getItem("flag")) {
-    //   this.props.history.push("/sharedare");
-    //   return;
-    // }
+
+    localStorage.setItem('PF', true);
 
 
 
@@ -89,7 +82,8 @@ class ResponsePlayer extends React.Component {
 
   handleChange(event) {
     this.setState({
-      name: event.target.value
+      name: event.target.value,
+      errors: ''
     });
   }
 
@@ -126,11 +120,11 @@ class ResponsePlayer extends React.Component {
 
     return (
       <div>
-        <div class="contact-body">
-          <div class="row">
-            <div class="col-md-3" />
-            <div class="col-md-8">
-              {!this.state.showComponent && (
+        {!this.state.showComponent && (
+          <div class="contact-body">
+            <div class="row">
+              <div class="col-md-3" />
+              <div class="col-md-8">
                 <Container>
                   <Row>
                     <Col md="10">
@@ -164,13 +158,11 @@ class ResponsePlayer extends React.Component {
                           <br />
 
                           <div class="text-center">
-                            <Button onClick={this._onCreateButtonClick}>
+                            <Button class="btnClass" style={{ borderRadius: "25px", width: "150px", height: "50px", outline: "0" }} onClick={this._onCreateButtonClick}>
                               Play{" "}
-                              <i
-                                class="fa fa-arrow-circle-o-right pr-2 pr-1"
-                                aria-hidden="true"
-                              />{" "}
+                              <i class="fa fa-play-circle-o" aria-hidden="true"></i>{" "}
                             </Button>
+
                           </div>
                           <br />
                           <br />
@@ -188,21 +180,20 @@ class ResponsePlayer extends React.Component {
                     </Col>
                   </Row>
                 </Container>
-              )}
-
-              {this.state.showComponent && (
-                <ResponseDare
-                  history={this.props.history}
-                  questionData={this.state.questionData}
-                  link={this.state.link}
-                  name={this.state.name}
-                  dareid={this.state.dareid}
-                />
-              )}
+              </div>
+              <div class="col-md-2" />
             </div>
-            <div class="col-md-2" />
           </div>
-        </div>
+        )}
+        {this.state.showComponent && (
+          <ResponseDare
+            history={this.props.history}
+            questionData={this.state.questionData}
+            link={this.state.link}
+            name={this.state.name}
+            dareid={this.state.dareid}
+          />
+        )}
       </div>
     );
   }

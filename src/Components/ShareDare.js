@@ -24,48 +24,71 @@ class ShareDare extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      link: ""
+      link: "",
+      dareDeleteComponent: false,
+      loader: false
     };
 
-    if (this.props.link != null) {
-      this.state.link = this.props.link;
-      localStorage.setItem("link", this.state.link);
-      localStorage.setItem("user_id", this.props.user_id);
-    } else {
-      this.state.link = localStorage.getItem("link");
+    if (localStorage.getItem('links') != null) {
+      var retrievedData = localStorage.getItem('links');
+      var links = JSON.parse(retrievedData);
+      this.state.link = links[links.length - 1];
     }
-    this.btnClickDelete = this.btnClickDelete.bind(this);
+    else {
+      this.props.history.push("/home");
+    }
+    //this.state.link = localStorage.getItem("link");
   }
+
   btnClickDelete() {
+    this.setState({
+      link: ""
+    })
     var that = this;
-    var user_id = localStorage.getItem("user_id");
+    var user_id = localStorage.getItem('token') != null ? localStorage.getItem('luser_id') : localStorage.getItem("user_id");
     fetch(
       `https://pure-badlands-16289.herokuapp.com/api/users/delete_dare/${user_id}`
     )
       .then(function (response) {
         return response.json();
       })
-      .then(function (data) { });
+      .then(function (data) {
+        if (data.data.message === "Dare has been deleted succesfully") {
+          if (localStorage.getItem("token") != null) {
+            localStorage.setItem("dareCreated", false);
+            localStorage.removeItem("link");
+          }
+          else {
+            localStorage.clear();
+          }
+          that.setState({
+            dareDeleteComponent: true,
+            link: "s"
+          });
+
+        }
+        else {
+          alert("Something went wrong..!")
+        }
+      });
+
+  }
+  btnBackClick(e) {
     if (localStorage.getItem("token") != null) {
-      localStorage.setItem("dareCreated", false);
-      localStorage.removeItem("link");
       this.props.history.push("/user-question");
-
-
     } else {
-      localStorage.clear();
-      this.props.history.push("/");
+      this.props.history.push("/home");
     }
   }
   btnClickResult(e) {
     this.props.history.push("/userresults");
   }
   componentWillMount() {
-
-    if (localStorage.getItem('link') == null) {
-      this.props.history.push("/");
-      return;
+    if(!localStorage.getItem('CF')){
+      this.props.history.push("/home");
     }
+
+
   }
 
   render() {
@@ -93,77 +116,75 @@ class ShareDare extends React.Component {
           <div class="col-md-8">
             <Container>
               <Row>
-                <Col md="8">
+                <Col md="10">
                   <div class="card">
                     <div class="card-body">
-                      <h5 class="card-title text-center" color="primary-color">
-                        <strong>Your Dare is ready!</strong>
-                      </h5>
-                      <p class="text-center" style={{ fontSize: "15px" }}>
-                        Share with your friends, and see who get maximum scores.
+                      {!this.state.dareDeleteComponent &&
+                        <div>
+                          <h5 class="card-title text-center" color="primary-color">
+                            <strong>Your Challenge is ready!</strong>
+                          </h5>
+                          <p class="text-center" style={{ fontSize: "15px" }}>
+                            Share with your friends, and see who get maximum scores.
                       </p>
-                      <br />
+                          <br />
 
-                      <div className="text-center">
-                        <input
-                          className="form-control"
-                          value={this.state.link}
-                          onChange={({ target: { value } }) =>
-                            this.setState({ value, copied: false })
-                          }
-                        />
+                          <div className="text-center">
+                            <input
+                              className="form-control"
+                              value={this.state.link}
+                              onChange={({ target: { value } }) =>
+                                this.setState({ value, copied: false })
+                              }
+                            />
+                            <br />
 
-                        <CopyToClipboard
-                          text={this.state.link}
-                          onCopy={() => this.setState({ copied: true })}
-                        >
-                          <button
-                            style={{
-                              width: "120px",
-                              height: "40px",
-                              padding: "0.65em",
-                              textTransform: "capitalize"
-                            }}
-                            class="btn btn-secondary btn-rounded"
-                          >
-                            Copy Link
+                            <CopyToClipboard
+                              text={this.state.link}
+                              onCopy={() => this.setState({ copied: true })}
+                            >
+                              <button style={{ color: "white", backgroundColor: "#605E5E", borderRadius: "10px", textTransform: "none" }} class="btn">
+                                Copy Link
                           </button>
-                        </CopyToClipboard>
+                            </CopyToClipboard>
 
-                        {this.state.copied ? (
-                          <span style={{ color: "red" }}>Copied.</span>
-                        ) : null}
-                        <br />
-                        <br />
-                        <SocialShare link={this.state.link} />
+                            {this.state.copied ? (
+                              <span style={{ color: "red" }}>Copied.</span>
+                            ) : null}
+                            <br />
+                            <br />
+                            <SocialShare link={this.state.link} />
+                            <br />
+                            <button
+                              style={{ borderRadius: "10px", textTransform: "none" }} class="btn btn-primary"
+                              onClick={this.btnClickResult.bind(this)}
+                              type="button"
 
-                        <button
-                          style={{
-                            width: "120px",
-                            height: "40px",
-                            padding: "0.65em",
-                            textTransform: "capitalize"
-                          }}
-                          onClick={this.btnClickResult.bind(this)}
-                          type="button"
-                          class="btn btn-secondary btn-rounded"
-                        >
-                          See Result
+                            ><i class="fa fa-eye" aria-hidden="true"></i>
+                              &nbsp; Result
                         </button>
-                        <button
-                          style={{
-                            width: "130px",
-                            height: "40px",
-                            padding: "0.65em",
-                            textTransform: "capitalize"
-                          }}
-                          onClick={this.btnClickDelete}
-                          type="button"
-                          class="btn btn-warning btn-rounded"
-                        >
-                          Delete Dare
+                            <button onClick={this.btnClickDelete.bind(this)}
+                              style={{ backgroundColor: "#2E86C1", color: "white", borderRadius: "10px", textTransform: "none" }} class="btn btn-danger"
+                            ><i class="fa fa-trash" aria-hidden="true"></i>
+                              &nbsp; Challenge
                         </button>
-                      </div>
+                          </div>
+                        </div>
+                      }
+                      {this.state.dareDeleteComponent &&
+                        <div class="text-center">
+                          <div class="alert alert-success" role="alert">
+                            Your Challenge has been deleted succesfully. Want to create new one ?
+                            </div>
+                          <Button class="btn" style={{ borderRadius: "25px", width: "191px", height: "50px", backgroundColor: "#2E86C1", color: "white", textTransform: "none" }} onClick={this.btnBackClick.bind(this)}>
+                            Create Challenge{" "}
+                            <i
+                              class="fa fa-arrow-circle-o-right pr-2 pr-1"
+                              aria-hidden="true"
+                            />{" "}
+                          </Button>
+                        </div>
+                      }
                     </div>
                   </div>
                 </Col>

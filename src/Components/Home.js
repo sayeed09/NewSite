@@ -46,22 +46,46 @@ class Home extends React.Component {
         });
       })
       .catch(function (error) { });
+    localStorage.setItem('CF', true);
   }
 
 
   componentDidMount() {
-    if (localStorage.getItem('dareCreated') === false) {
-      this.props.history.push("/user-question")
-      return;
+    if (localStorage.getItem('token') != null) {
+      if (localStorage.getItem('lglink') != null) {
+        this.props.history.push("/sharedare");
+        return;
+      }
+      else {
+        this.props.history.push("/user-question");
+        return;
+      }
     }
-    if (localStorage.getItem("dareCreated")) {
+    if (localStorage.getItem('CPF')) {
       this.props.history.push("/sharedare");
       return;
     }
-    if (localStorage.getItem("flag")) {
-      this.props.history.push("/sharedare");
+    if (localStorage.getItem('rflg')) {
+      this.props.history.push("/score");
       return;
     }
+    // if (localStorage.getItem('links') != null) {
+    //   var retrievedData = localStorage.getItem('links');
+    //   var links = JSON.parse(retrievedData);
+    //   if (links.includes(window.location.href)) {
+    //     if (localStorage.getItem('CF')) {
+    //       this.props.history.push("/sharedare");
+    //       return;
+    //     }
+    //     else {
+    //       this.props.history.push("/score");
+    //       return;
+    //     }
+
+    //   }
+
+
+
   }
   _onButtonClick() {
     var that = this;
@@ -72,7 +96,8 @@ class Home extends React.Component {
   }
   handleChange(event) {
     this.setState({
-      name: event.target.value
+      name: event.target.value,
+      errors: ''
     });
   }
   _onPreviousButtonClick() {
@@ -169,10 +194,14 @@ class Home extends React.Component {
                                 />
                                 <br />
                                 <br />
-                                <Button onClick={this._onButtonClick}>
-                                  Start Now
-                                  <Fa icon="paper-plane-o" className="ml-1" />
+                                <Button class="btn" style={{ borderRadius: "25px", width: "191px", height: "50px", backgroundColor: "#2E86C1", color: "white", textTransform: "none" }} onClick={this._onButtonClick}>
+                                Start Now{" "}
+                                  <i
+                                    class="fa fa-arrow-circle-o-right pr-2 pr-1"
+                                    aria-hidden="true"
+                                  />{" "}
                                 </Button>
+
                               </div>
                             </form>
                           </div>
@@ -192,7 +221,7 @@ class Home extends React.Component {
                               style={{ fontSize: "30px" }}
                             >
                               <strong>
-                                How Well Do Your Friends Know You??
+                                How Well Do Your Friends Know You?
                               </strong>
                             </h5>
                             <br />
@@ -215,8 +244,8 @@ class Home extends React.Component {
                             <br />
 
                             <div class="text-center">
-                              <Button onClick={this._onCreateButtonClick}>
-                                Create Dare{" "}
+                              <Button class="btn" style={{ borderRadius: "25px", width: "191px", height: "50px", backgroundColor: "#2E86C1", color: "white", textTransform: "none" }} onClick={this._onCreateButtonClick}>
+                                Create Challenge{" "}
                                 <i
                                   class="fa fa-arrow-circle-o-right pr-2 pr-1"
                                   aria-hidden="true"
@@ -243,12 +272,9 @@ class Home extends React.Component {
                               </ul>
                             </div>
                             <div class="text-center">
-                              <Button onClick={this._onPreviousButtonClick}>
-                                <i
-                                  class="fa fa-arrow-circle-left pr-2 pr-1"
-                                  aria-hidden="true"
-                                />{" "}
-                                Previous{" "}
+                              <Button class="btn" style={{ borderRadius: "25px", width: "50", backgroundColor: "#2E86C1", color: "white" }} onClick={this._onPreviousButtonClick}>
+                                <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>{" "}
+                                Back
                               </Button>
                             </div>
                           </div>

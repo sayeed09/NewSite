@@ -21,12 +21,13 @@ class Contact extends React.Component {
           <div class="col-md-8">
             <Container>
               <Row>
-                <Col md="8">
+                <Col md="10">
                   <Card>
                     <CardBody>
-                      <CardHeader color="primary-color" tag="h4">
-                        Write to us
-                      </CardHeader>
+                      <div class="text-center">
+                     <h4>Write to us</h4>
+                     
+                     </div>
                       <form>
                         <div className="grey-text">
                           <Input

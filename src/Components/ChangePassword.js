@@ -125,7 +125,7 @@ class ChangePassword extends React.Component {
           <div class="col-md-8">
             <Container>
               <Row>
-                <Col md="8">
+                <Col md="10">
                   <Card>
                     <CardBody>
                       <form onSubmit={this.submit.bind(this)}>
@@ -148,7 +148,7 @@ class ChangePassword extends React.Component {
                             group
                             type="password"
                             name="newpassword"
-                            validate
+                            validate0
                             required
                             value={this.state.newpassword}
                             onChange={this.handleChange.bind(this)}
@@ -164,31 +164,22 @@ class ChangePassword extends React.Component {
                             value={this.state.cnfnewpassword}
                             onChange={this.handleChange.bind(this)}
                           />
-                          <span
-                            style={{
-                              color: "red",
-                              fontSize: "14px",
-                              marginLeft: "3px"
-                            }}
-                          >
-                            {this.state.errors}
-                          </span>
+                          {this.state.errors != "" &&
+                            <div class="alert alert-danger" role="alert">
+                              {this.state.errors}
+                            </div>}
+
                           <br />
-                          <Button
-                            style={{ marginLeft: "150px" }}
-                            color="cyan"
-                            type="submit"
-                          >
-                            Change
-                          </Button>
-                          <br />
-                          <Button
-                            style={{ marginLeft: "150px" }}
-                            color="cyan"
-                            onClick={this.btnBackClick.bind(this)}
-                          >
-                            Back
-                          </Button>
+                          <div class="text-center">
+                            <Button class="btn" style={{ borderRadius: "25px", width: "120px", height: "50px", outline: "0", backgroundColor: "#2E86C1", textTransform: "none" }} type="submit">
+                              Change
+                            </Button>
+
+                            <Button class="btn" style={{ borderRadius: "25px", width: "30", height: "50px", backgroundColor: "#2E86C1", color: "white", textTransform: "none" }} onClick={this.btnBackClick.bind(this)}>
+                              <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>{" "}
+                              Back
+                              </Button>
+                          </div>
                         </div>
                       </form>
                     </CardBody>

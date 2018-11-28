@@ -20,12 +20,15 @@ import AdminQuestion from "./Components/AdminQuestion";
 
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
-    return<BrowserRouter>
-    <div className="App">
-    <NavBar />
-    <FooterPage />  
-    </div>
+    return <BrowserRouter>
+      <div className="App">
+        <NavBar />
+        <FooterPage />
+      </div>
     </BrowserRouter>;
   }
 }

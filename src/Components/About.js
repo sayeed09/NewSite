@@ -21,26 +21,30 @@ class About extends React.Component {
   render() {
     return (
       <div class="contact-body">
-        <div class="row">
+        <div class="text-center row">
           <div class="col-md-3" />
           <div class="col-md-8">
             <Container>
               <Row>
-                <Col md="8">
+                <Col md="10">
                   <Card>
                     <CardBody>
-                      <CardHeader color="primary-color" tag="h5">
-                        About us
-                      </CardHeader>
+                      <h4>About us </h4>
+                      <hr />
                       <br />
                       <h4>Do you think your friends know you?</h4>
                       <CardText>
-                        Test your friendship by Creating a Dare (Challange) for
+                        Test your friendship by Creating a Challenge (Challange) for
                         them and test the strength of your friendship.
                       </CardText>
-                      <Button onClick={this.btnClick.bind(this)} color="cyan">
-                        Create Dare
+                      <Button class="btnClass" style={{ borderRadius: "25px", width: "175px", height: "50px", outline: "0" }} onClick={this.btnClick.bind(this)}>
+                        Create Challenge{" "}
+                        <i
+                          class="fa fa-arrow-circle-o-right pr-2 pr-1"
+                          aria-hidden="true"
+                        />{" "}
                       </Button>
+
                     </CardBody>
                   </Card>
                 </Col>

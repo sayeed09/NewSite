@@ -19,7 +19,7 @@ import SocialShare from "./SocialShare";
 import Result from "./Result";
 import { Progress } from "react-sweet-progress";
 import loader from "./loader.gif";
-
+var question_type = "";
 class Question extends React.Component {
   constructor(props) {
     super(props);
@@ -126,16 +126,18 @@ class Question extends React.Component {
             linkArr.push(data.data.link);
             localStorage.setItem('links', JSON.stringify(linkArr));
           }
+          localStorage.setItem('CPF',true);
+          that.props.history.push("/sharedare");
         })
         .catch(function (error) {
           alert("Server Error Please try again");
+          that.props.history.push("/home");
           return;
         });
-      localStorage.setItem("flag", true);
       this.setState({
         showDareComponent: true
       });
-      
+
     }
     this.setState({
       questionNumber: this.state.questionNumber + 1,
@@ -145,17 +147,31 @@ class Question extends React.Component {
 
   btnClickDelete(e) {
     var that = this;
-    var user_id = this.props.userData;
-
+    var user_id = localStorage.getItem("user_id");
     fetch(
       `https://pure-badlands-16289.herokuapp.com/api/users/delete_dare/${user_id}`
     )
       .then(function (response) {
         return response.json();
       })
-      .then(function (data) { });
-    localStorage.clear();
-    this.props.history.push("/home");
+      .then(function (data) {
+        if (data.message === "Dare has been deleted succesfully") {
+          if (localStorage.getItem("token") != null) {
+            localStorage.setItem("dareCreated", false);
+            localStorage.removeItem("link");
+            that.props.history.push("/user-question");
+
+
+          } else {
+            localStorage.clear();
+            that.props.history.push("/home");
+          }
+        }
+        else {
+          alert("Something went wrong..!")
+        }
+      });
+
   }
   btnClickResult(e) {
     this.props.history.push("/userresults");
@@ -189,8 +205,11 @@ class Question extends React.Component {
       if (i === that.state.questionNumber) {
         answers = item.options.map(function (val) {
           if (i === that.state.questionNumber) {
+            question_type = item.question_type
             return (
+
               <a
+                className="col-6"
                 onClick={that.onAnswerClick.bind(
                   that,
                   val.option_id,
@@ -205,11 +224,10 @@ class Question extends React.Component {
                     <div>
                       <img
                         id={val.option_id}
-                        class="answer-body"
+                        class="img-thumbnail rounded "
                         style={{
-                          height: "150px",
-                          width: "200px",
-                          padding: "20px"
+                          width: "150px",
+                          height: "120px"
                         }}
                         src={val.option_value}
                       />
@@ -232,7 +250,7 @@ class Question extends React.Component {
             {!this.state.showDareComponent && (
               <Container>
                 <Row>
-                  <Col md="8">
+                  <Col md="10">
                     <div class="card">
                       <div class="card-body">
                         <div class="avatar mx-auto white">
@@ -261,24 +279,32 @@ class Question extends React.Component {
                             100
                           ).toFixed(2)}
                         />
+                        <br />
                         <h5
                           class="card-title text-center"
                           style={{ fontSize: "35px" }}
                         >
                           <strong>{question}</strong>
                         </h5>
+                        {question_type === "text" ?
+                          <div className="text-center ">
+                            {answers}
+                          </div> :
+                          <div className="text-center row">
+                            {answers}
+                          </div>
+                        }
                         <div className="text-center">
-                          <br />
-                          {answers}
                           <button
                             onClick={this.btnClick}
                             type="button"
-                            class="btn btn-secondary btn-rounded"
+                            class="btn" style={{ color: "white", backgroundColor: "#2E86C1", borderRadius: "10px" }}
                           >
-                            Next
+                            Next  &nbsp;<i class="fa fa-forward" aria-hidden="true"></i>
                           </button>
                         </div>
                       </div>
+
                     </div>
                   </Col>
                 </Row>
@@ -294,7 +320,7 @@ class Question extends React.Component {
                           class="card-title text-center"
                           color="primary-color"
                         >
-                          <strong>Your Dare is ready!</strong>
+                          <strong>Your Challenge is ready!</strong>
                         </h5>
                         <p class="text-center" style={{ fontSize: "15px" }}>
                           Share with your friends, and see who get maximum
@@ -302,7 +328,7 @@ class Question extends React.Component {
                         </p>
                         <br />
 
-                        <div className="text-center">
+                        <div className="text-center ">
                           <input
                             value={this.state.link}
                             className="form-control"
@@ -327,14 +353,13 @@ class Question extends React.Component {
                               Copy Link
                             </button>
                           </CopyToClipboard>
-
+                          <br />
                           {this.state.copied ? (
                             <span style={{ color: "red" }}>Copied.</span>
                           ) : null}
                           <br />
-                          <br />
                           <SocialShare link={this.state.link} />
-
+                          <br />
                           <button
                             style={{
                               width: "120px",
@@ -362,7 +387,6 @@ class Question extends React.Component {
                             Delete dare
                           </button>
 
-                          {localStorage.setItem("link", this.state.link)}
                           {localStorage.setItem("user_id", this.props.userData)}
                         </div>
                       </div>

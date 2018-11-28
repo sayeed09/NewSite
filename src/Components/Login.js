@@ -48,6 +48,7 @@ class Login extends React.Component {
     const { name, value } = e.target;
     this.setState({ [name]: value, errors: "" });
   }
+
   componentWillMount() {
     if (sessionStorage.getItem('forgetverified')) {
       this.setState({
@@ -110,6 +111,7 @@ class Login extends React.Component {
           return;
         }
         if (data.data.auth_token != null) {
+          localStorage.setItem('luser_id', data.data.user_id);
           that.setState({ auth_token: data.data.auth_token });
           PubSub.publish("UPDATE_NAV_MENU", data.data.name);
           var _secretKey = "thekeyof12NewSite";
@@ -134,6 +136,7 @@ class Login extends React.Component {
                 link: data.data.link,
                 user_id: data.data.user_id
               });
+
               if (localStorage.getItem('links') != null) {
                 var retrievedData = localStorage.getItem('links');
                 var links = JSON.parse(retrievedData);
@@ -145,7 +148,9 @@ class Login extends React.Component {
                 linkArr.push(data.data.link);
                 localStorage.setItem('links', JSON.stringify(linkArr));
               }
+              localStorage.setItem('lglink', data.data.link);
               localStorage.setItem("dareCreated", true);
+              that.props.history.push("/sharedare");
             } else {
               that.props.history.push("/user-question");
               localStorage.setItem("dareCreated", false);
@@ -181,15 +186,19 @@ class Login extends React.Component {
             <div class="col-md-8">
               <Container>
                 <Row>
-                  <Col md="8">
+                  <Col md="10">
                     <Card>
                       <CardBody>
                         <form onSubmit={this.loginFunction.bind(this)}>
                           {this.state.forgetPassword &&
-                            <span style={{ color: "green" }} className="label label-success text-center py-4">Your Passord is changed successfully</span>}
+                            <div class="alert alert-primary" role="alert">
+                              Your password is changed Successfully..!
+                         </div>}
                           {this.state.emailVerified &&
-                            <span style={{ color: "green" }} className="label label-success text-center py-4">Your account is activated, you can login now</span>}
-                          <p className="h4 text-center py-4">Log In </p>
+                            <div class="alert alert-success" role="alert">
+                              Your Account is Activated, login to continue..!
+                          </div>}
+                          <p className="h3 text-center py-4">Log In </p>
                           <div className="grey-text">
                             <Input
                               label="Your email"
@@ -222,7 +231,10 @@ class Login extends React.Component {
                                 marginLeft: "3px"
                               }}
                             >
-                              {this.state.errors}
+                              {this.state.errors != "" &&
+                                <div class="alert alert-danger" role="alert">
+                                  {this.state.errors}
+                                </div>}
                             </span>
                             <p className="font-small grey-text d-flex justify-content-end">
                               <Link to="/forgotpassword">
@@ -232,12 +244,12 @@ class Login extends React.Component {
                             </p>
                           </div>
                           <div className="text-center py-4 mt-3">
-                            <Button color="cyan" type="submit">
+                            <Button class="btn" style={{ borderRadius: "25px", width: "125px", height: "50px", backgroundColor: "#2E86C1", color: "white", textTransform: "none" }} type="submit">
                               Login
                             </Button>
                           </div>
                           <p className="font-small grey-text d-flex justify-content-center">
-                            Don't have an account?{" "}
+                            Don't have an account?&nbsp;
                             <Link to="/register">Sign up</Link>
                           </p>
                         </form>

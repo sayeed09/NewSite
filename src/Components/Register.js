@@ -85,7 +85,7 @@ class Register extends React.Component {
 
           if (data.data.message === "User saved succesfully") {
             that.setState({
-              signUp: true,
+              signup: true,
 
             });
           }
@@ -123,15 +123,15 @@ class Register extends React.Component {
           <div class="col-md-8">
             <Container>
               <Row>
-                <Col md="8">
+                <Col md="10">
                   <Card>
                     <CardBody>
-                      {!this.state.signUp &&
+                      {!this.state.signup &&
                         <form onSubmit={this.registerFunction.bind(this)}>
                           <p className="h4 text-center py-4">Sign Up </p>
                           <div className="grey-text">
                             <Input
-                              label="name*"
+                              label="Name *"
                               icon="user"
                               group
                               type="text"
@@ -144,7 +144,7 @@ class Register extends React.Component {
                               required
                             />
                             <Input
-                              label="email*"
+                              label="Email *"
                               icon="envelope"
                               group
                               type="email"
@@ -157,7 +157,7 @@ class Register extends React.Component {
                               required
                             />
                             <Input
-                              label="password*"
+                              label="Password *"
                               icon="lock"
                               group
                               type="password"
@@ -168,7 +168,7 @@ class Register extends React.Component {
                               required
                             />
                             <Input
-                              label="confirm password*"
+                              label="Confirm Password *"
                               icon="lock"
                               group
                               type="password"
@@ -179,7 +179,7 @@ class Register extends React.Component {
                               required
                             />
                             <Input
-                              label="mobile"
+                              label="Mobile"
                               icon="mobile"
                               group
                               type="number"
@@ -188,32 +188,31 @@ class Register extends React.Component {
                               name="mobile"
                               onChange={this.handleChange}
                             />
-                            <span
-                              style={{
-                                color: "red",
-                                fontSize: "14px",
-                                marginLeft: "3px"
-                              }}
-                            >
-                              {this.state.errors}
-                            </span>
+                            {this.state.errors != "" &&
+                              <div class="alert alert-danger" role="alert">
+                                {this.state.errors}
+                              </div>}
                           </div>
                           <div className="text-center py-4 mt-3">
-                            <Button color="cyan" type="submit">
-                              Sign Up
-                          </Button>
+                          <Button class="btn" style={{ borderRadius: "25px", width: "125px", height: "50px", backgroundColor: "#2E86C1", color: "white", textTransform: "none"}} type="submit">
+                              SignUp
+                            </Button>
+                         
                           </div>
                           <p className="font-small grey-text d-flex justify-content-center">
-                            Already have an account?{" "}
+                            Already have an account?&nbsp;  
                             <Link to="/login">Sign in</Link>
                           </p>
                         </form>
                       }
-                      {this.state.signUp &&
-                        <div>
-                          <p className="h4 text-center py-4">Account Verification </p>
-                          <span style={{ color: "red" }} class="label label-info">Your Account is created, it will Activate after you click on verification link you got in email address.</span>
+                      {this.state.signup &&
+                        <div class="text-center">
+                          <h3>Account Activation </h3>
+                          <div class="alert alert-info" role="alert">
+                            Your Account is created, it will activate after you click on verification link you got in email address.
+                    </div>
                         </div>
+
                       }
                     </CardBody>
                   </Card>

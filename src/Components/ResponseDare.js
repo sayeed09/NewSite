@@ -16,7 +16,9 @@ import "./Custom.css";
 import "react-sweet-progress/lib/style.css";
 import ShowScore from "./ShowScore";
 import { Progress } from "react-sweet-progress";
+import loader from "./loader.gif";
 
+var question_type = "";
 class ResponseDare extends React.Component {
   constructor(props) {
     super(props);
@@ -34,7 +36,8 @@ class ResponseDare extends React.Component {
       score: 0,
       obj: {},
       per: "",
-      responseData: {}
+      responseData: {},
+      loader: false
     };
 
     this.btnClick = this.btnClick.bind(this);
@@ -85,6 +88,11 @@ class ResponseDare extends React.Component {
     }
 
     if (this.state.questionNumber === this.props.questionData.data.length - 1) {
+      localStorage.setItem("s", this.state.score);
+      localStorage.setItem("t", this.props.questionData.data.length);
+      this.setState({
+        loader: true
+      })
       this.state.obj["link"] = this.props.link;
       this.state.obj["score"] = this.state.score;
       this.state.obj["name"] = this.props.name;
@@ -106,30 +114,58 @@ class ResponseDare extends React.Component {
         .then(function (response) {
           return response.json();
         })
-        .then(function (data) { });
-      this.setState({
-        showResultComponent: true
-      });
-      localStorage.setItem("rflg", true);
-      if (localStorage.getItem('links') != null) {
-        var retrievedData = localStorage.getItem('links');
-        var links = JSON.parse(retrievedData);
-        links.push(window.location.href);
-        localStorage.setItem('links', JSON.stringify(links));
-      }
-      else {
-        var linkArr = [];
-        linkArr.push(window.location.href);
-        localStorage.setItem('links', JSON.stringify(linkArr));
-      }
+        .then(function (data) {
+          if (data.data.message == "Result stored succesfully") {
+            that.setState({
+              loader: false
+            });
+            localStorage.setItem("rflg", true);
+            if (localStorage.getItem('links') != null) {
+              var retrievedData = localStorage.getItem('links');
+              var links = JSON.parse(retrievedData);
+              links.push(window.location.href);
+              localStorage.setItem('links', JSON.stringify(links));
+            }
+            else {
+              var linkArr = [];
+              linkArr.push(window.location.href);
+              localStorage.setItem('links', JSON.stringify(linkArr));
+            }
+            that.props.history.push("/score");
+          }
+          else {
+            alert("Something went wrong");
+            that.props.history.push("/home");
+          }
+        });
     }
+
     this.setState({
       questionNumber: this.state.questionNumber + 1,
       cnt: this.state.cnt + 1
     });
+
   }
 
+
   render() {
+    if (this.state.loader) {
+      return (
+        <div class="text-center">
+          <img
+            className="home-img"
+            style={{
+              height: "80px",
+              width: "100px",
+              marginTop: "300px",
+              alignItems: "center"
+            }}
+            src={loader}
+            className="img-responsive "
+          />
+        </div>
+      );
+    }
 
     var answers;
     var i = -1;
@@ -139,8 +175,10 @@ class ResponseDare extends React.Component {
       if (i === that.state.questionNumber) {
         answers = item.options.map(function (val) {
           if (i === that.state.questionNumber) {
+            question_type = item.question_type
             return (
               <a
+                className="col-6"
                 onClick={that.onAnswerClick.bind(
                   that,
                   val.option_id,
@@ -156,11 +194,10 @@ class ResponseDare extends React.Component {
                     <div>
                       <img
                         id={val.option_id}
-                        class="answer-body"
+                        class="img-thumbnail rounded "
                         style={{
-                          height: "150px",
-                          width: "200px",
-                          padding: "20px"
+                          width: "150px",
+                          height: "120px"
                         }}
                         src={val.option_value}
                       />
@@ -176,33 +213,37 @@ class ResponseDare extends React.Component {
     });
 
     return (
-      <div class="contact-body">
-        <div class="row">
-          <div class="col-md-3" />
-          <div class="col-md-8">
-            {!this.state.showResultComponent && (
-              <Container>
-                <Row>
-                  <Col md="8">
-                    <div class="card">
-                      <div class="card-body">
-                        <div class="avatar mx-auto white">
-                          <h6
-                            class="text-center"
-                            style={{
-                              fontSize: "15px",
-                              margin: "0 auto",
-                              width: "120px",
-                              height: "40px",
-                              paddingTop: "10px",
-                              paddingRight: "20px"
-                            }}
-                          >
-                            <strong>
-                              Question {this.state.questionNumber + 1} /{" "}
-                              {this.props.questionData.data.length}{" "}
-                            </strong>{" "}
-                          </h6>
+      <div>
+
+        {!this.state.showResultComponent && (
+          <div class="contact-body">
+            <div class="row">
+              <div class="col-md-3" />
+              <div class="col-md-8">
+                <Container>
+                  <Row>
+                    <Col md="10">
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="avatar mx-auto white">
+                            <h6
+                              class="text-center"
+                              style={{
+                                fontSize: "15px",
+                                margin: "0 auto",
+                                width: "120px",
+                                height: "40px",
+                                paddingTop: "10px",
+                                paddingRight: "20px"
+                              }}
+                            >
+                              <strong>
+                                Question {this.state.questionNumber + 1} /{" "}
+                                {this.props.questionData.data.length}{" "}
+                              </strong>{" "}
+                            </h6>
+                          </div>
+                          <br />
                           <Progress
                             percent={(
                               (this.state.questionNumber /
@@ -210,39 +251,44 @@ class ResponseDare extends React.Component {
                               100
                             ).toFixed(2)}
                           />
-                        </div>
-                        <br />
-                        <h5
-                          class="card-title text-center"
-                          style={{ fontSize: "35px" }}
-                        >
-                          <strong>{question}</strong>
-                        </h5>
-                        <div className="text-center">
-                          <br />
-                          {answers}
-                          <button
-                            onClick={this.btnClick}
-                            type="button"
-                            class="btn btn-secondary btn-rounded"
+                          <h5
+                            class="card-title text-center"
+                            style={{ fontSize: "35px" }}
                           >
-                            Next
-                          </button>
+                            <strong>{question}</strong>
+                          </h5>
+                          {question_type === "text" ?
+                            <div className="text-center ">
+                              {answers}
+                            </div> :
+                            <div className="text-center row">
+                              {answers}
+                            </div>
+                          }
+                          <div className="text-center">
+                            <button
+                              onClick={this.btnClick}
+                              type="button"
+                              class="btn" style={{ color: "white", backgroundColor: "#2E86C1", borderRadius: "10px" }}
+                            >
+                              Next  &nbsp;<i class="fa fa-forward" aria-hidden="true"></i>
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  </Col>
-                </Row>
-              </Container>
-            )}
 
-            {localStorage.setItem("s", this.state.score)}
-            {localStorage.setItem("t", this.props.questionData.data.length)}
-            {this.state.showResultComponent && (
-              <ShowScore history={this.props.history} link={this.props.link} />
-            )}
+                      </div>
+                    </Col>
+                  </Row>
+                </Container>
+              </div>
+            </div>
           </div>
-        </div>
+
+        )}
+
+
+
+
       </div>
     );
   }

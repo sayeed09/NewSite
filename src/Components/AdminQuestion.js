@@ -157,19 +157,19 @@ class AdminQuestion extends React.Component {
           <div class="col-md-8">
             <Container>
               <Row>
-                <Col md="8">
+                <Col md="10">
                   <div class="card">
                     <div class="card-body">
                       <div class="avatar mx-auto white" />
                       {!this.state.editComponent && (
                         <div>
                           <br />
-                          <h5
+                          <h4
                             class="card-title text-center"
-                            style={{ fontSize: "35px" }}
+                           
                           >
                             <strong />
-                          </h5>
+                          </h4>
                           <div className="text-center">
                             <br />
 

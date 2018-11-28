@@ -46,10 +46,10 @@ class AdminPanel extends React.Component {
         "Content-Type": "application/json"
       }
     })
-      .then(function(response) {
+      .then(function (response) {
         return response.json();
       })
-      .then(function(data) {
+      .then(function (data) {
         that.setState({
           loader: false,
           data: data.data
@@ -82,10 +82,10 @@ class AdminPanel extends React.Component {
     fetch(`https://pure-badlands-16289.herokuapp.com/api/users/${user_id}`, {
       method: "DELETE"
     })
-      .then(function(response) {
+      .then(function (response) {
         return response.json();
       })
-      .then(function(data) {
+      .then(function (data) {
         that.setState({
           loader: false
         });
@@ -103,10 +103,10 @@ class AdminPanel extends React.Component {
     fetch(
       `https://pure-badlands-16289.herokuapp.com/api/users/delete_dare/${user_id}`
     )
-      .then(function(response) {
+      .then(function (response) {
         return response.json();
       })
-      .then(function(data) {
+      .then(function (data) {
         that.setState({
           loader: false
         });
@@ -167,15 +167,14 @@ class AdminPanel extends React.Component {
                 <th scope="col">Name</th>
                 <th scope="col">Email</th>
                 <th scope="col">Mobile</th>
-                <th scope="col">Dare Link</th>
+                <th scope="col">Challenge Link</th>
                 <th scope="col">Last Visited</th>
                 <th scope="col">Created At</th>
-                <th scope="col">Delete Dare</th>
+                <th scope="col">Delete Challenge</th>
                 <th scope="col">Delete User</th>
               </tr>
             </TableHead>
             <TableBody>
-              {console.log("datata", this.state.data)}
               {this.state.data.map((item, index) => (
                 <tr>
                   <td>{index + 1}</td>
@@ -197,14 +196,10 @@ class AdminPanel extends React.Component {
                       )}
                   </td>
                   <td>
-                    <Button onClick={that.btnClickDelete.bind(that, item.id)}>
-                      <i class="fa fa-trash" aria-hidden="true" />
-                    </Button>
+                    <a onClick={that.btnClickDelete.bind(that, item.id)} style={{ color: 'red', textDecoration: 'underline' }} class="delete"><b>Delete</b></a>
                   </td>
                   <td>
-                    <Button onClick={that.btnClickUser.bind(that, item.id)}>
-                      <i class="fa fa-trash" aria-hidden="true" />
-                    </Button>
+                  <a  onClick={that.btnClickUser.bind(that, item.id)} style={{ color: 'red', textDecoration: 'underline' }} class="delete"><b>Delete</b></a>
                   </td>
                 </tr>
               ))}

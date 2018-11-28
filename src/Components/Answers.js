@@ -32,10 +32,10 @@ class Answers extends React.Component {
     fetch(
       `https://pure-badlands-16289.herokuapp.com/api/dares/view_answer_sheet/${id}`
     )
-      .then(function(response) {
+      .then(function (response) {
         return response.json();
       })
-      .then(function(data) {
+      .then(function (data) {
         that.setState({
           data: data.data,
           loader: false
@@ -79,14 +79,13 @@ class Answers extends React.Component {
           <div class="col-md-8">
             <Container>
               <Row>
-                <Col md="8">
+                <Col md="10">
                   <div class="card">
                     <div class="card-body">
                       <div class="avatar mx-auto white">
-                        <h6
+                        <h4
                           class="text-center"
                           style={{
-                            fontSize: "15px",
                             margin: "0 auto",
                             width: "120px",
                             height: "40px",
@@ -95,7 +94,7 @@ class Answers extends React.Component {
                           }}
                         >
                           <strong>Answers</strong>{" "}
-                        </h6>
+                        </h4>
                       </div>
                       <br />
 
@@ -117,10 +116,10 @@ class Answers extends React.Component {
                                   {item.option_type === "text" ? (
                                     item.option
                                   ) : (
-                                     item.caption
-                                  )}
+                                      item.caption
+                                    )}
                                 </td>
-                                <td />
+                                <td >
                                 {item.is_correct ? (
                                   <img
                                     style={{
@@ -132,37 +131,28 @@ class Answers extends React.Component {
                                     src={correctImg}
                                   />
                                 ) : (
-                                  <img
-                                    style={{
-                                      height: "30px",
-                                      width: "30px",
-                                      marginTop: "10px",
-                                      alignItems: "center"
-                                    }}
-                                    src={wrongImg}
-                                  />
-                                )}
+                                    <img
+                                      style={{
+                                        height: "30px",
+                                        width: "30px",
+                                        marginTop: "10px",
+                                        alignItems: "center"
+                                      }}
+                                      src={wrongImg}
+                                    />
+                                  )}
+                                  </td>
                               </tr>
                             ))}
                           </tbody>
                         </table>
                       </div>
-
-                      <button
-                        onClick={this.btnCLick.bind(this)}
-                        class="text-center"
-                        style={{
-                          width: "120px",
-                          height: "40px",
-                          padding: "0.65em",
-                          marginLeft: "100px",
-                          textTransform: "capitalize"
-                        }}
-                        type="button"
-                        class="btn btn-secondary btn-rounded"
-                      >
-                        Back
-                      </button>
+                      <div class="text-center">
+                        <Button class="btn" onClick={this.btnCLick.bind(this)} style={{ borderRadius: "15px", width: "50", backgroundColor: "#2E86C1", color: "white" }}>
+                          <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>{" "}
+                          Back
+                              </Button>
+                      </div>
                     </div>
                   </div>
                 </Col>

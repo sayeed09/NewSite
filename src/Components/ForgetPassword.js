@@ -21,12 +21,12 @@ class ForgetPassword extends React.Component {
       obj: {},
       loader: false,
       mailSent: false,
-      error:''
+      error: ''
     };
   }
   handleChange(e) {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
+    this.setState({ [name]: value ,error:''});
   }
   btnPrevious(e) {
     this.props.history.push("/login");
@@ -98,6 +98,7 @@ class ForgetPassword extends React.Component {
                         <form onSubmit={this.submit.bind(this)}>
                           <p className="h4 text-center py-4">Forget Password </p>
                           <div className="grey-text">
+                            <p>We will send you link to reset your password, therefore please ensure that you enter a valid email address.</p>
                             <Input
                               label="Your email"
                               icon="envelope"
@@ -111,23 +112,22 @@ class ForgetPassword extends React.Component {
                               value={this.state.email}
                               onChange={this.handleChange.bind(this)}
                             />
-                            <span
-                              style={{
-                                color: "red",
-                                fontSize: "15px",
-                                marginLeft: "3px"
-                              }}
-                            >
-                              {this.state.error}
-                            </span>
-                            <br />
-                            <input class="btn btn-primary btn-md" type="submit" value="Submit" />
-                            <br />
-                            <button onClick={this.btnPrevious.bind(this)}
-                              class="btn btn-secondary btn-sm "
-                            >
-                              Back
-                            </button>
+                            {this.state.error != "" &&
+                              < div class="alert alert-danger" role="alert">
+                                {this.state.error}
+                              </div>
+                            }
+                            <div class="text-center">
+                              <Button class="btn" style={{ borderRadius: "25px", width: "120px", height: "50px", outline: "0", backgroundColor: "#2E86C1", textTransform: "none" }} type="submit">
+                                Submit
+                            </Button>
+
+                              <Button class="btn" style={{ borderRadius: "25px", width: "30", height: "50px", backgroundColor: "#2E86C1", color: "white", textTransform: "none" }} onClick={this.btnPrevious.bind(this)}>
+                                <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>{" "}
+                                Back
+                              </Button>
+
+                            </div>
 
 
                           </div>
@@ -136,8 +136,11 @@ class ForgetPassword extends React.Component {
                       }
                       {this.state.mailSent &&
                         <div>
-                          <p className="h4 text-center py-4">Account Verification </p>
-                          <span style={{ color: "red" }} class="label label-info">Please check your email we have sent you a link to change your password.</span>
+                          <p className="h4 text-center py-4">Change your password..! </p>
+                          <div class="alert alert-info" role="alert">
+                            Please check your email we have sent you a link to change your password
+                        </div>
+
                         </div>
                       }
                     </CardBody>

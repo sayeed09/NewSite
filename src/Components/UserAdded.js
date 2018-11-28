@@ -20,14 +20,14 @@ class UserAdded extends React.Component {
     this.state = {};
   }
   componentWillMount() {
-    
+
     if (localStorage.getItem("token") === null) {
       this.props.history.push("/login");
       return;
     }
-}
-  _onCreateButtonClick(e){
-      this.props.history.push("\customquestion");
+  }
+  _onCreateButtonClick(e) {
+    this.props.history.push("\customquestion");
   }
   render() {
     return (
@@ -37,25 +37,25 @@ class UserAdded extends React.Component {
           <div class="col-md-8">
             <Container>
               <Row>
-                <Col md="8">
+                <Col md="10">
                   <div class="card">
                     <div class="card-body">
                       <div class="avatar mx-auto white">
-                      <h5
-                              class="card-title text-center"
-                              style={{ fontSize: "30px" }}
-                            >
-                              <strong>
-                               Challenge your friends, Create your own questions
+                        <h5
+                          class="card-title text-center"
+                          style={{ fontSize: "30px" }}
+                        >
+                          <strong>
+                            Challenge your friends, Create your own questions
                               </strong>
-                            </h5>
+                        </h5>
                       </div>
                       <br />
                       <br />
                       <div>
                         <h5>Instructions: </h5>
                         <ul>
-                        <li>
+                          <li>
                             You can create only one dare at a time.
                           </li>
                           <li>
@@ -77,13 +77,15 @@ class UserAdded extends React.Component {
                           </li>
                         </ul>
                       </div>
-                      <Button onClick={this._onCreateButtonClick.bind(this)}>
-                        Create Dare{" "}
+                      <div class="text-center">
+                      <Button class="btnClass" style={{ borderRadius: "25px", width: "175px", height: "50px", outline: "0" }} onClick={this._onCreateButtonClick.bind(this)}>
+                        Create Challenge{" "}
                         <i
                           class="fa fa-arrow-circle-o-right pr-2 pr-1"
                           aria-hidden="true"
                         />{" "}
                       </Button>
+                      </div>
                     </div>
                   </div>
                 </Col>

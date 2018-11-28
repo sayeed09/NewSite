@@ -1,4 +1,6 @@
 import React from "react";
+import SemiCircleProgressBar from "react-progressbar-semicircle";
+
 import {
   Container,
   Row,
@@ -15,27 +17,45 @@ import {
 import "./Custom.css";
 import { Progress } from "react-sweet-progress";
 import "react-sweet-progress/lib/style.css";
-
+var color = '';
 class ShowScore extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      color: ''
+    }
   }
   btnFunc(e) {
-    this.props.history.push("/");
-    
+    this.props.history.push("/home");
+    localStorage.removeItem('rflag');
+
   }
   btnresult(e) {
     this.props.history.push("/results");
   }
 
   componentWillMount() {
-    if (localStorage.getItem("rflg")) {
-      this.props.history.push("/score");
-      return;
+
+    if (localStorage.getItem('s') != null && localStorage.getItem('t') != null) {
+      var scores = (
+        (localStorage.getItem("s") /
+          localStorage.getItem("t")) *
+        100
+      ).toFixed(2);
+      var score = parseInt(scores, 10)
+      if (score < 40) {
+        color = "red"
+      }
+
+      if (score >= 40 && score < 75) {
+        color = "yellow"
+      }
+      if (score >= 75) {
+        color = "green"
+      }
     }
-    if (localStorage.getItem("flag")) {
-      this.props.history.push("/sharedare");
-      return;
+    else {
+      this.props.history.push("/home")
     }
   }
 
@@ -47,7 +67,7 @@ class ShowScore extends React.Component {
           <div class="col-md-8">
             <Container>
               <Row>
-                <Col md="8">
+                <Col md="10">
                   <div class="card">
                     <div class="card-body">
                       <div class="avatar mx-auto white">
@@ -66,45 +86,29 @@ class ShowScore extends React.Component {
                           </strong>
                         </h6>
                         <br />
-                        <Progress
-                          type="circle"
-                          percent={(
-                            (localStorage.getItem("s") /
-                              localStorage.getItem("t")) *
-                            100
-                          ).toFixed(2)}
-                        />
+                        <SemiCircleProgressBar stroke={color} percentage={(
+                          (localStorage.getItem("s") /
+                            localStorage.getItem("t")) *
+                          100
+                        ).toFixed(2)} showPercentValue />
+
                         <br /> <br />
                         <p>
                           Now, it’s your turn. Create your own challange and
-                          send to your friends! Create Your Dare{" "}
+                          send to your friends! Create Your Challenge{" "}
                         </p>
-                        <button
-                          style={{
-                            width: "120px",
-                            height: "40px",
-                            padding: "0.65em",
-                            textTransform: "capitalize"
-                          }}
-                          onClick={this.btnFunc.bind(this)}
-                          type="button"
-                          class="btn btn-secondary btn-rounded"
-                        >
-                          Create Your Dare
+                        <button onClick={this.btnFunc.bind(this)}
+                          style={{ backgroundColor: "#2E86C1", color: "white", borderRadius: "10px", textTransform: "none" }} class="btn btn-info"
+                        > Create Your Challenge &nbsp; <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i>
                         </button>
-                        <button
-                          style={{
-                            width: "120px",
-                            height: "40px",
-                            padding: "0.65em",
-                            textTransform: "capitalize"
-                          }}
+                        <br />
+                        <a
+                          style={{ color: "blue" }}
                           onClick={this.btnresult.bind(this)}
-                          type="button"
-                          class="btn btn-secondary btn-rounded"
                         >
-                          See all results
-                        </button>
+                          See all Results
+                        </a>
+
                       </div>
                     </div>
                   </div>

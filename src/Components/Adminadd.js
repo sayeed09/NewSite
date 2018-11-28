@@ -265,7 +265,7 @@ class Adminadd extends React.Component {
           <div class="col-md-8">
             <Container>
               <Row>
-                <Col md="8">
+                <Col md="10">
                   <Card>
                     <CardBody>
                       <form onSubmit={this.handleSubmit.bind(this)}>

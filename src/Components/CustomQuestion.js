@@ -124,17 +124,34 @@ class CustomQuestion extends React.Component {
       .then(function (data) {
         if (data.data.link != null) {
           that.setState({
-            shareComponent: true,
             loader: false,
             link: data.data.link
           });
           localStorage.setItem('dareCreated', true);
-          localStorage.setItem('user_id', data.data.user_id);
-          localStorage.setItem('link', data.data.link);
+          // localStorage.setItem('user_id', data.data.user_id);
+          if (localStorage.getItem('links') != null) {
+            var retrievedData = localStorage.getItem('links');
+            var links = JSON.parse(retrievedData);
+            links.push(data.data.link);
+            localStorage.setItem('links', JSON.stringify(links));
+            localStorage.setItem('lglink', data.data.link);
+          }
+          else {
+            var linkArr = [];
+            linkArr.push(data.data.link);
+            localStorage.setItem('links', JSON.stringify(linkArr));
+          }
+          localStorage.setItem("dareCreated", true);
+          //localStorage.setItem('link', data.data.link);
 
           for (var i = 0; i < questionModel.length - 1; i++) {
             questionModel.pop();
           }
+          that.props.history.push("/sharedare");
+        }
+        else {
+          alert("Something went wrong, Please try again");
+          that.props.history.push("/user-question")
         }
       })
       .catch(function (error) {
@@ -263,12 +280,12 @@ class CustomQuestion extends React.Component {
             <div class="col-md-8">
               <Container>
                 <Row>
-                  <Col md="8">
+                  <Col md="10">
                     <div class="card">
                       <div class="card-body">
                         <div class="avatar mx-auto white">
                           <h3 class="text-center">Question {this.state.cnt + 1} </h3>
-
+                          <hr />
                         </div>
                         <br />
                         <form onSubmit={this.handleSubmit.bind(that)}>
@@ -304,32 +321,36 @@ class CustomQuestion extends React.Component {
 
                                 <div>
                                   {that.state.cnt == idx &&
-                                    <div>
-                                      <input
-                                        required
-                                        type="radio"
-                                        name={idx}
-                                        checked={questionModel[idx].answer !== "" ? (questionModel[idx].options[optionId] === questionModel[idx].answer) ? "checked" : null : null}
-                                        value={questionModel[idx].answer === "" ? question.name : questionModel[idx].answer}
-                                        onChange={that.handleChange.bind(
-                                          that,
-                                          idx,
-                                          optionId
-                                        )}
-                                      />
-                                      <input
-                                        type="text"
-                                        required
-                                        placeholder={`options ${optionId + 1} `}
-                                        value={questionModel[idx].options[optionId] === "" ? question.name : questionModel[idx].options[optionId]}
-                                        onChange={that.handleOptionName.bind(
-                                          that,
-                                          idx,
-                                          optionId
-                                        )}
-                                        class="form-control"
-                                      />
-
+                                    <div class='row'>
+                                      <div class='col-sm-1 col-md-1 col-lg-1 col-1 text-right'>
+                                        <input
+                                          required
+                                          type="radio"
+                                          name={idx}
+                                          checked={questionModel[idx].answer !== "" ? (questionModel[idx].options[optionId] === questionModel[idx].answer) ? "checked" : null : null}
+                                          value={questionModel[idx].answer === "" ? question.name : questionModel[idx].answer}
+                                          onChange={that.handleChange.bind(
+                                            that,
+                                            idx,
+                                            optionId
+                                          )}
+                                        />
+                                      </div>
+                                      <div class='col-sm-8 col-md-5 col-lg-5 col-8 text-left'>
+                                        <input
+                                          type="text"
+                                          required
+                                          placeholder={`Option ${optionId + 1} `}
+                                          value={questionModel[idx].options[optionId] === "" ? question.name : questionModel[idx].options[optionId]}
+                                          onChange={that.handleOptionName.bind(
+                                            that,
+                                            idx,
+                                            optionId
+                                          )}
+                                          class="form-control"
+                                        />
+                                        <br />
+                                      </div>
                                       <br />
                                     </div>
                                   }
@@ -344,7 +365,7 @@ class CustomQuestion extends React.Component {
                                     <input
                                       type="text"
                                       required
-                                      placeholder={`question ${idx + 1} `}
+                                      placeholder={`Question ${idx + 1} `}
                                       value={questionModel[idx].question === "" ? question.name : questionModel[idx].question}
                                       onChange={that.handleQuestionNameChange.bind(
                                         that,
@@ -354,24 +375,29 @@ class CustomQuestion extends React.Component {
                                     />
                                     <br />
                                     {quesrions}
+                                    {questionModel[idx].options.length < 6 &&
+                                      <button
+                                        style={{ borderRadius: '20px', height: '40px', width: '30px', backgroundColor: "#32c16c" }}
+                                        onClick={that.handleAddOptions.bind(
+                                          that,
+                                          idx
+                                        )}
+                                        type="button" class="btn ">
+                                        <i style={{ top: '0px', transform: 'translateX(-6px)' }} class="fa fa-plus" aria-hidden="true" />
+                                        &nbsp; </button>
+                                    }
                                     {questionModel[idx].options.length > 2 &&
                                       <button
+                                        style={{ borderRadius: '20px', height: '40px', width: '30px', backgroundColor: "#cf2a39" }}
                                         type="button"
                                         onClick={() =>
                                           that.handleRemoveOption(that, idx)
                                         }
-                                        class="btn btn-outline-info  btn-sm"
+                                        class="btn"
                                       >
-                                        <i class="fa fa-minus" aria-hidden="true" />
-                                        &nbsp; Option
+                                        <i style={{ top: '0px', transform: 'translateX(-6px)' }} class="fa fa-minus" aria-hidden="true" />
+                                        &nbsp;
                                 </button>
-                                    }
-                                    {questionModel[idx].options.length < 6 &&
-                                      <button onClick={that.handleAddOptions.bind(
-                                        that,
-                                        idx
-                                      )} type="button" class="btn btn-outline-info  btn-sm"> <i class="fa fa-plus" aria-hidden="true" />
-                                        &nbsp; Option</button>
                                     }
                                     <br />
 
@@ -382,26 +408,40 @@ class CustomQuestion extends React.Component {
 
                           })}
 
-                          {(this.state.cnt >= 4) &&
-                            <input class="btn btn-primary btn-md" type="submit" value="Submit" />
+                          <div class="text-center">
+                            {this.state.cnt > 0 &&
+                              <button
+                                onClick={this.prevbtnClick.bind(this)}
+                                type="button"
+                                class="btn" style={{ color: "white", backgroundColor: "#2E86C1", borderRadius: "10px", textTransform: "none" }}
+                              >
+                                <i class="fa fa-backward" aria-hidden="true"></i>&nbsp;  Previous
+                             </button>
 
-                          }
+                            }
+                            {this.state.cnt < 19 &&
+
+                              <button
+                                onClick={that.nextbtnClick.bind(that)}
+                                type="button"
+                                class="btn" style={{ color: "white", backgroundColor: "#2E86C1", borderRadius: "10px", textTransform: "none" }}
+                              >
+                                Next  &nbsp;<i class="fa fa-forward" aria-hidden="true"></i>
+                              </button>
+
+                            }
+                            <br />
+                            {(this.state.cnt >= 4) &&
+                              <Button type="submit" outline color="secondary">
+                                Submit  className="ml-1" />
+                              </Button>
+                            }
+                          </div>
 
                         </form>
-                        {this.state.cnt > 0 &&
-                          <button onClick={this.prevbtnClick.bind(this)}
-                            class="btn btn-secondary btn-sm "
-                          >
-                            Previous Question
-                            </button>
-                        }
-                        {this.state.cnt < 19 &&
-                          <button type="button" style={{ marginRight: "2px" }} class="btn btn-secondary btn-sm " onClick={that.nextbtnClick.bind(that)}
 
-                          >
-                            Next Question
-                                </button>
-                        }
+
+
 
 
                       </div>
@@ -412,7 +452,6 @@ class CustomQuestion extends React.Component {
             </div>
           </div>
         )}
-        {this.state.shareComponent && <Sharedare link={this.state.link} history={this.props.history} />}
       </div>
     );
   }

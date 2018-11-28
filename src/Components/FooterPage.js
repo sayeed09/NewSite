@@ -5,7 +5,7 @@ class FooterPage extends React.Component {
   render() {
     return (
       <div className="footer">
-        <Footer color="light blue" className="font-small pt-0" fixed="bottom">
+        <Footer className="font-small pt-0" fixed="bottom">
           <Container>
             <Row>
               <Col md="12">
@@ -40,7 +40,7 @@ class FooterPage extends React.Component {
           <div className="footer-copyright text-center py-3">
             <Container fluid>
               &copy; {new Date().getFullYear()} Copyright:{" "}
-              <a href=""> NewSite </a>
+              <a href=""> challengefrom.me </a>
             </Container>
           </div>
         </Footer>
