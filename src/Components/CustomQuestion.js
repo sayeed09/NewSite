@@ -22,7 +22,7 @@ const questionModel = [
     questionID: "",
     question: "",
     answer: "",
-    options: ["", ""]
+    options: ["", "",]
   }
 ];
 var answerIndx;
@@ -433,16 +433,12 @@ class CustomQuestion extends React.Component {
                             <br />
                             {(this.state.cnt >= 4) &&
                               <Button type="submit" outline color="secondary">
-                                Submit  className="ml-1" />
+                                Submit  
                               </Button>
                             }
                           </div>
 
                         </form>
-
-
-
-
 
                       </div>
                     </div>
@@ -457,4 +453,3 @@ class CustomQuestion extends React.Component {
   }
 }
 export default CustomQuestion;
-``

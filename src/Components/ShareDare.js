@@ -26,7 +26,8 @@ class ShareDare extends React.Component {
     this.state = {
       link: "",
       dareDeleteComponent: false,
-      loader: false
+      loader: false,
+      btnText:'Copy Link'
     };
 
     if (localStorage.getItem('links') != null) {
@@ -141,16 +142,12 @@ class ShareDare extends React.Component {
 
                             <CopyToClipboard
                               text={this.state.link}
-                              onCopy={() => this.setState({ copied: true })}
+                              onCopy={() => this.setState({btnText:'Copied' })}
                             >
                               <button style={{ color: "white", backgroundColor: "#605E5E", borderRadius: "10px", textTransform: "none" }} class="btn">
-                                Copy Link
+                               {this.state.btnText}
                           </button>
                             </CopyToClipboard>
-
-                            {this.state.copied ? (
-                              <span style={{ color: "red" }}>Copied.</span>
-                            ) : null}
                             <br />
                             <br />
                             <SocialShare link={this.state.link} />

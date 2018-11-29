@@ -120,16 +120,16 @@ class ResponseDare extends React.Component {
               loader: false
             });
             localStorage.setItem("rflg", true);
-            if (localStorage.getItem('links') != null) {
-              var retrievedData = localStorage.getItem('links');
+            if (localStorage.getItem('PL') != null) {
+              var retrievedData = localStorage.getItem('PL');
               var links = JSON.parse(retrievedData);
               links.push(window.location.href);
-              localStorage.setItem('links', JSON.stringify(links));
+              localStorage.setItem('PL', JSON.stringify(links));
             }
             else {
               var linkArr = [];
               linkArr.push(window.location.href);
-              localStorage.setItem('links', JSON.stringify(linkArr));
+              localStorage.setItem('PL', JSON.stringify(linkArr));
             }
             that.props.history.push("/score");
           }

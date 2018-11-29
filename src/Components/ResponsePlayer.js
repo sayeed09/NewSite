@@ -52,6 +52,21 @@ class ResponsePlayer extends React.Component {
 
       }
     }
+    if (localStorage.getItem('PL') != null) {
+      var retrievedData = localStorage.getItem('PL');
+      var links = JSON.parse(retrievedData);
+      if (links.includes(window.location.href)) {
+        if (localStorage.getItem('CPF')) {
+          this.props.history.push("/sharedare");
+          return;
+        }
+        else {
+          this.props.history.push("/score");
+          return;
+        }
+
+      }
+    }
 
     localStorage.setItem('PF', true);
 

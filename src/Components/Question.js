@@ -227,7 +227,8 @@ class Question extends React.Component {
                         class="img-thumbnail rounded "
                         style={{
                           width: "150px",
-                          height: "120px"
+                          height: "120px",
+                          padding:"1.15rem"
                         }}
                         src={val.option_value}
                       />

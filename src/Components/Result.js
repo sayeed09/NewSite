@@ -42,8 +42,8 @@ class Result extends React.Component {
       this.props.history.push("/home")
     }
     var that = this;
-    if (localStorage.getItem('links') != null) {
-      var retrievedData = localStorage.getItem('links');
+    if (localStorage.getItem('PL') != null) {
+      var retrievedData = localStorage.getItem('PL');
       var links = JSON.parse(retrievedData);
         var link = links[links.length - 1];
      // var link = "https://glacial-tundra-88546.herokuapp.com/dare/136/test";
