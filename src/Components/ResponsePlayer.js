@@ -27,8 +27,8 @@ class ResponsePlayer extends React.Component {
       loader: true
     };
 
-    this.state.link=window.location.href;
-    //this.state.link = "https://glacial-tundra-88546.herokuapp.com/dare/147/test";
+    //this.state.link=window.location.href;
+    this.state.link = "https://glacial-tundra-88546.herokuapp.com/invite/195";
     localStorage.setItem("link", this.state.link);
 
 
