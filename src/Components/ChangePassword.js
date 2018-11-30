@@ -29,7 +29,7 @@ class ChangePassword extends React.Component {
   }
   btnBackClick(e) {
     if (!localStorage.getItem("dareCreated")) {
-      this.props.history.push("/invite");
+      this.props.history.push("/send_invite");
     } else {
       this.props.history.push("/user-question");
     }
@@ -86,7 +86,7 @@ class ChangePassword extends React.Component {
           } else {
             alert("Your password changed successfully")
             if (localStorage.getItem("dareCreated")) {
-              that.props.history.push("/invite");
+              that.props.history.push("/send_invite");
             } else {
               that.props.history.push("/user-question");
             }

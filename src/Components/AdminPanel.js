@@ -31,6 +31,7 @@ class AdminPanel extends React.Component {
     this.getData();
   }
   getData() {
+    if(localStorage.getItem("token") !=null){
     var that = this;
     var _secretKey = "thekeyof12NewSite";
     var simpleCrypto = new SimpleCrypto(_secretKey);
@@ -55,11 +56,15 @@ class AdminPanel extends React.Component {
           data: data.data
         });
         var admin_data = data.data;
-        console.log("var", admin_data);
         that.setState({
           da: admin_data
         });
       });
+  }
+
+else{
+  this.props.history.push("/home")
+}
   }
   handleSelect(e) {
     if (e === 1) {

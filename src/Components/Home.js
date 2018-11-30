@@ -53,7 +53,7 @@ class Home extends React.Component {
   componentDidMount() {
     if (localStorage.getItem('token') != null) {
       if (localStorage.getItem('lglink') != null) {
-        this.props.history.push("/invite");
+        this.props.history.push("/send_invite");
         return;
       }
       else {
@@ -62,7 +62,7 @@ class Home extends React.Component {
       }
     }
     if (localStorage.getItem('CPF')) {
-      this.props.history.push("/invite");
+      this.props.history.push("/send_invite");
       return;
     }
     if (localStorage.getItem('rflg')) {
@@ -74,7 +74,7 @@ class Home extends React.Component {
     //   var links = JSON.parse(retrievedData);
     //   if (links.includes(window.location.href)) {
     //     if (localStorage.getItem('CF')) {
-    //       this.props.history.push("/invite");
+    //       this.props.history.push("/send_invite");
     //       return;
     //     }
     //     else {

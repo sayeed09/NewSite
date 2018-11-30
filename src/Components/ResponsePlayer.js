@@ -36,13 +36,14 @@ class ResponsePlayer extends React.Component {
     this._onCreateButtonClick = this._onCreateButtonClick.bind(this);
   }
   componentWillMount() {
+ 
 
     if (localStorage.getItem('links') != null) {
       var retrievedData = localStorage.getItem('links');
       var links = JSON.parse(retrievedData);
       if (links.includes(window.location.href)) {
         if (localStorage.getItem('CPF')) {
-          this.props.history.push("/invite");
+          this.props.history.push("/send_invite");
           return;
         }
         else {
@@ -57,7 +58,7 @@ class ResponsePlayer extends React.Component {
       var links = JSON.parse(retrievedData);
       if (links.includes(window.location.href)) {
         if (localStorage.getItem('CPF')) {
-          this.props.history.push("/invite");
+          this.props.history.push("/send_invite");
           return;
         }
         else {
@@ -69,8 +70,6 @@ class ResponsePlayer extends React.Component {
     }
 
     localStorage.setItem('PF', true);
-
-
 
     const { dare_id } = this.props.match.params;
     this.state.dareid = this.props.match.params;
@@ -89,8 +88,9 @@ class ResponsePlayer extends React.Component {
       })
       .catch(function (error) {
         alert("Link Expired or Invalid")
-        that.props.history.push("/home")
+        // that.props.history.push("/home")
       });
+    
   }
 
 

@@ -147,7 +147,7 @@ class CustomQuestion extends React.Component {
           for (var i = 0; i < questionModel.length - 1; i++) {
             questionModel.pop();
           }
-          that.props.history.push("/invite");
+          that.props.history.push("/send_invite");
         }
         else {
           alert("Something went wrong, Please try again");

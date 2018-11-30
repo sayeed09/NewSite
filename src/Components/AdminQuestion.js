@@ -75,7 +75,6 @@ class AdminQuestion extends React.Component {
   }
   editButtonClick(item, e) {
     this.props.history.push("/editquestion/" + item.question_id);
-    //this.props.history.push({ pathname: "/editquestion", search: item.question_id });
   }
   handleSelect(e) {
     if (e === 1) {

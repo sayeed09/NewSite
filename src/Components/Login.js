@@ -66,7 +66,7 @@ class Login extends React.Component {
     }
     if (localStorage.getItem('token') != null) {
       if (localStorage.getItem('link') != null) {
-        this.props.history.push("/invite")
+        this.props.history.push("/send_invite")
       } else {
         this.props.history.push("/user-question")
       }
@@ -150,7 +150,7 @@ class Login extends React.Component {
               }
               localStorage.setItem('lglink', data.data.link);
               localStorage.setItem("dareCreated", true);
-              that.props.history.push("/invite");
+              that.props.history.push("/send_invite");
             } else {
               that.props.history.push("/user-question");
               localStorage.setItem("dareCreated", false);

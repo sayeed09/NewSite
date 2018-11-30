@@ -72,18 +72,7 @@ class Adminadd extends React.Component {
       alert("please select image less than 4Mb");
       return;
     }
-    /* var parts = e.target.files[0].split('.');
-      return parts[parts.length - 1];
-      var ext = getExtension(filename);
-      switch (ext.toLowerCase()) {
-      case 'jpg':
-      case 'png':
-      case 'jpeg':
-          //etc
-          return true;
-      }
-      return false;
-  */
+
 
     this.setState({
       selectedFile: e.target.files[0]

@@ -93,7 +93,7 @@ class DareResult extends React.Component {
       });
   }
   btnClick(e) {
-    this.props.history.push("/invite");
+    this.props.history.push("/send_invite");
   }
   btnBackDeleteClick(e) {
     this.getData();

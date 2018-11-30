@@ -127,7 +127,7 @@ class Question extends React.Component {
             localStorage.setItem('links', JSON.stringify(linkArr));
           }
           localStorage.setItem('CPF',true);
-          that.props.history.push("/invite");
+          that.props.history.push("/send_invite");
         })
         .catch(function (error) {
           alert("Server Error Please try again");

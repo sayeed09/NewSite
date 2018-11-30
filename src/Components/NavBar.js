@@ -266,7 +266,7 @@ export default class NavBar extends React.Component {
                       {localStorage.getItem("name") === "Admin" ? (
                         <DropdownItem href="/adminquestion"><b>Menu</b></DropdownItem>
                       ) : localStorage.getItem("dareCreated") ? (
-                        <DropdownItem href="/invite"><b>Menu</b></DropdownItem>
+                        <DropdownItem href="/send_invite"><b>Menu</b></DropdownItem>
                       ) : (
                             <DropdownItem href="/user-question"><b>Menu</b></DropdownItem>
                           )}
@@ -290,7 +290,7 @@ export default class NavBar extends React.Component {
           <Route path="/contactus" component={Contact} />
           <Route path="/invite/:dare_id" component={ResponsePlayer} />
           <Route path="/login" component={Login} />
-          <Route path="/invite" component={ShareDare} />
+          <Route path="/send_invite" component={ShareDare} />
           <Route path="/result" component={Result} />
           <Route path="/register" component={Register} />
           <Route path="/editquestion/:id" component={EditQuestion} />
