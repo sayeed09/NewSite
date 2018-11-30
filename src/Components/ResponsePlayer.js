@@ -42,7 +42,7 @@ class ResponsePlayer extends React.Component {
       var links = JSON.parse(retrievedData);
       if (links.includes(window.location.href)) {
         if (localStorage.getItem('CPF')) {
-          this.props.history.push("/sharedare");
+          this.props.history.push("/invite");
           return;
         }
         else {
@@ -57,7 +57,7 @@ class ResponsePlayer extends React.Component {
       var links = JSON.parse(retrievedData);
       if (links.includes(window.location.href)) {
         if (localStorage.getItem('CPF')) {
-          this.props.history.push("/sharedare");
+          this.props.history.push("/invite");
           return;
         }
         else {
@@ -139,7 +139,7 @@ class ResponsePlayer extends React.Component {
           <div class="contact-body">
             <div class="row">
               <div class="col-md-3" />
-              <div class="col-md-8">
+              <div class="col-md-8" style={{paddingLeft: '0', paddingRight: '0'}}>
                 <Container>
                   <Row>
                     <Col md="10">

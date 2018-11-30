@@ -127,7 +127,7 @@ class Question extends React.Component {
             localStorage.setItem('links', JSON.stringify(linkArr));
           }
           localStorage.setItem('CPF',true);
-          that.props.history.push("/sharedare");
+          that.props.history.push("/invite");
         })
         .catch(function (error) {
           alert("Server Error Please try again");
@@ -174,7 +174,7 @@ class Question extends React.Component {
 
   }
   btnClickResult(e) {
-    this.props.history.push("/userresults");
+    this.props.history.push("/results");
   }
 
   render() {
@@ -247,7 +247,7 @@ class Question extends React.Component {
       <div class="contact-body">
         <div class="row">
           <div class="col-md-3" />
-          <div class="col-md-8">
+          <div class="col-sm-12 col-md-8" style={{paddingLeft: '0', paddingRight: '0'}}>
             {!this.state.showDareComponent && (
               <Container>
                 <Row>

@@ -66,7 +66,7 @@ class Login extends React.Component {
     }
     if (localStorage.getItem('token') != null) {
       if (localStorage.getItem('link') != null) {
-        this.props.history.push("/sharedare")
+        this.props.history.push("/invite")
       } else {
         this.props.history.push("/user-question")
       }
@@ -150,7 +150,7 @@ class Login extends React.Component {
               }
               localStorage.setItem('lglink', data.data.link);
               localStorage.setItem("dareCreated", true);
-              that.props.history.push("/sharedare");
+              that.props.history.push("/invite");
             } else {
               that.props.history.push("/user-question");
               localStorage.setItem("dareCreated", false);
@@ -183,7 +183,7 @@ class Login extends React.Component {
         {!this.state.isLoggedIn && (
           <div class="row">
             <div class="col-md-3" />
-            <div class="col-md-8">
+            <div class="col-md-8" style={{paddingLeft: '0', paddingRight: '0'}}>
               <Container>
                 <Row>
                   <Col md="10">

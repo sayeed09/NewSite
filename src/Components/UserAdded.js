@@ -34,7 +34,7 @@ class UserAdded extends React.Component {
       <div class="contact-body">
         <div class="row">
           <div class="col-md-3" />
-          <div class="col-md-8">
+          <div class="col-md-8" style={{paddingLeft: '0', paddingRight: '0'}}>
             <Container>
               <Row>
                 <Col md="10">

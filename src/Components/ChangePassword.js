@@ -29,7 +29,7 @@ class ChangePassword extends React.Component {
   }
   btnBackClick(e) {
     if (!localStorage.getItem("dareCreated")) {
-      this.props.history.push("/sharedare");
+      this.props.history.push("/invite");
     } else {
       this.props.history.push("/user-question");
     }
@@ -86,7 +86,7 @@ class ChangePassword extends React.Component {
           } else {
             alert("Your password changed successfully")
             if (localStorage.getItem("dareCreated")) {
-              that.props.history.push("/sharedare");
+              that.props.history.push("/invite");
             } else {
               that.props.history.push("/user-question");
             }
@@ -122,7 +122,7 @@ class ChangePassword extends React.Component {
       <div class="contact-body">
         <div class="row">
           <div class="col-md-3" />
-          <div class="col-md-8">
+          <div class="col-md-8" style={{paddingLeft: '0', paddingRight: '0'}}>
             <Container>
               <Row>
                 <Col md="10">

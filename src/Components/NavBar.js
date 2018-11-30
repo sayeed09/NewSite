@@ -266,7 +266,7 @@ export default class NavBar extends React.Component {
                       {localStorage.getItem("name") === "Admin" ? (
                         <DropdownItem href="/adminquestion"><b>Menu</b></DropdownItem>
                       ) : localStorage.getItem("dareCreated") ? (
-                        <DropdownItem href="/sharedare"><b>Menu</b></DropdownItem>
+                        <DropdownItem href="/invite"><b>Menu</b></DropdownItem>
                       ) : (
                             <DropdownItem href="/user-question"><b>Menu</b></DropdownItem>
                           )}
@@ -288,15 +288,15 @@ export default class NavBar extends React.Component {
           <Route exact path="/" component={Home} />
           <Route path="/aboutus" component={About} />
           <Route path="/contactus" component={Contact} />
-          <Route path="/dare/:dare_id" component={ResponsePlayer} />
+          <Route path="/invite/:dare_id" component={ResponsePlayer} />
           <Route path="/login" component={Login} />
-          <Route path="/sharedare" component={ShareDare} />
-          <Route path="/results" component={Result} />
+          <Route path="/invite" component={ShareDare} />
+          <Route path="/result" component={Result} />
           <Route path="/register" component={Register} />
           <Route path="/editquestion/:id" component={EditQuestion} />
           <Route path="/adminquestion" component={AdminQuestion} />
           <Route path="/score" component={ShowScore} />
-          <Route path="/userresults" component={DareResult} />
+          <Route path="/results" component={DareResult} />
           <Route path="/customquestion" component={CustomQuestion} />
           <Route path="/forgotpassword" component={ForgetPassword} />
           <Route path="/home" component={Home} />

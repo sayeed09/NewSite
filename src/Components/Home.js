@@ -53,7 +53,7 @@ class Home extends React.Component {
   componentDidMount() {
     if (localStorage.getItem('token') != null) {
       if (localStorage.getItem('lglink') != null) {
-        this.props.history.push("/sharedare");
+        this.props.history.push("/invite");
         return;
       }
       else {
@@ -62,7 +62,7 @@ class Home extends React.Component {
       }
     }
     if (localStorage.getItem('CPF')) {
-      this.props.history.push("/sharedare");
+      this.props.history.push("/invite");
       return;
     }
     if (localStorage.getItem('rflg')) {
@@ -74,7 +74,7 @@ class Home extends React.Component {
     //   var links = JSON.parse(retrievedData);
     //   if (links.includes(window.location.href)) {
     //     if (localStorage.getItem('CF')) {
-    //       this.props.history.push("/sharedare");
+    //       this.props.history.push("/invite");
     //       return;
     //     }
     //     else {
@@ -165,7 +165,7 @@ class Home extends React.Component {
           <div class="contact-body">
             <div class="row">
               <div class="col-md-3" />
-              <div class="col-md-8">
+              <div class="col-sm-12 col-md-8" style={{paddingLeft: '0', paddingRight: '0'}}>
                 {!this.state.showComponent && (
                   <Container>
                     <Row>

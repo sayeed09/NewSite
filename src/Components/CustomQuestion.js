@@ -147,7 +147,7 @@ class CustomQuestion extends React.Component {
           for (var i = 0; i < questionModel.length - 1; i++) {
             questionModel.pop();
           }
-          that.props.history.push("/sharedare");
+          that.props.history.push("/invite");
         }
         else {
           alert("Something went wrong, Please try again");
@@ -277,7 +277,7 @@ class CustomQuestion extends React.Component {
         {!this.state.shareComponent && (
           <div class="row">
             <div class="col-md-3" />
-            <div class="col-md-8">
+            <div class="col-md-8" style={{paddingLeft: '0', paddingRight: '0'}}>
               <Container>
                 <Row>
                   <Col md="10">

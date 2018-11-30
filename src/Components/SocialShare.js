@@ -12,8 +12,7 @@ import {
   TwitterIcon
 } from "react-share";
 import "./Custom.css";
-
-
+import messenger from "./messenger.jpg";
 class SocialShare extends Component {
   constructor(props) {
     super(props);
@@ -28,6 +27,7 @@ class SocialShare extends Component {
       <div class="row">
         <div class="col-3" />
         <div className="col-2 Demo__some-network">
+
           <FacebookShareButton
             url={this.state.link}
             quote="Hey How much you know me I challenge you! Play Now.."
@@ -47,7 +47,6 @@ class SocialShare extends Component {
             <WhatsappIcon size={50} round />
           </WhatsappShareButton>
         </div>
-
         <div className="col-2 Demo__some-network">
           <TwitterShareButton
             url={this.state.link}
@@ -57,6 +56,7 @@ class SocialShare extends Component {
             <TwitterIcon size={50} round />
           </TwitterShareButton>
         </div>
+        {/* <img src={messenger} style={{ height: "25px", width: "25px" }} /> */}
         <br />
         <br />
       </div>
