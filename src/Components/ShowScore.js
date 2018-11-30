@@ -27,12 +27,12 @@ class ShowScore extends React.Component {
     }
   }
   btnFunc(e) {
-    this.props.history.push("/home");
     localStorage.removeItem('rflg');
     localStorage.removeItem('s');
     localStorage.removeItem('t');
-    this.props.history.push("/home");
 
+    this.props.history.push("/home");
+    return;
   }
   btnresult(e) {
     this.props.history.push("/result");
@@ -68,7 +68,7 @@ class ShowScore extends React.Component {
       <div class="contact-body">
         <div class="row">
           <div class="col-md-3" />
-          <div class="col-md-8" style={{paddingLeft: '0', paddingRight: '0'}}>
+          <div class="col-md-8" style={{ paddingLeft: '0', paddingRight: '0' }}>
             <Container>
               <Row>
                 <Col md="10">
