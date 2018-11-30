@@ -1,5 +1,6 @@
 import React from "react";
 import SemiCircleProgressBar from "react-progressbar-semicircle";
+import { BrowserRouter as Router, Link, Switch, Route } from "react-router-dom";
 
 import {
   Container,
@@ -28,7 +29,7 @@ class ShowScore extends React.Component {
   btnFunc(e) {
     this.props.history.push("/home");
     localStorage.removeItem('rflag');
-    this.props.history.push("/home");
+    //this.props.history.push("/");
 
   }
   btnresult(e) {
@@ -98,10 +99,11 @@ class ShowScore extends React.Component {
                           Now, it’s your turn. Create your own challange and
                           send to your friends! Create Your Challenge{" "}
                         </p>
+                        <Link to="/home">
                         <button onClick={this.btnFunc.bind(this)}
                           style={{ backgroundColor: "#2E86C1", color: "white", borderRadius: "10px", textTransform: "none" }} class="btn btn-info"
                         > Create Your Challenge &nbsp; <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i>
-                        </button>
+                        </button></Link>
                         <br />
                         <a
                           style={{ color: "blue" }}
