@@ -35,29 +35,35 @@ class DareResult extends React.Component {
 
   getData(e) {
     var that = this;
-    this.state.obj["link"] = localStorage.getItem("link");
-    var postData = this.state.obj;
-    fetch(`https://pure-badlands-16289.herokuapp.com/api/users/result`, {
-      method: "post",
-      body: JSON.stringify(postData),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (data) {
-        that.setState({
-          data: data.data,
-          loader: false
-        });
-        if (data.data.length < 1) {
-          that.setState({
-            showNoResultComponent: true
-          });
+    var that = this;
+    if (localStorage.getItem('links') != null) {
+      var retrievedData = localStorage.getItem('links');
+      var links = JSON.parse(retrievedData);
+      var link = links[links.length - 1];
+      this.state.obj["link"] = link;
+      var postData = this.state.obj;
+      fetch(`https://pure-badlands-16289.herokuapp.com/api/users/result`, {
+        method: "post",
+        body: JSON.stringify(postData),
+        headers: {
+          "Content-Type": "application/json"
         }
-      });
+      })
+        .then(function (response) {
+          return response.json();
+        })
+        .then(function (data) {
+          that.setState({
+            data: data.data,
+            loader: false
+          });
+          if (data.data.length < 1) {
+            that.setState({
+              showNoResultComponent: true
+            });
+          }
+        });
+    }
   }
   componentWillMount() {
     this.getData();
@@ -98,7 +104,7 @@ class DareResult extends React.Component {
   btnBackDeleteClick(e) {
     this.getData();
     this.setState({
-      deleteComponent:false
+      deleteComponent: false
     })
   }
   componentDidMount() {
@@ -127,7 +133,7 @@ class DareResult extends React.Component {
       <div class="contact-body">
         <div class="row">
           <div class="col-md-3" />
-          <div class="col-md-8" style={{paddingLeft: '0', paddingRight: '0'}}>
+          <div class="col-md-8" style={{ paddingLeft: '0', paddingRight: '0' }}>
             <Container>
               <Row>
                 <Col md="10">
