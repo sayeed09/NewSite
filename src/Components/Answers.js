@@ -47,7 +47,7 @@ class Answers extends React.Component {
   }
   btnCLick(e) {
     if (localStorage.getItem("rflg")) {
-      this.props.history.push("/results");
+      this.props.history.push("/result");
     } else {
       this.props.history.push("/results");
     }
